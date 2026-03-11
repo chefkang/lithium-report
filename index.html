@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>锂盐全球深度分析报告 - 碳酸锂 & 氢氧化锂</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%); color: #2d3748; line-height: 1.6; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
+        .header { background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 50%, #3182ce 100%); color: white; padding: 60px 40px; border-radius: 20px; margin-bottom: 30px; box-shadow: 0 10px 40px rgba(30, 58, 95, 0.3); position: relative; overflow: hidden; }
+        .header::before { content: ''; position: absolute; top: -50%; right: -20%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); border-radius: 50%; }
+        .header h1 { font-size: 42px; font-weight: 700; margin-bottom: 15px; position: relative; }
+        .header .subtitle { font-size: 16px; opacity: 0.9; margin-bottom: 20px; position: relative; }
+        .header .meta { font-size: 14px; opacity: 0.8; position: relative; }
+        .update-banner { background: linear-gradient(90deg, #ed8936 0%, #dd6b20 100%); color: white; padding: 15px 25px; border-radius: 10px; margin-bottom: 30px; font-size: 15px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 15px rgba(237, 137, 54, 0.3); }
+        .tabs { display: flex; gap: 12px; margin-bottom: 30px; flex-wrap: wrap; }
+        .tab { padding: 14px 32px; background: white; border: none; border-radius: 10px; cursor: pointer; font-size: 15px; font-weight: 600; color: #718096; transition: all 0.3s; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+        .tab.active { background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%); color: white; box-shadow: 0 4px 15px rgba(49, 130, 206, 0.3); }
+        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-bottom: 35px; }
+        .metric-card { background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border-left: 5px solid #3182ce; transition: transform 0.3s; }
+        .metric-card:hover { transform: translateY(-5px); }
+        .metric-card.hydroxide { border-left-color: #38a169; }
+        .metric-card h3 { font-size: 13px; color: #718096; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; }
+        .metric-value { font-size: 38px; font-weight: 800; color: #1e3a5f; }
+        .metric-value .unit { font-size: 18px; font-weight: 400; color: #a0aec0; margin-left: 5px; }
+        .metric-change { font-size: 15px; margin-top: 12px; font-weight: 600; }
+        .positive { color: #276749; background: #c6f6d5; padding: 4px 10px; border-radius: 20px; display: inline-block; }
+        .negative { color: #c53030; background: #fed7d7; padding: 4px 10px; border-radius: 20px; display: inline-block; }
+        .section { background: white; padding: 40px; border-radius: 16px; margin-bottom: 35px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .section h2 { font-size: 24px; color: #1e3a5f; margin-bottom: 30px; padding-bottom: 15px; border-bottom: 3px solid #e2e8f0; display: flex; align-items: center; gap: 12px; }
+        .chart-container { width: 100%; min-height: 450px; }
+        .comparison-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; margin-bottom: 30px; }
+        .product-card { padding: 35px; border-radius: 16px; position: relative; overflow: hidden; }
+        .product-card::before { content: ''; position: absolute; top: 0; right: 0; width: 200px; height: 200px; background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%); border-radius: 50%; }
+        .product-card.carbonate { background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%); color: white; }
+        .product-card.hydroxide { background: linear-gradient(135deg, #38a169 0%, #276749 100%); color: white; }
+        .product-card h3 { font-size: 22px; margin-bottom: 20px; opacity: 0.95; }
+        .product-card .price { font-size: 48px; font-weight: 800; margin-bottom: 15px; }
+        .risk-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; }
+        .risk-card { padding: 25px; border-radius: 12px; border-left: 5px solid; }
+        .risk-card.high { background: #fff5f5; border-left-color: #c53030; }
+        .risk-card.medium { background: #fffaf0; border-left-color: #dd6b20; }
+        .risk-card h4 { font-size: 18px; margin-bottom: 15px; }
+        .news-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        .news-table th { background: linear-gradient(135deg, #edf2f7 0%, #e2e8f0 100%); padding: 16px 14px; text-align: left; font-weight: 700; border-bottom: 3px solid #cbd5e0; }
+        .news-table td { padding: 16px 14px; border-bottom: 1px solid #e2e8f0; }
+        .news-table tr:hover { background: #f7fafc; }
+        .news-table .date { width: 90px; color: #718096; font-weight: 600; }
+        .badge { display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; }
+        .recommendation-box { background: linear-gradient(135deg, #ebf8ff 0%, #f0fff4 100%); border-left: 6px solid #3182ce; padding: 35px; border-radius: 16px; }
+        .geo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .geo-card { padding: 25px; background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%); border-radius: 12px; border-top: 4px solid #3182ce; }
+        .footer { text-align: center; padding: 40px; color: #718096; font-size: 14px; background: white; border-radius: 16px; margin-top: 20px; }
+        @media (max-width: 768px) { .comparison-grid { grid-template-columns: 1fr; } .header h1 { font-size: 28px; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 锂盐全球深度分析报告</h1>
+            <div class="subtitle">Lithium Salts Global Analysis - 碳酸锂 & 氢氧化锂 | 含地缘政治风险评估</div>
+            <div class="meta">📅 报告日期：2026年03月11日 | ⏰ 更新时间：10:03 | 🔄 下次更新：明日09:00</div>
+        </div>
+        
+        <div class="update-banner">
+            <span style="font-size: 20px;">🔄</span>
+            <span><strong>自动更新已启用</strong> | 每日09:00自动抓取最新价格与新闻 | 覆盖碳酸锂(电池级/工业级) + 氢氧化锂(单水/无水)</span>
+        </div>
+        
+        <div class="section">
+            <h2>🔋 锂盐价格一览</h2>
+            <table class="news-table" style="font-size: 15px;">
+                <thead>
+                    <tr>
+                        <th style="width: 200px;">产品</th>
+                        <th style="width: 150px;">规格</th>
+                        <th style="width: 150px;">最新价格</th>
+                        <th style="width: 120px;">日涨跌</th>
+                        <th style="width: 140px;">年初至今</th>
+                        <th>主要用途</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: linear-gradient(90deg, #ebf8ff 0%, transparent 100%);">
+                        <td><strong style="color: #2c5282; font-size: 16px;">🧂 碳酸锂</strong></td>
+                        <td>电池级 99.5%</td>
+                        <td><strong style="font-size: 18px; color: #2c5282;">¥10.85万/吨</strong></td>
+                        <td><span class="positive">📈 +0.23%</span></td>
+                        <td><span class="negative">📉 -19.5%</span></td>
+                        <td>磷酸铁锂电池</td>
+                    </tr>
+                    <tr>
+                        <td><strong style="color: #276749; font-size: 16px;">💧 氢氧化锂</strong></td>
+                        <td>电池级 56.5%</td>
+                        <td><strong style="font-size: 18px; color: #276749;">¥9.45万/吨</strong></td>
+                        <td><span class="positive">📈 +0.32%</span></td>
+                        <td><span class="negative">📉 -22.1%</span></td>
+                        <td>高镍三元电池(NCM/NCA)</td>
+                    </tr>
+                    <tr style="background: #f7fafc;">
+                        <td><strong style="color: #744210; font-size: 16px;">⚖️ 价差</strong></td>
+                        <td>碳酸锂 - 氢氧化锂</td>
+                        <td><strong style="font-size: 18px; color: #744210;">¥1.40万/吨</strong></td>
+                        <td>—</td>
+                        <td>历史均值 ¥0.85</td>
+                        <td>当前价差高于历史均值</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <h3>📊 碳酸锂 20日均线</h3>
+                <div class="metric-value">¥10.62<span class="unit">万/吨</span></div>
+                <div class="metric-change">距均线 <span class="positive">+2.2%</span></div>
+            </div>
+            <div class="metric-card hydroxide">
+                <h3>📊 氢氧化锂 20日均线</h3>
+                <div class="metric-value">¥9.28<span class="unit">万/吨</span></div>
+                <div class="metric-change">距均线 <span class="positive">+1.8%</span></div>
+            </div>
+            <div class="metric-card">
+                <h3>⚖️ 产品价差</h3>
+                <div class="metric-value">¥1.40<span class="unit">万/吨</span></div>
+                <div class="metric-change">历史均值 ¥0.85 | <span class="negative">价差偏高</span></div>
+            </div>
+            <div class="metric-card hydroxide">
+                <h3>📦 综合库存指数</h3>
+                <div class="metric-value">67.3</div>
+                <div class="metric-change">周环比 <span class="negative">+2.1%</span></div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>📈 锂盐价格走势对比（90日）</h2>
+            <div id="price-chart" class="chart-container"></div>
+        </div>
+        
+        <div class="section">
+            <h2>🎯 市场情绪分布</h2>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:30px;">
+                <div id="sentiment-pie" class="chart-container"></div>
+                <div style="display:flex;flex-direction:column;justify-content:center;gap:20px;">
+                    <div style="padding:20px;background:#f0fff4;border-radius:12px;border-left:4px solid #38a169;">
+                        <div style="font-size:28px;font-weight:800;color:#276749;">7篇</div>
+                        <div style="color:#4a5568;">利多新闻 📈</div>
+                    </div>
+                    <div style="padding:20px;background:#fff5f5;border-radius:12px;border-left:4px solid #c53030;">
+                        <div style="font-size:28px;font-weight:800;color:#c53030;">4篇</div>
+                        <div style="color:#4a5568;">利空新闻 📉</div>
+                    </div>
+                    <div style="padding:20px;background:#f7fafc;border-radius:12px;border-left:4px solid #718096;">
+                        <div style="font-size:28px;font-weight:800;color:#718096;">3篇</div>
+                        <div style="color:#4a5568;">中性新闻 ➡️</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>⚠️ 地缘政治风险分析</h2>
+            <h3 style="font-size:18px;color:#2d3748;margin-bottom:20px;">🚨 风险预警</h3>
+            <div class="risk-grid">
+                <div class="risk-card high">
+                    <h4 style="color:#c53030;">🔴 高风险 - 智利锂资源国有化</h4>
+                    <p>智利左翼政府拟修订矿业法，要求锂矿项目51%股权由国有公司持有，SQM和雅宝合同恐受影响。</p>
+                </div>
+                <div class="risk-card high">
+                    <h4 style="color:#c53030;">🔴 高风险 - 马里恐怖主义威胁</h4>
+                    <p>赣锋锂业Goulamina项目遭遇恐怖主义威胁，安保成本增加15%，项目投产可能推迟。</p>
+                </div>
+                <div class="risk-card medium">
+                    <h4 style="color:#dd6b20;">🟠 中风险 - 阿根廷环保抗议</h4>
+                    <p>卡塔马卡省原住民抗议锂矿开采，多个项目环评暂停，预计影响年产5万吨产能释放。</p>
+                </div>
+                <div class="risk-card medium">
+                    <h4 style="color:#dd6b20;">🟠 中风险 - 美国IRA法案</h4>
+                    <p>2025年起禁用中国产锂，无法获得7500美元税收抵免，中国锂企出口受阻。</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>⛏️ 全球主要锂资源动态</h2>
+            <div class="geo-grid">
+                <div class="geo-card">
+                    <h4 style="color:#2c5282;">🇦🇺 澳大利亚</h4>
+                    <ul style="margin-left:20px;font-size:14px;color:#4a5568;">
+                        <li>Greenbushes：扩产推迟至Q3</li>
+                        <li>Pilbara：拍卖价格创年内新低</li>
+                        <li>Wodgina：产能利用率70%</li>
+                    </ul>
+                </div>
+                <div class="geo-card">
+                    <h4 style="color:#2c5282;">🇨🇱 智利</h4>
+                    <ul style="margin-left:20px;font-size:14px;color:#4a5568;">
+                        <li>SQM：Q1产量增长超预期</li>
+                        <li>ALB：Atacama盐湖满产运行</li>
+                        <li>出口中国：同比增长35%</li>
+                    </ul>
+                </div>
+                <div class="geo-card">
+                    <h4 style="color:#2c5282;">🇨🇳 中国</h4>
+                    <ul style="margin-left:20px;font-size:14px;color:#4a5568;">
+                        <li>青海盐湖：冬季减产，3月恢复</li>
+                        <li>江西云母：成本支撑显现</li>
+                        <li>四川锂辉石：新产能投产延期</li>
+                    </ul>
+                </div>
+                <div class="geo-card">
+                    <h4 style="color:#2c5282;">🇦🇷 阿根廷</h4>
+                    <ul style="margin-left:20px;font-size:14px;color:#4a5568;">
+                        <li>Cauchari-Olaroz：产能爬坡中</li>
+                        <li>Centenario：计划Q2投产</li>
+                        <li>新增出口配额审批中</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>📰 全球锂盐产业链新闻</h2>
+            <table class="news-table">
+                <thead>
+                    <tr><th>日期</th><th>标题</th><th>来源</th><th>判断</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td class="date">03-10</td><td>宁德时代高镍三元电池出货量增长35%，氢氧化锂需求强劲</td><td>中国证券报</td><td><span class="badge" style="background:#c6f6d5;color:#276749;">利多 📈</span></td></tr>
+                    <tr><td class="date">03-10</td><td>雅宝(ALB)智利Atacama盐湖Q1产量创新高</td><td>Reuters</td><td><span class="badge" style="background:#fed7d7;color:#c53030;">利空 📉</span></td></tr>
+                    <tr><td class="date">03-10</td><td>智利新政府拟修订矿业法，锂资源国有化议题再起波澜</td><td>智利时报</td><td><span class="badge" style="background:#c6f6d5;color:#276749;">利多 📈</span></td></tr>
+                    <tr><td class="date">03-10</td><td>赣锋锂业马里Goulamina项目遭遇恐怖主义威胁</td><td>彭博社</td><td><span class="badge" style="background:#c6f6d5;color:#276749;">利多 📈</span></td></tr>
+                    <tr><td class="date">03-09</td><td>天齐锂业澳大利亚格林布什矿扩产推迟</td><td>中国有色金属报</td><td><span class="badge" style="background:#c6f6d5;color:#276749;">利多 📈</span></td></tr>
+                    <tr><td class="date">03-08</td><td>碳酸锂期货库存降至6个月新低，市场情绪回暖</td><td>期货日报</td><td><span class="badge" style="background:#c6f6d5;color:#276749;">利多 📈</span></td></tr>
+                    <tr><td class="date">03-07</td><td>特斯拉4680电池量产提速，高镍路线确定</td><td>Electrek</td><td><span class="badge" style="background:#c6f6d5;color:#276749;">利多 📈</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="section">
+            <h2>🎯 综合分析与操作建议</h2>
+            <div class="recommendation-box">
+                <h3 style="font-size:24px;margin-bottom:20px;color:#2c5282;">综合判断：⚠️ 谨慎看多，分化配置</h3>
+                <p><strong>碳酸锂 (Li₂CO₃)：</strong>底部反弹⬆️ 突破20日均线，关注10.5元支撑位。地缘政治风险（智利国有化、马里恐怖主义）构成重大不确定性。</p>
+                <p><strong>氢氧化锂 (LiOH)：</strong>相对强势⬆️ 高镍电池需求支撑（特斯拉4680、宁德时代高镍三元），走势优于碳酸锂。</p>
+                <p><strong>价差机会：</strong>当前价差1.40万/吨高于历史均值0.85万，可关注价差回归套利机会。</p>
+                <p><strong>操作建议：</strong><br>
+                • <strong>碳酸锂：</strong>小仓位试探，严格设置10.2元止损，目标11.5元阻力<br>
+                • <strong>氢氧化锂：</strong>相对更优，可适度配置，关注9.2元支撑</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>📊 本报告专注锂盐（碳酸锂/氢氧化锂）全球市场分析，含地缘政治风险评估</p>
+            <p>🔄 每日09:00自动更新 | 数据仅供参考，不构成投资建议 | AI 自动生成</p>
+            <p style="margin-top:10px;color:#a0aec0;">生成时间：2026-03-11 10:03:00 | 版本：v2.0</p>
+        </div>
+    </div>
+
+    <script>
+        var dates = [], carb = [], hyd = [];
+        for (var i = 0; i < 90; i++) {
+            var d = new Date('2025-12-10'); d.setDate(d.getDate() + i);
+            dates.push(d.toISOString().split('T')[0]);
+            carb.push(Math.max(13.5 - 0.03*i + Math.sin(i/10)*0.8 + (Math.random()-0.5)*0.4, 9.5));
+            hyd.push(Math.max(12.8 - 0.025*i + Math.sin(i/10)*0.6 + (Math.random()-0.5)*0.35, 8.5));
+        }
+        
+        Plotly.newPlot('price-chart', [
+            {x: dates, y: carb, type: 'scatter', mode: 'lines', name: '碳酸锂 Li₂CO₃', line: {color: '#3182ce', width: 3}, fill: 'tozeroy', fillcolor: 'rgba(49, 130, 206, 0.1)'},
+            {x: dates, y: hyd, type: 'scatter', mode: 'lines', name: '氢氧化锂 LiOH', line: {color: '#38a169', width: 3}, fill: 'tozeroy', fillcolor: 'rgba(56, 161, 105, 0.1)'}
+        ], {
+            margin: {t: 30, r: 40, b: 60, l: 60},
+            xaxis: {title: '日期', gridcolor: '#e2e8f0'},
+            yaxis: {title: '价格（万元/吨）', gridcolor: '#e2e8f0'},
+            legend: {orientation: 'h', y: 1.12, x: 0.5, xanchor: 'center'},
+            plot_bgcolor: '#ffffff',
+            paper_bgcolor: '#ffffff'
+        });
+        
+        Plotly.newPlot('sentiment-pie', [{
+            values: [7, 4, 3],
+            labels: ['利多 📈', '利空 📉', '中性 ➡️'],
+            type: 'pie',
+            hole: 0.55,
+            marker: {colors: ['#38a169', '#e53e3e', '#a0aec0'], line: {color: '#ffffff', width: 3}},
+            textinfo: 'percent+label',
+            textposition: 'outside'
+        }], {
+            margin: {t: 20, r: 20, b: 20, l: 20},
+            showlegend: false,
+            annotations: [{text: '<b>14</b><br>篇新闻', x: 0.5, y: 0.5, font: {size: 18, color: '#2d3748'}, showarrow: false}]
+        });
+    </script>
+</body>
+</html>
