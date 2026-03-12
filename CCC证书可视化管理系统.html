@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCC证书可视化管理系统 - 湖南而周电子科技</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .cert-card { transition: all 0.3s ease; cursor: pointer; }
+        .cert-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .manufacturer-湖南而周 { background: #dbeafe; color: #1e40af; }
+        .manufacturer-嘉森 { background: #fce7f3; color: #9d174d; }
+        .manufacturer-敬恒 { background: #e0e7ff; color: #3730a3; }
+        .manufacturer-东森 { background: #d1fae5; color: #065f46; }
+        .manufacturer-其他 { background: #f3f4f6; color: #4b5563; }
+        .status-pending { background: #fef3c7; color: #92400e; }
+        .status-attention { background: #fecaca; color: #7f1d1d; }
+        .filter-btn.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
+        .modal.show { display: flex; }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-7xl mx-auto">
+        <header class="glass-card rounded-2xl p-6 mb-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-800 flex items-center gap-3">
+                        <i class="fas fa-certificate text-purple-600"></i>
+                        CCC证书可视化管理系统
+                    </h1>
+                    <p class="text-gray-600 mt-1">湖南而周电子科技有限公司 | 强制性产品认证证书管理</p>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="exportData()" class="px-4 py-2 bg-white border-2 border-purple-500 text-purple-600 rounded-lg hover:bg-purple-50">
+                        <i class="fas fa-download mr-2"></i>导出数据
+                    </button>
+                    <button onclick="openBatchQuery()" class="px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg hover:shadow-lg">
+                        <i class="fas fa-search-plus mr-2"></i>批量查询
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+            <div class="glass-card rounded-xl p-5" style="border-left: 4px solid #667eea;">
+                <p class="text-gray-500 text-sm">证书总数</p>
+                <p class="text-3xl font-bold text-gray-800">27</p>
+            </div>
+            <div class="glass-card rounded-xl p-5" style="border-left: 4px solid #3b82f6;">
+                <p class="text-gray-500 text-sm">自有品牌</p>
+                <p class="text-3xl font-bold text-gray-800">11</p>
+            </div>
+            <div class="glass-card rounded-xl p-5" style="border-left: 4px solid #10b981;">
+                <p class="text-gray-500 text-sm">供应商</p>
+                <p class="text-3xl font-bold text-gray-800">5</p>
+            </div>
+            <div class="glass-card rounded-xl p-5" style="border-left: 4px solid #f59e0b;">
+                <p class="text-gray-500 text-sm">待查询</p>
+                <p class="text-3xl font-bold text-gray-800">25</p>
+            </div>
+            <div class="glass-card rounded-xl p-5" style="border-left: 4px solid #ef4444;">
+                <p class="text-gray-500 text-sm">需关注</p>
+                <p class="text-3xl font-bold text-gray-800">2</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">制造商分布</h3>
+                <canvas id="manufacturerChart" height="200"></canvas>
+            </div>
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">产品类型分布</h3>
+                <canvas id="productChart" height="200"></canvas>
+            </div>
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">证书年份趋势</h3>
+                <canvas id="yearChart" height="200"></canvas>
+            </div>
+        </div>
+
+        <div class="glass-card rounded-xl p-6 mb-6">
+            <div class="flex flex-col md:flex-row gap-4 mb-4">
+                <div class="flex-1">
+                    <div class="relative">
+                        <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" id="searchInput" placeholder="搜索证书编号、产品型号或制造商..." class="w-full pl-12 pr-4 py-3 rounded-lg border-2 border-gray-200 focus:border-purple-500 focus:outline-none" oninput="searchCerts()">
+                    </div>
+                </div>
+                <select id="statusFilter" onchange="filterCerts()" class="px-4 py-3 rounded-lg border-2 border-gray-200">
+                    <option value="">所有状态</option>
+                    <option value="待查询">待查询</option>
+                    <option value="需关注">需关注</option>
+                </select>
+            </div>
+            <div class="flex flex-wrap gap-2">
+                <button onclick="filterByManufacturer('all')" class="filter-btn active px-4 py-2 rounded-full text-sm font-medium bg-gray-200" data-manufacturer="all">全部制造商</button>
+                <button onclick="filterByManufacturer('湖南而周')" class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-200" data-manufacturer="湖南而周">湖南而周 (11)</button>
+                <button onclick="filterByManufacturer('嘉森')" class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-200" data-manufacturer="嘉森">嘉森 (2)</button>
+                <button onclick="filterByManufacturer('敬恒')" class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-200" data-manufacturer="敬恒">敬恒 (4)</button>
+                <button onclick="filterByManufacturer('东森')" class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-200" data-manufacturer="东森">东森 (2)</button>
+                <button onclick="filterByManufacturer('其他')" class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-200" data-manufacturer="其他">其他 (8)</button>
+            </div>
+        </div>
+
+        <div class="glass-card rounded-xl p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold text-gray-800">证书列表</h3>
+                <p class="text-sm text-gray-500">点击卡片查看详情</p>
+            </div>
+            <div id="certGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        </div>
+    </div>
+
+    <div id="certModal" class="modal">
+        <div class="bg-white rounded-xl max-w-lg w-full mx-4 p-6">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <h2 id="modalTitle" class="text-2xl font-bold text-gray-800"></h2>
+                    <p id="modalSubtitle" class="text-gray-500"></p>
+                </div>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            <div class="space-y-3">
+                <div class="bg-gray-50 p-3 rounded"><span class="text-gray-500 text-sm">制造商</span><p id="modalManufacturer" class="font-semibold"></p></div>
+                <div class="bg-gray-50 p-3 rounded"><span class="text-gray-500 text-sm">产品类型</span><p id="modalType" class="font-semibold"></p></div>
+                <div class="bg-gray-50 p-3 rounded"><span class="text-gray-500 text-sm">产品型号</span><p id="modalModel" class="font-semibold"></p></div>
+                <div class="bg-gray-50 p-3 rounded"><span class="text-gray-500 text-sm">文件位置</span><p id="modalFolder" class="text-sm font-mono"></p></div>
+            </div>
+            <div class="mt-6 flex gap-3">
+                <button onclick="copyNumber()" class="flex-1 py-2 border border-gray-300 rounded-lg hover:bg-gray-100"><i class="fas fa-copy mr-2"></i>复制编号</button>
+                <button onclick="queryCert()" class="flex-1 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg"><i class="fas fa-external-link-alt mr-2"></i>官网查询</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const certificates = [
+            {id: 1, no: "A2024CCC0914-4661906", manufacturer: "湖南而周", type: "移动电源", model: "ezdjs-013 (P6)", year: "2024", folder: "013CCC认证/证书+报告", status: "待查询", note: "60000mAh"},
+            {id: 2, no: "A2024CCC0914-4584030", manufacturer: "湖南而周", type: "移动电源", model: "X2500", year: "2024", folder: "007+证书", status: "待查询", note: "007系列"},
+            {id: 3, no: "A2025CCC0914-4718205", manufacturer: "湖南而周", type: "移动电源", model: "011 (x2500)", year: "2025", folder: "011ccc认证", status: "待查询", note: "011系列"},
+            {id: 4, no: "A2025CCC0914-4810806", manufacturer: "湖南而周", type: "移动电源", model: "015 (D6)", year: "2025", folder: "015CCC认证", status: "待查询", note: "015系列"},
+            {id: 5, no: "A2025CCC0914-4923042", manufacturer: "湖南而周", type: "移动电源", model: "007 (x2500)", year: "2025", folder: "007-ccc认证资料", status: "待查询", note: "007系列"},
+            {id: 6, no: "A2025CCC0907-4732245", manufacturer: "湖南而周", type: "电源适配器", model: "19V2A", year: "2025", folder: "19V2A电源适配器CCC认证", status: "待查询", note: "配套适配器"},
+            {id: 7, no: "2022300907000094", manufacturer: "湖南而周", type: "充电器", model: "30W PD", year: "2022", folder: "30WPD充电头CCC", status: "待查询", note: "30W快充"},
+            {id: 8, no: "2025200915004088", manufacturer: "湖南而周", type: "电芯", model: "F606080-2000", year: "2025", folder: "T2025CCC0915-015832目录", status: "待查询", note: "F606080电芯"},
+            {id: 9, no: "T2025CCC0915-015832", manufacturer: "湖南而周", type: "电池组", model: "F606080配套", year: "2025", folder: "T2025CCC0915-015832目录", status: "待查询", note: "电芯配套"},
+            {id: 10, no: "2024010914714544", manufacturer: "湖南而周", type: "电池组", model: "-", year: "2024", folder: "007+证书", status: "待查询", note: "移动电源配套"},
+            {id: 11, no: "2025010914751524", manufacturer: "湖南而周", type: "电池组", model: "-", year: "2025", folder: "013CCC认证", status: "待查询", note: "013配套"},
+            {id: 12, no: "A2024CCC0915-4435612", manufacturer: "嘉森", type: "聚合物电池组", model: "-", year: "2024", folder: "嘉森CCC证书+报告", status: "待查询", note: "嘉森生产"},
+            {id: 13, no: "A2024CCC0915-4435613", manufacturer: "嘉森", type: "聚合物电池组", model: "-", year: "2024", folder: "嘉森CCC证书+报告", status: "待查询", note: "嘉森生产"},
+            {id: 14, no: "T2025CCC0915-013585", manufacturer: "敬恒", type: "电池组", model: "-", year: "2025", folder: "敬恒CCC证书", status: "待查询", note: "敬恒生产"},
+            {id: 15, no: "T2025CCC0915-011957", manufacturer: "敬恒", type: "电池组", model: "-", year: "2025", folder: "敬恒CCC证书", status: "待查询", note: "敬恒生产"},
+            {id: 16, no: "T2025CCC0915-013586", manufacturer: "敬恒", type: "电池组", model: "-", year: "2025", folder: "敬恒CCC证书", status: "待查询", note: "敬恒生产"},
+            {id: 17, no: "T2024CCC0915-010467", manufacturer: "敬恒", type: "电池组", model: "-", year: "2024", folder: "敬恒CCC证书", status: "需关注", note: "有变更报告"},
+            {id: 18, no: "S2023CCC0915-001499", manufacturer: "东森", type: "电芯/电池组", model: "BG01 (32140)", year: "2023", folder: "018CCC认证", status: "需关注", note: "32140电芯-2023年"},
+            {id: 19, no: "S2025CCC0915-000029", manufacturer: "东森", type: "电芯/电池组", model: "32140 15Ah", year: "2025", folder: "3C认证资料(1)", status: "待查询", note: "32140电芯"},
+            {id: 20, no: "待确认", manufacturer: "其他", type: "充电器", model: "5V2A充电头", year: "-", folder: "5V2A充电头CCC", status: "待查询", note: "待确认制造商"},
+            {id: 21, no: "待确认", manufacturer: "其他", type: "充电器", model: "65W充电器", year: "-", folder: "65W充电器CCC", status: "待查询", note: "待确认制造商"},
+            {id: 22, no: "A2025CCC0915-4830611", manufacturer: "其他", type: "电池组", model: "8267100配套", year: "2025", folder: "聚合物8267100电芯CCC", status: "待查询", note: "电芯配套"},
+            {id: 23, no: "A2025CCC0915-4830612", manufacturer: "其他", type: "电池组", model: "8267100配套", year: "2025", folder: "聚合物8267100电芯CCC", status: "待查询", note: "电芯配套"},
+            {id: 24, no: "A2025CCC0915-4830613", manufacturer: "其他", type: "电池组", model: "8267100配套", year: "2025", folder: "聚合物8267100电芯CCC", status: "待查询", note: "电芯配套"},
+            {id: 25, no: "A2025CCC0915-4830614", manufacturer: "其他", type: "电池组", model: "8267100配套", year: "2025", folder: "聚合物8267100电芯CCC", status: "待查询", note: "电芯配套"},
+            {id: 26, no: "A2025CCC0915-4830608", manufacturer: "其他", type: "电池组", model: "8267100配套", year: "2025", folder: "聚合物8267100电芯CCC", status: "待查询", note: "电芯配套"},
+            {id: 27, no: "A2025CCC0915-4751306", manufacturer: "其他", type: "电池组", model: "8267100配套", year: "2025", folder: "报告&证书", status: "待查询", note: "电芯配套"}
+        ];
+
+        let currentFilter = { manufacturer: 'all', status: '', search: '' };
+        let currentCert = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            renderCerts();
+            initCharts();
+        });
+
+        function initCharts() {
+            const manufacturerData = {};
+            certificates.forEach(c => { manufacturerData[c.manufacturer] = (manufacturerData[c.manufacturer] || 0) + 1; });
+            new Chart(document.getElementById('manufacturerChart'), {
+                type: 'doughnut',
+                data: { labels: Object.keys(manufacturerData), datasets: [{ data: Object.values(manufacturerData), backgroundColor: ['#667eea', '#ec4899', '#3b82f6', '#10b981', '#9ca3af'] }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+            });
+
+            const typeData = {};
+            certificates.forEach(c => { typeData[c.type] = (typeData[c.type] || 0) + 1; });
+            new Chart(document.getElementById('productChart'), {
+                type: 'bar',
+                data: { labels: Object.keys(typeData), datasets: [{ data: Object.values(typeData), backgroundColor: '#667eea' }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+            });
+
+            const yearData = {};
+            certificates.forEach(c => { if (c.year !== '-') yearData[c.year] = (yearData[c.year] || 0) + 1; });
+            new Chart(document.getElementById('yearChart'), {
+                type: 'line',
+                data: { labels: Object.keys(yearData).sort(), datasets: [{ data: Object.keys(yearData).sort().map(y => yearData[y]), borderColor: '#667eea', backgroundColor: 'rgba(102,126,234,0.1)', fill: true, tension: 0.4 }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+            });
+        }
+
+        function renderCerts() {
+            const grid = document.getElementById('certGrid');
+            grid.innerHTML = '';
+            let filtered = certificates;
+            if (currentFilter.manufacturer !== 'all') filtered = filtered.filter(c => c.manufacturer === currentFilter.manufacturer);
+            if (currentFilter.status) filtered = filtered.filter(c => c.status === currentFilter.status);
+            if (currentFilter.search) {
+                const search = currentFilter.search.toLowerCase();
+                filtered = filtered.filter(c => c.no.toLowerCase().includes(search) || c.model.toLowerCase().includes(search) || c.manufacturer.toLowerCase().includes(search));
+            }
+
+            filtered.forEach(cert => {
+                const statusClass = cert.status === '需关注' ? 'status-attention' : 'status-pending';
+                const card = document.createElement('div');
+                card.className = 'cert-card bg-white rounded-xl p-5 border border-gray-200';
+                card.onclick = () => openModal(cert);
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="px-3 py-1 rounded-full text-xs font-medium manufacturer-${cert.manufacturer}">${cert.manufacturer}</span>
+                        <span class="px-2 py-1 rounded-full text-xs font-semibold ${statusClass}">${cert.status}</span>
+                    </div>
+                    <h4 class="font-bold text-gray-800 mb-1 font-mono text-sm">${cert.no}</h4>
+                    <p class="text-gray-600 text-sm mb-2">${cert.type} - ${cert.model}</p>
+                    <div class="flex justify-between items-center text-xs text-gray-400">
+                        <span><i class="far fa-calendar mr-1"></i>${cert.year}</span>
+                        <span><i class="far fa-folder mr-1"></i>${cert.folder.substring(0,15)}...</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterByManufacturer(manufacturer) {
+            currentFilter.manufacturer = manufacturer;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.manufacturer === manufacturer);
+            });
+            renderCerts();
+        }
+
+        function filterCerts() {
+            currentFilter.status = document.getElementById('statusFilter').value;
+            renderCerts();
+        }
+
+        function searchCerts() {
+            currentFilter.search = document.getElementById('searchInput').value;
+            renderCerts();
+        }
+
+        function openModal(cert) {
+            currentCert = cert;
+            document.getElementById('modalTitle').textContent = cert.no;
+            document.getElementById('modalSubtitle').textContent = cert.note;
+            document.getElementById('modalManufacturer').textContent = cert.manufacturer;
+            document.getElementById('modalType').textContent = cert.type;
+            document.getElementById('modalModel').textContent = cert.model;
+            document.getElementById('modalFolder').textContent = cert.folder;
+            document.getElementById('certModal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('certModal').classList.remove('show');
+        }
+
+        function copyNumber() {
+            navigator.clipboard.writeText(currentCert.no);
+            alert('已复制: ' + currentCert.no);
+        }
+
+        function queryCert() {
+            window.open('http://cx.cnca.cn/CertECloud/qts/qtsPage?currentPosition=2', '_blank');
+        }
+
+        function openBatchQuery() {
+            const list = document.getElementById('batchCertList');
+            list.innerHTML = certificates.map(cert => `
+                <label class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100">
+                    <input type="checkbox" class="cert-checkbox w-4 h-4" value="${cert.no}">
+                    <div class="flex-1">
+                        <p class="font-semibold text-sm">${cert.no}</p>
+                        <p class="text-xs text-gray-500">${cert.manufacturer} - ${cert.type}</p>
+                    </div>
+                </label>
+            `).join('');
+            document.getElementById('batchModal').classList.add('show');
+        }
+
+        function closeBatchModal() {
+            document.getElementById('batchModal').classList.remove('show');
+        }
+
+        function toggleSelectAll() {
+            const checked = document.getElementById('selectAll').checked;
+            document.querySelectorAll('.cert-checkbox').forEach(cb => cb.checked = checked);
+        }
+
+        function startBatchQuery() {
+            const selected = Array.from(document.querySelectorAll('.cert-checkbox:checked')).map(cb => cb.value);
+            if (selected.length === 0) { alert('请至少选择一个证书'); return; }
+            if (!confirm(`将打开 ${selected.length} 个查询页面，确定吗？`)) return;
+            selected.forEach((no, index) => {
+                setTimeout(() => window.open('http://cx.cnca.cn/CertECloud/qts/qtsPage?currentPosition=2', '_blank'), index * 800);
+            });
+            closeBatchModal();
+        }
+
+        function exportData() {
+            const csv = ["证书编号,制造商,产品类型,产品型号,年份,文件夹,状态,备注"];
+            certificates.forEach(c => csv.push(`${c.no},${c.manufacturer},${c.type},${c.model},${c.year},${c.folder},${c.status},${c.note}`));
+            const blob = new Blob([csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'CCC证书清单_' + new Date().toISOString().slice(0,10) + '.csv';
+            link.click();
+        }
+
+        document.getElementById('certModal').onclick = function(e) {
+            if (e.target === this) closeModal();
+        };
+    </script>
+</body>
+</html>

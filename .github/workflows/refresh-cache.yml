@@ -1,0 +1,56 @@
+name: Auto Refresh GitHub Pages
+
+on:
+  push:
+    branches: [ master, main ]
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  refresh-cache:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Setup Git
+      run: |
+        git config --global user.name 'GitHub Actions'
+        git config --global user.email 'actions@github.com'
+    
+    - name: Update Timestamp
+      run: |
+        # 读取当前文件并更新时间戳
+        TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
+        sed -i "s/<div class=\"current-time\">.*<\/div>/<div class=\"current-time\">$TIMESTAMP CST<\/div>/g" index.html
+        
+        # 检查是否有变更
+        if git diff --quiet; then
+          echo "No changes to commit"
+        else
+          git add index.html
+          git commit -m "Auto refresh timestamp - $TIMESTAMP"
+          git push
+        fi
+      
+    - name: Trigger Pages Rebuild
+      run: |
+        echo "🚀 触发 GitHub Pages 重新构建..."
+        curl -X POST \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/${{ github.repository }}/pages/builds \
+          -s -o response.json -w "%{http_code}"
+        
+        STATUS=$(cat response.json | jq -r '.status // .message' 2>/dev/null || echo "unknown")
+        echo "状态: $STATUS"
+        
+    - name: Wait for Cache Refresh
+      run: |
+        echo "⏳ 等待缓存刷新..."
+        sleep 30
+        echo "✅ 缓存刷新请求已发送，约2-5分钟后生效"
+        
+    - name: Verify Deployment
+      run: |
+        echo "🔗 网站地址: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+        echo "📱 请手动检查网站是否已更新"

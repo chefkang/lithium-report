@@ -1,0 +1,13 @@
+# 忽略敏感文件
+memory/github-token.md
+.openclaw/
+*.ps1
+
+# 忽略临时文件
+*.zip
+*.tmp
+
+# 忽略其他
+__pycache__/
+*.pyc
+.DS_Store
