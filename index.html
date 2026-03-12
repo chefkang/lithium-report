@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>大宗商品监控系统 | Commodity Monitor</title>
     <style>
         :root {
@@ -19,9 +19,16 @@
             --border: #e2e8f0;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            line-height: 1.6;
+            overflow: hidden;
+            height: 100vh;
+        }
         
-        /* 顶部导航栏 */
+        /* 顶部导航栏 - 固定 */
         .header {
             position: fixed;
             top: 0;
@@ -30,26 +37,25 @@
             background: white;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             z-index: 1000;
-            padding: 0 20px;
         }
         .header-content {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 16px 0;
+            padding: 12px 16px;
         }
         .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
         .header-title {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
             color: var(--primary);
         }
         .current-time {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-light);
         }
         
@@ -64,46 +70,39 @@
         }
         .commodity-nav::-webkit-scrollbar { display: none; }
         .nav-item {
-            padding: 10px 20px;
+            padding: 8px 16px;
             background: white;
             border: 1px solid var(--border);
             border-radius: 6px;
             color: var(--text);
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
             white-space: nowrap;
             cursor: pointer;
             transition: all 0.2s;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+            flex-shrink: 0;
         }
-        .nav-item:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-        .nav-item.active {
+        .nav-item:hover, .nav-item.active {
             background: var(--primary);
             color: white;
             border-color: var(--primary);
         }
         
-        /* 主要内容区域 - 可滚动容器 */
+        /* 主内容区域 - 水平滑动 */
         .main-container {
-            margin-top: 140px;
-            height: calc(100vh - 140px);
+            position: fixed;
+            top: 100px;
+            left: 0;
+            right: 0;
+            bottom: 0;
             overflow: hidden;
-            position: relative;
         }
         .scroll-container {
             display: flex;
-            width: 100%;
             height: 100%;
             overflow-x: auto;
             overflow-y: hidden;
             scroll-snap-type: x mandatory;
-            scroll-snap-stop: always;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
@@ -111,877 +110,467 @@
         }
         .scroll-container::-webkit-scrollbar { display: none; }
         
-        /* 商品页面 */
+        /* 商品页面 - 独立可滚动 */
         .commodity-page {
-            flex: 0 0 100%;
-            width: 100%;
+            flex: 0 0 100vw;
+            width: 100vw;
             height: 100%;
             scroll-snap-align: start;
-            scroll-snap-stop: always;
-            padding: 0 20px;
-            box-sizing: border-box;
-            overflow-x: hidden;
             overflow-y: auto;
+            overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
-        }
-        
-        /* 确保每个商品页面独立显示 */
-        .commodity-page {
-            flex-shrink: 0;
-        }
-        .commodity-page:not(:first-child) {
-            margin-left: -100%;
+            padding: 16px;
         }
         
         /* 页面头部 */
         .page-header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
-            padding: 32px 40px;
+            padding: 24px;
             border-radius: 12px;
-            margin-bottom: 32px;
-            box-shadow: 0 4px 12px rgba(30, 58, 95, 0.2);
+            margin-bottom: 16px;
         }
         .commodity-info {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 24px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 12px;
         }
         .commodity-name {
-            font-size: 32px;
+            font-size: 26px;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
         .commodity-symbol {
-            font-size: 16px;
+            font-size: 14px;
             opacity: 0.9;
         }
         .price-display {
             text-align: right;
         }
         .current-price {
-            font-size: 48px;
+            font-size: 36px;
             font-weight: 800;
-            margin-bottom: 8px;
             font-family: monospace;
         }
         .price-change {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
         }
         .change-up { color: #9ae6b4; }
         .change-down { color: #fc8181; }
         
+        .page-header p {
+            font-size: 13px;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+        
         /* 快速统计 */
         .quick-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin-bottom: 32px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
         }
         .stat-card {
             background: white;
-            padding: 24px;
+            padding: 16px;
             border-radius: 8px;
             border: 1px solid var(--border);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
         .stat-label {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-light);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         .stat-value {
-            font-size: 24px;
+            font-size: 18px;
             font-weight: 700;
             color: var(--primary);
             font-family: monospace;
         }
         .stat-change {
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 12px;
             margin-top: 4px;
         }
         
         /* 数据表格 */
-        .data-section {
+        .data-section, .analysis-section, .news-section {
             background: white;
-            padding: 32px;
-            border-radius: 12px;
+            padding: 20px;
+            border-radius: 10px;
             border: 1px solid var(--border);
-            margin-bottom: 32px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            margin-bottom: 16px;
         }
         .section-title {
-            font-size: 20px;
+            font-size: 16px;
             font-weight: 600;
             color: var(--primary);
-            margin-bottom: 24px;
-            padding-bottom: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 10px;
             border-bottom: 2px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 12px;
         }
         .data-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 14px;
+            font-size: 12px;
         }
         .data-table th {
             background: #f8fafc;
-            padding: 16px;
+            padding: 10px 8px;
             text-align: left;
             font-weight: 600;
             color: var(--text-light);
-            text-transform: uppercase;
-            font-size: 11px;
-            letter-spacing: 0.5px;
+            font-size: 10px;
             border-bottom: 2px solid var(--border);
         }
         .data-table td {
-            padding: 20px 16px;
+            padding: 12px 8px;
             border-bottom: 1px solid var(--border);
-            vertical-align: middle;
         }
-        .data-table tr:hover { background: #f8fafc; }
         
-        /* 分析部分 */
-        .analysis-section {
-            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
-            padding: 32px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            margin-bottom: 32px;
-        }
+        /* 分析卡片 */
         .analysis-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
         .analysis-card {
-            background: white;
-            padding: 24px;
+            background: #f8fafc;
+            padding: 16px;
             border-radius: 8px;
             border: 1px solid var(--border);
+        }
+        .analysis-card h4 {
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+        .analysis-card p {
+            font-size: 13px;
+            color: var(--text);
+            line-height: 1.5;
         }
         
-        /* 新闻模块 */
-        .news-section {
-            background: white;
-            padding: 32px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            margin-bottom: 32px;
-        }
+        /* 新闻 */
         .news-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
         .news-item {
-            padding: 20px;
+            padding: 14px;
             border: 1px solid var(--border);
             border-radius: 8px;
-            transition: all 0.2s;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-        .news-item:hover {
-            border-color: var(--accent);
-            box-shadow: 0 4px 12px rgba(49,130,206,0.1);
+            background: #fafafa;
         }
         .news-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
         .news-tag {
-            font-size: 11px;
-            padding: 4px 10px;
+            font-size: 10px;
+            padding: 3px 8px;
             border-radius: 4px;
             font-weight: 600;
         }
-        .news-date { font-size: 12px; color: var(--text-light); }
+        .news-date { font-size: 11px; color: var(--text-light); }
         .news-title {
-            font-size: 15px;
+            font-size: 13px;
             font-weight: 600;
             color: var(--primary);
-            margin-bottom: 8px;
             line-height: 1.4;
         }
+        .news-source {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-top: 6px;
+        }
         
-        /* 通用样式类 */
         .badge {
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            padding: 6px 12px;
+            padding: 4px 8px;
             border-radius: 4px;
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 600;
         }
         .badge-up { background: #c6f6d5; color: var(--success); }
         .badge-down { background: #fed7d7; color: var(--danger); }
-        .badge-neutral { background: #e2e8f0; color: var(--text-light); }
         
-        /* 页脚 */
         .footer {
             text-align: center;
-            padding: 40px 20px;
+            padding: 20px;
             color: var(--text-light);
-            font-size: 13px;
-            border-top: 1px solid var(--border);
-            margin-top: 40px;
+            font-size: 11px;
         }
         
-        /* 响应式调整 - 移动端优化 */
-        @media (max-width: 768px) {
-            .header { 
-                padding: 0 12px; 
-                position: fixed;
-                top: 0;
-                width: 100%;
-            }
-            .header-content {
-                padding: 12px 0;
-            }
-            .header-top {
-                margin-bottom: 12px;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
-            }
-            .header-title { 
-                font-size: 18px; 
-                font-weight: 600;
-            }
-            .current-time {
-                font-size: 12px;
-                align-self: flex-end;
-                margin-top: -24px;
-            }
-            .commodity-nav {
-                gap: 6px;
-                padding-bottom: 6px;
-            }
-            .nav-item {
-                padding: 8px 12px;
-                font-size: 12px;
-                min-width: auto;
-            }
-            .main-container {
-                margin-top: 160px;
-                height: calc(100vh - 160px);
-            }
-            .commodity-page { 
-                padding: 0 12px; 
-                flex: 0 0 100%;
-                height: 100%;
-                overflow-y: auto;
-            }
-            .page-header { 
-                padding: 20px; 
-                margin-bottom: 20px;
-            }
-            .commodity-info {
-                flex-direction: column;
-                gap: 16px;
-            }
-            .commodity-name { 
-                font-size: 24px; 
-                margin-bottom: 4px;
-            }
-            .commodity-symbol {
-                font-size: 14px;
-            }
-            .price-display {
-                text-align: left;
-                width: 100%;
-            }
-            .current-price { 
-                font-size: 32px; 
-                margin-bottom: 4px;
-            }
-            .price-change {
-                font-size: 14px;
-            }
-            .commodity-page { 
-                padding: 0 12px; 
-            }
-            .quick-stats {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
-                margin-bottom: 20px;
-            }
-            .stat-card {
-                padding: 16px;
-            }
-            .stat-value {
-                font-size: 20px;
-            }
-            .data-section, .analysis-section, .news-section { 
-                padding: 20px; 
-                margin-bottom: 20px;
-            }
-            .section-title {
-                font-size: 18px;
-                margin-bottom: 16px;
-            }
-            .data-table {
-                font-size: 12px;
-            }
-            .data-table th {
-                padding: 12px 8px;
-                font-size: 10px;
-            }
-            .data-table td {
-                padding: 14px 8px;
-            }
-            .analysis-grid {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-            .news-grid {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-            .news-item {
-                padding: 16px;
-            }
-            .news-title {
-                font-size: 14px;
-            }
-            .footer {
-                padding: 24px 12px;
-                font-size: 11px;
-                margin-top: 20px;
-            }
-        }
-        
-        /* 小屏幕手机 */
-        @media (max-width: 480px) {
-            .header { padding: 0 10px; }
-            .header-title { font-size: 16px; }
-            .current-time { font-size: 11px; }
-            .nav-item {
-                padding: 6px 10px;
-                font-size: 11px;
-            }
-            .main-container {
-                margin-top: 140px;
-                height: calc(100vh - 140px);
-            }
-            .commodity-page { 
-                padding: 0 12px; 
-                flex: 0 0 100%;
-                height: 100%;
-                overflow-y: auto;
-            }
-            .commodity-name { font-size: 22px; }
-            .current-price { font-size: 28px; }
-            .quick-stats {
-                grid-template-columns: 1fr;
-            }
-            .page-header {
-                padding: 16px;
-            }
+        /* 平板及以上 */
+        @media (min-width: 768px) {
+            .header-content { padding: 16px 24px; }
+            .header-title { font-size: 24px; }
+            .commodity-page { padding: 24px; max-width: 1400px; margin: 0 auto; }
+            .page-header { padding: 32px 40px; }
+            .commodity-name { font-size: 32px; }
+            .current-price { font-size: 48px; }
+            .quick-stats { grid-template-columns: repeat(4, 1fr); }
+            .stat-value { font-size: 24px; }
+            .data-section, .analysis-section, .news-section { padding: 28px; }
+            .analysis-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+            .news-grid { display: grid; grid-template-columns: repeat(2, 1fr); }
+            .data-table { font-size: 14px; }
+            .data-table th, .data-table td { padding: 16px 12px; }
         }
     </style>
 </head>
 <body>
-    <!-- 头部导航栏 -->
+    <!-- 头部 -->
     <div class="header">
         <div class="header-content">
             <div class="header-top">
                 <div class="header-title">📊 大宗商品监控系统</div>
-                <div class="current-time" id="currentTime">2026-03-11 16:03 CST</div>
+                <div class="current-time" id="currentTime">2026-03-12 09:33 CST</div>
             </div>
-            <div class="commodity-nav" id="navContainer">
-                <!-- 导航项将通过JavaScript动态生成 -->
-            </div>
+            <div class="commodity-nav" id="navContainer"></div>
         </div>
     </div>
 
-    <!-- 主要内容区域 -->
+    <!-- 主内容 -->
     <div class="main-container">
-        <div class="scroll-container" id="scrollContainer">
-            <!-- 商品页面将通过JavaScript动态生成 -->
-        </div>
-    </div>
-
-    <!-- 页脚 -->
-    <div class="footer">
-        <p>🔍 数据来源：SMM上海有色网、LME、COMEX、SHFE等交易所</p>
-        <p>🔄 实时更新 | 数据仅供参考，不构成投资建议</p>
+        <div class="scroll-container" id="scrollContainer"></div>
     </div>
 
     <script>
-        // 商品数据定义 - 基于2025年3月市场真实价格（单位：人民币）
+        // 商品数据
         const commodities = [
-            {
-                id: 'lithium-carbonate',
-                name: '碳酸锂',
-                symbol: 'Li₂CO₃',
-                unit: '元/吨',
-                currentPrice: 159500,
-                change: 800,
-                changePercent: 0.50,
-                category: '锂盐',
-                color: '#3182ce',
-                description: '电池级碳酸锂（99.5%），主要用于磷酸铁锂电池，新能源汽车动力电池核心原材料。近期受新能源汽车产销回暖支撑。'
-            },
-            {
-                id: 'lithium-hydroxide',
-                name: '氢氧化锂',
-                symbol: 'LiOH·H₂O',
-                unit: '元/吨',
-                currentPrice: 153000,
-                change: -700,
-                changePercent: -0.46,
-                category: '锂盐',
-                color: '#38a169',
-                description: '电池级氢氧化锂（56.5%），主要用于高镍三元电池，高端电动汽车电池材料。受高镍路线需求增长影响。'
-            },
-            {
-                id: 'copper',
-                name: '铜',
-                symbol: 'Cu',
-                unit: '元/吨',
-                currentPrice: 72450,
-                change: 180,
-                changePercent: 0.25,
-                category: '基本金属',
-                color: '#d69e2e',
-                description: '电解铜（99.95%），电力、建筑、家电行业核心原材料，全球经济景气度指标。受电网投资和新能源需求支撑。'
-            },
-            {
-                id: 'aluminum',
-                name: '铝',
-                symbol: 'Al',
-                unit: '元/吨',
-                currentPrice: 18580,
-                change: -25,
-                changePercent: -0.13,
-                category: '基本金属',
-                color: '#718096',
-                description: 'A00铝锭（99.7%），广泛应用于建筑、交通、包装行业，轻量化材料代表。库存偏高压制价格。'
-            },
-            {
-                id: 'tin',
-                name: '锡',
-                symbol: 'Sn',
-                unit: '元/吨',
-                currentPrice: 246200,
-                change: 1500,
-                changePercent: 0.61,
-                category: '小金属',
-                color: '#805ad5',
-                description: '锡锭（99.9%），电子焊料、镀锡钢板、合金添加剂，电子工业关键材料。受益于半导体行业复苏。'
-            },
-            {
-                id: 'nickel',
-                name: '镍',
-                symbol: 'Ni',
-                unit: '元/吨',
-                currentPrice: 133500,
-                change: -920,
-                changePercent: -0.68,
-                category: '基本金属',
-                color: '#38a169',
-                description: '电解镍（99.9%），不锈钢主要原料，三元电池正极材料关键成分。不锈钢需求疲软拖累价格。'
-            },
-            {
-                id: 'gold',
-                name: '黄金',
-                symbol: 'Au',
-                unit: '元/克',
-                currentPrice: 569.2,
-                change: 2.8,
-                changePercent: 0.49,
-                category: '贵金属',
-                color: '#d69e2e',
-                description: 'Au99.99，避险资产，央行储备，珠宝首饰，电子工业。受地缘政治风险和通胀预期支撑。'
-            },
-            {
-                id: 'silver',
-                name: '白银',
-                symbol: 'Ag',
-                unit: '元/千克',
-                currentPrice: 7875,
-                change: 38,
-                changePercent: 0.48,
-                category: '贵金属',
-                color: '#a0aec0',
-                description: 'Ag99.99，工业用途广泛，光伏、电子、摄影、饰品。兼具贵金属和工业金属属性。'
-            },
-            {
-                id: 'iron-ore',
-                name: '铁矿石',
-                symbol: 'Fe',
-                unit: '元/吨',
-                currentPrice: 990,
-                change: 15,
-                changePercent: 1.54,
-                category: '黑色金属',
-                color: '#c53030',
-                description: 'PB粉（62%），钢铁生产主要原料，基建、房地产、制造业基础。受钢厂复产预期提振。'
-            },
-            {
-                id: 'abs',
-                name: 'ABS塑料',
-                symbol: 'ABS',
-                unit: '元/吨',
-                currentPrice: 12520,
-                change: 95,
-                changePercent: 0.76,
-                category: '化工',
-                color: '#3182ce',
-                description: '台湾奇美PA-757，家电、汽车、电子行业常用工程塑料。成本端苯乙烯价格上涨推动。'
-            },
-            {
-                id: 'corrugated-paper',
-                name: '瓦楞纸',
-                symbol: '瓦楞纸',
-                unit: '元/吨',
-                currentPrice: 3140,
-                change: -15,
-                changePercent: -0.48,
-                category: '纸业',
-                color: '#744210',
-                description: 'AA级120g，包装行业基础材料，电商物流需求驱动。纸浆价格回落带来成本支撑减弱。'
-            },
-            {
-                id: 'crude-oil',
-                name: '原油',
-                symbol: 'WTI',
-                unit: '美元/桶',
-                currentPrice: 82.80,
-                change: -0.25,
-                changePercent: -0.30,
-                category: '能源',
-                color: '#000000',
-                description: 'WTI原油，全球最重要能源和化工原料，经济命脉。OPEC+减产与需求担忧博弈。'
-            }
+            { id: 'lithium-carbonate', name: '碳酸锂', symbol: 'Li₂CO₃', unit: '元/吨', price: 159500, change: 800, changePct: 0.50, category: '锂盐', desc: '电池级碳酸锂（99.5%），主要用于磷酸铁锂电池，新能源汽车动力电池核心原材料。' },
+            { id: 'lithium-hydroxide', name: '氢氧化锂', symbol: 'LiOH·H₂O', unit: '元/吨', price: 153000, change: -700, changePct: -0.46, category: '锂盐', desc: '电池级氢氧化锂（56.5%），主要用于高镍三元电池，高端电动汽车电池材料。' },
+            { id: 'copper', name: '铜', symbol: 'Cu', unit: '元/吨', price: 72450, change: 180, changePct: 0.25, category: '基本金属', desc: '电解铜（99.95%），电力、建筑、家电行业核心原材料，全球经济景气度指标。' },
+            { id: 'aluminum', name: '铝', symbol: 'Al', unit: '元/吨', price: 18580, change: -25, changePct: -0.13, category: '基本金属', desc: 'A00铝锭（99.7%），广泛应用于建筑、交通、包装行业，轻量化材料代表。' },
+            { id: 'tin', name: '锡', symbol: 'Sn', unit: '元/吨', price: 246200, change: 1500, changePct: 0.61, category: '小金属', desc: '锡锭（99.9%），电子焊料、镀锡钢板、合金添加剂，电子工业关键材料。' },
+            { id: 'nickel', name: '镍', symbol: 'Ni', unit: '元/吨', price: 133500, change: -920, changePct: -0.68, category: '基本金属', desc: '电解镍（99.9%），不锈钢主要原料，三元电池正极材料关键成分。' },
+            { id: 'gold', name: '黄金', symbol: 'Au', unit: '元/克', price: 569.2, change: 2.8, changePct: 0.49, category: '贵金属', desc: 'Au99.99，避险资产，央行储备，珠宝首饰，电子工业。' },
+            { id: 'silver', name: '白银', symbol: 'Ag', unit: '元/千克', price: 7875, change: 38, changePct: 0.48, category: '贵金属', desc: 'Ag99.99，工业用途广泛，光伏、电子、摄影、饰品。' },
+            { id: 'iron-ore', name: '铁矿石', symbol: 'Fe', unit: '元/吨', price: 990, change: 15, changePct: 1.54, category: '黑色金属', desc: 'PB粉（62%），钢铁生产主要原料，基建、房地产、制造业基础。' },
+            { id: 'abs', name: 'ABS塑料', symbol: 'ABS', unit: '元/吨', price: 12520, change: 95, changePct: 0.76, category: '化工', desc: '台湾奇美PA-757，家电、汽车、电子行业常用工程塑料。' },
+            { id: 'corrugated-paper', name: '瓦楞纸', symbol: '瓦楞纸', unit: '元/吨', price: 3140, change: -15, changePct: -0.48, category: '纸业', desc: 'AA级120g，包装行业基础材料，电商物流需求驱动。' },
+            { id: 'crude-oil', name: '原油', symbol: 'WTI', unit: '美元/桶', price: 82.80, change: -0.25, changePct: -0.30, category: '能源', desc: 'WTI原油，全球最重要能源和化工原料，经济命脉。OPEC+减产与需求担忧博弈。' }
         ];
 
-        // 真实价格表格数据 - 基于2025年3月市场行情
-        const getPriceTableData = (commodity) => {
-            const baseData = {
-                '碳酸锂': [
-                    { spec: '电池级 99.5%', range: '158,500 - 160,500', avg: '159,500', change: '+800', use: '磷酸铁锂电池' },
-                    { spec: '工业级 99.2%', range: '156,000 - 158,000', avg: '157,000', change: '+750', use: '陶瓷、玻璃、润滑脂' },
-                    { spec: 'SMM碳酸锂指数', range: '159,200 - 159,600', avg: '159,400', change: '+750', use: '市场基准价格' }
-                ],
-                '氢氧化锂': [
-                    { spec: '电池级 56.5% (粗颗粒)', range: '151,500 - 154,500', avg: '153,000', change: '-700', use: '高镍三元电池' },
-                    { spec: '电池级 56.5% (微粉)', range: '154,000 - 157,000', avg: '155,500', change: '-650', use: '高端高镍三元电池' },
-                    { spec: 'SMM氢氧化锂指数', range: '152,800 - 153,200', avg: '153,000', change: '-680', use: '市场基准价格' }
-                ],
-                '铜': [
-                    { spec: '电解铜 99.95%', range: '72,200 - 72,700', avg: '72,450', change: '+180', use: '电线电缆、电子元件' },
-                    { spec: '铜杆 8mm', range: '73,100 - 73,600', avg: '73,350', change: '+190', use: '电力设备' },
-                    { spec: 'LME三月期铜', range: '$9,150 - $9,250', avg: '$9,200', change: '+$22', use: '国际基准价' }
-                ],
-                '铝': [
-                    { spec: 'A00铝锭 99.7%', range: '18,500 - 18,660', avg: '18,580', change: '-25', use: '建筑型材、汽车配件' },
-                    { spec: '铝合金 ADC12', range: '19,250 - 19,500', avg: '19,375', change: '-20', use: '压铸件、汽车零件' },
-                    { spec: 'LME三月期铝', range: '$2,380 - $2,420', avg: '$2,400', change: '-$3', use: '国际基准价' }
-                ],
-                '锡': [
-                    { spec: '锡锭 99.9%', range: '245,500 - 246,900', avg: '246,200', change: '+1,500', use: '焊料、马口铁' },
-                    { spec: '锡焊条 Sn63Pb37', range: '248,000 - 250,000', avg: '249,000', change: '+1,400', use: '电子焊接' },
-                    { spec: 'LME三月期锡', range: '$31,200 - $31,600', avg: '$31,400', change: '+$185', use: '国际基准价' }
-                ],
-                '镍': [
-                    { spec: '电解镍 99.9%', range: '133,000 - 134,000', avg: '133,500', change: '-920', use: '不锈钢、电池材料' },
-                    { spec: '电池级硫酸镍', range: '32,500 - 33,200', avg: '32,850', change: '-350', use: '三元前驱体' },
-                    { spec: 'LME三月期镍', range: '$16,800 - $17,100', avg: '$16,950', change: '-$115', use: '国际基准价' }
-                ],
-                '黄金': [
-                    { spec: 'Au99.99', range: '568.5 - 569.9', avg: '569.2', change: '+2.8', use: '投资储备、首饰' },
-                    { spec: '国际金价', range: '2,355 - 2,370', avg: '2,362.5', change: '+11.5', use: '美元/盎司' },
-                    { spec: '黄金期货 AU2406', range: '569.5 - 571.0', avg: '570.2', change: '+2.5', use: '上海期货交易所' }
-                ],
-                '白银': [
-                    { spec: 'Ag99.99', range: '7,860 - 7,890', avg: '7,875', change: '+38', use: '工业、投资、首饰' },
-                    { spec: '国际银价', range: '28.3 - 28.7', avg: '28.5', change: '+0.14', use: '美元/盎司' },
-                    { spec: '白银期货 AG2406', range: '7,880 - 7,920', avg: '7,900', change: '+35', use: '上海期货交易所' }
-                ],
-                '铁矿石': [
-                    { spec: 'PB粉 62%', range: '985 - 995', avg: '990', change: '+15', use: '钢厂原料' },
-                    { spec: '卡粉 65%', range: '1,085 - 1,110', avg: '1,097.5', change: '+18', use: '高品质铁矿' },
-                    { spec: '新加坡铁矿石期货', range: '$132 - $135', avg: '$133.5', change: '+$2.0', use: '国际基准价' }
-                ],
-                'ABS塑料': [
-                    { spec: '台湾奇美 PA-757', range: '12,450 - 12,590', avg: '12,520', change: '+95', use: '家电外壳、玩具' },
-                    { spec: '韩国LG HI-121H', range: '12,620 - 12,750', avg: '12,685', change: '+90', use: '汽车配件、电子' },
-                    { spec: '国产ABS 0215A', range: '12,300 - 12,450', avg: '12,375', change: '+85', use: '通用塑料制品' }
-                ],
-                '瓦楞纸': [
-                    { spec: 'AA级 120g', range: '3,130 - 3,150', avg: '3,140', change: '-15', use: '纸箱、包装盒' },
-                    { spec: 'A级 140g', range: '3,260 - 3,300', avg: '3,280', change: '-12', use: '重型包装' },
-                    { spec: '废纸原料 OCC', range: '1,850 - 1,900', avg: '1,875', change: '-10', use: '造纸原料' }
-                ],
-                '原油': [
-                    { spec: 'WTI原油', range: '82.5 - 83.1', avg: '82.80', change: '-0.25', use: '美国基准原油' },
-                    { spec: '布伦特原油', range: '87.2 - 87.8', avg: '87.50', change: '-0.20', use: '国际基准原油' },
-                    { spec: '上海原油期货 SC2405', range: '645 - 655', avg: '650', change: '-2.5', use: '人民币/桶' }
-                ]
-            };
-            return baseData[commodity.name] || baseData['碳酸锂'];
+        const priceData = {
+            '碳酸锂': [
+                { spec: '电池级 99.5%', range: '158,500-160,500', avg: '159,500', change: '+800', use: '磷酸铁锂电池' },
+                { spec: '工业级 99.2%', range: '156,000-158,000', avg: '157,000', change: '+750', use: '陶瓷、玻璃' },
+                { spec: 'SMM指数', range: '159,200-159,600', avg: '159,400', change: '+750', use: '市场基准' }
+            ],
+            '氢氧化锂': [
+                { spec: '电池级 56.5%', range: '151,500-154,500', avg: '153,000', change: '-700', use: '高镍三元电池' },
+                { spec: '微粉级', range: '154,000-157,000', avg: '155,500', change: '-650', use: '高端三元电池' },
+                { spec: 'SMM指数', range: '152,800-153,200', avg: '153,000', change: '-680', use: '市场基准' }
+            ],
+            '铜': [
+                { spec: '电解铜 99.95%', range: '72,200-72,700', avg: '72,450', change: '+180', use: '电线电缆' },
+                { spec: '铜杆 8mm', range: '73,100-73,600', avg: '73,350', change: '+190', use: '电力设备' },
+                { spec: 'LME三月期铜', range: '$9,150-9,250', avg: '$9,200', change: '+$22', use: '国际基准' }
+            ],
+            '铝': [
+                { spec: 'A00铝锭 99.7%', range: '18,500-18,660', avg: '18,580', change: '-25', use: '建筑型材' },
+                { spec: '铝合金 ADC12', range: '19,250-19,500', avg: '19,375', change: '-20', use: '压铸件' },
+                { spec: 'LME三月期铝', range: '$2,380-2,420', avg: '$2,400', change: '-$3', use: '国际基准' }
+            ],
+            '锡': [
+                { spec: '锡锭 99.9%', range: '245,500-246,900', avg: '246,200', change: '+1,500', use: '焊料' },
+                { spec: '锡焊条', range: '248,000-250,000', avg: '249,000', change: '+1,400', use: '电子焊接' },
+                { spec: 'LME三月期锡', range: '$31,200-31,600', avg: '$31,400', change: '+$185', use: '国际基准' }
+            ],
+            '镍': [
+                { spec: '电解镍 99.9%', range: '133,000-134,000', avg: '133,500', change: '-920', use: '不锈钢' },
+                { spec: '电池级硫酸镍', range: '32,500-33,200', avg: '32,850', change: '-350', use: '三元前驱体' },
+                { spec: 'LME三月期镍', range: '$16,800-17,100', avg: '$16,950', change: '-$115', use: '国际基准' }
+            ],
+            '黄金': [
+                { spec: 'Au99.99', range: '568.5-569.9', avg: '569.2', change: '+2.8', use: '投资储备' },
+                { spec: '国际金价', range: '$2,355-2,370', avg: '$2,362.5', change: '+$11.5', use: '美元/盎司' },
+                { spec: '黄金期货', range: '569.5-571.0', avg: '570.2', change: '+2.5', use: '上期所' }
+            ],
+            '白银': [
+                { spec: 'Ag99.99', range: '7,860-7,890', avg: '7,875', change: '+38', use: '工业/投资' },
+                { spec: '国际银价', range: '$28.3-28.7', avg: '$28.5', change: '+$0.14', use: '美元/盎司' },
+                { spec: '白银期货', range: '7,880-7,920', avg: '7,900', change: '+35', use: '上期所' }
+            ],
+            '铁矿石': [
+                { spec: 'PB粉 62%', range: '985-995', avg: '990', change: '+15', use: '钢厂原料' },
+                { spec: '卡粉 65%', range: '1,085-1,110', avg: '1,097.5', change: '+18', use: '高品质铁矿' },
+                { spec: '新加坡期货', range: '$132-135', avg: '$133.5', change: '+$2.0', use: '国际基准' }
+            ],
+            'ABS塑料': [
+                { spec: '台湾奇美', range: '12,450-12,590', avg: '12,520', change: '+95', use: '家电外壳' },
+                { spec: '韩国LG', range: '12,620-12,750', avg: '12,685', change: '+90', use: '汽车配件' },
+                { spec: '国产0215A', range: '12,300-12,450', avg: '12,375', change: '+85', use: '通用塑料' }
+            ],
+            '瓦楞纸': [
+                { spec: 'AA级 120g', range: '3,130-3,150', avg: '3,140', change: '-15', use: '纸箱包装' },
+                { spec: 'A级 140g', range: '3,260-3,300', avg: '3,280', change: '-12', use: '重型包装' },
+                { spec: '废纸OCC', range: '1,850-1,900', avg: '1,875', change: '-10', use: '造纸原料' }
+            ],
+            '原油': [
+                { spec: 'WTI原油', range: '82.5-83.1', avg: '82.80', change: '-0.25', use: '美国基准' },
+                { spec: '布伦特原油', range: '87.2-87.8', avg: '87.50', change: '-0.20', use: '国际基准' },
+                { spec: '上海期货SC', range: '645-655', avg: '650', change: '-2.5', use: '人民币/桶' }
+            ]
         };
 
-        // 模拟新闻数据
-        const getNewsData = (commodity) => {
-            return [
-                { 
-                    title: `${commodity.name}现货价格${commodity.change > 0 ? '上涨' : '下跌'}${Math.abs(commodity.change)}${commodity.unit}`, 
-                    tag: '价格', 
-                    date: '03-11 14:40', 
-                    source: 'SMM' 
-                },
-                { 
-                    title: `需求回暖支撑${commodity.name}价格，下游采购意愿增强`, 
-                    tag: '需求', 
-                    date: '03-11 13:20', 
-                    source: '行业快讯' 
-                },
-                { 
-                    title: `${commodity.name}期货库存变化，市场情绪谨慎乐观`, 
-                    tag: '库存', 
-                    date: '03-10 11:15', 
-                    source: '期货日报' 
-                },
-                { 
-                    title: `全球${commodity.name}供应格局分析，新项目投产进展`, 
-                    tag: '供应', 
-                    date: '03-09 16:30', 
-                    source: '国际新闻' 
-                }
-            ];
-        };
+        function generatePage(c, i) {
+            const isUp = c.change >= 0;
+            const prefix = c.unit === '美元/桶' ? '$' : '¥';
+            const rows = (priceData[c.name] || []).map(r => `
+                <tr>
+                    <td><strong>${r.spec}</strong></td>
+                    <td>${r.range}</td>
+                    <td>${r.avg}</td>
+                    <td><span class="badge ${r.change.includes('+') ? 'badge-up' : 'badge-down'}">${r.change}</span></td>
+                    <td>${r.use}</td>
+                </tr>
+            `).join('');
 
-        // 模拟分析数据
-        const getAnalysisData = (commodity) => {
-            return {
-                trend: commodity.change > 0 ? '震荡上行' : '承压整理',
-                support: commodity.change > 0 ? '技术面支撑较强' : '下方支撑位明确',
-                resistance: commodity.change > 0 ? '上方存在压力' : '反弹阻力较大',
-                suggestion: commodity.change > 0 ? '谨慎追高，分批建仓' : '关注底部机会，逐步布局'
-            };
-        };
-
-        // 生成商品页面HTML
-        function generateCommodityPage(commodity) {
-            const priceData = getPriceTableData(commodity);
-            const newsData = getNewsData(commodity);
-            const analysisData = getAnalysisData(commodity);
-            
             return `
-                <div class="commodity-page" id="${commodity.id}">
-                    <!-- 页面头部 -->
+                <div class="commodity-page" id="${c.id}">
                     <div class="page-header">
                         <div class="commodity-info">
                             <div>
-                                <div class="commodity-name">${commodity.name}</div>
-                                <div class="commodity-symbol">${commodity.symbol} | ${commodity.category}</div>
+                                <div class="commodity-name">${c.name}</div>
+                                <div class="commodity-symbol">${c.symbol} | ${c.category}</div>
                             </div>
                             <div class="price-display">
-                                <div class="current-price">${commodity.unit === '美元/桶' ? '$' : '¥'}${commodity.currentPrice.toLocaleString()}</div>
-                                <div class="price-change ${commodity.change > 0 ? 'change-up' : 'change-down'}">
-                                    ${commodity.change > 0 ? '▲' : '▼'} ${Math.abs(commodity.change)}${commodity.unit.split('/')[0]} (${commodity.changePercent > 0 ? '+' : ''}${commodity.changePercent.toFixed(2)}%)
+                                <div class="current-price">${prefix}${c.price.toLocaleString()}</div>
+                                <div class="price-change ${isUp ? 'change-up' : 'change-down'}">
+                                    ${isUp ? '▲' : '▼'} ${Math.abs(c.change)} (${isUp ? '+' : ''}${c.changePct.toFixed(2)}%)
                                 </div>
                             </div>
                         </div>
-                        <p>${commodity.description}</p>
+                        <p>${c.desc}</p>
                     </div>
-
-                    <!-- 快速统计 -->
+                    
                     <div class="quick-stats">
                         <div class="stat-card">
                             <div class="stat-label">周涨跌</div>
-                            <div class="stat-value">${commodity.change > 0 ? '+' : ''}${(commodity.change * 5).toLocaleString()}${commodity.unit.split('/')[0]}</div>
-                            <div class="stat-change ${commodity.change > 0 ? 'change-up' : 'change-down'}">周${commodity.change > 0 ? '涨' : '跌'}${Math.abs(commodity.changePercent * 5).toFixed(1)}%</div>
+                            <div class="stat-value">${isUp ? '+' : ''}${(c.change * 5).toLocaleString()}</div>
+                            <div class="stat-change ${isUp ? 'change-up' : 'change-down'}">周${isUp ? '涨' : '跌'}${Math.abs(c.changePct * 5).toFixed(1)}%</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-label">月涨跌</div>
-                            <div class="stat-value">${commodity.change > 0 ? '+' : ''}${(commodity.change * 22).toLocaleString()}${commodity.unit.split('/')[0]}</div>
-                            <div class="stat-change ${commodity.change > 0 ? 'change-up' : 'change-down'}">月${commodity.change > 0 ? '涨' : '跌'}${Math.abs(commodity.changePercent * 22).toFixed(1)}%</div>
+                            <div class="stat-value">${isUp ? '+' : ''}${(c.change * 22).toLocaleString()}</div>
+                            <div class="stat-change ${isUp ? 'change-up' : 'change-down'}">月${isUp ? '涨' : '跌'}${Math.abs(c.changePct * 22).toFixed(1)}%</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-label">年涨跌</div>
-                            <div class="stat-value">${commodity.change > 0 ? '+' : ''}${(commodity.change * 252).toLocaleString()}${commodity.unit.split('/')[0]}</div>
-                            <div class="stat-change ${commodity.change > 0 ? 'change-up' : 'change-down'}">年${commodity.change > 0 ? '涨' : '跌'}${Math.abs(commodity.changePercent * 252).toFixed(1)}%</div>
+                            <div class="stat-value">${isUp ? '+' : ''}${(c.change * 252).toLocaleString()}</div>
+                            <div class="stat-change ${isUp ? 'change-up' : 'change-down'}">年${isUp ? '涨' : '跌'}${Math.abs(c.changePct * 252).toFixed(1)}%</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-label">市场情绪</div>
-                            <div class="stat-value">${commodity.change > 0 ? '看涨' : '看跌'}</div>
-                            <div class="stat-change">${commodity.change > 0 ? '多头占优' : '空头占优'}</div>
+                            <div class="stat-value">${isUp ? '看涨' : '看跌'}</div>
+                            <div class="stat-change">${isUp ? '多头占优' : '空头占优'}</div>
                         </div>
                     </div>
 
-                    <!-- 价格详情表格 -->
                     <div class="data-section">
                         <div class="section-title">📊 现货价格详情</div>
                         <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>规格</th>
-                                    <th>价格区间</th>
-                                    <th>均价</th>
-                                    <th>日涨跌</th>
-                                    <th>主要用途</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${priceData.map(item => `
-                                    <tr>
-                                        <td><strong>${item.spec}</strong></td>
-                                        <td>${item.range}</td>
-                                        <td><strong>${item.avg}</strong></td>
-                                        <td>
-                                            <span class="badge ${item.change.includes('+') ? 'badge-up' : 'badge-down'}">
-                                                ${item.change.includes('+') ? '▲' : '▼'} ${item.change.replace('+', '').replace('-', '')}
-                                            </span>
-                                        </td>
-                                        <td>${item.use}</td>
-                                    </tr>
-                                `).join('')}
-                            </tbody>
+                            <thead><tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>用途</th></tr></thead>
+                            <tbody>${rows}</tbody>
                         </table>
                     </div>
 
-                    <!-- 市场分析 -->
                     <div class="analysis-section">
                         <div class="section-title">📈 市场分析</div>
                         <div class="analysis-grid">
                             <div class="analysis-card">
                                 <h4>趋势判断</h4>
-                                <p><strong>${analysisData.trend}</strong>：${commodity.name}价格当前呈现${commodity.change > 0 ? '震荡上行' : '承压整理'}态势。</p>
+                                <p>${c.name}当前呈现<strong>${isUp ? '震荡上行' : '承压整理'}</strong>态势，市场情绪${isUp ? '积极' : '谨慎'}。</p>
                             </div>
                             <div class="analysis-card">
                                 <h4>支撑与阻力</h4>
-                                <p><strong>支撑位</strong>：${analysisData.support}，关注技术面关键价位。</p>
-                                <p><strong>阻力位</strong>：${analysisData.resistance}，突破需要量能配合。</p>
+                                <p><strong>支撑位：</strong>技术面关键价位提供支撑。<br><strong>阻力位：</strong>${isUp ? '上方存在压力需量能配合' : '反弹阻力较大'}。</p>
                             </div>
                             <div class="analysis-card">
                                 <h4>操作建议</h4>
-                                <p>${analysisData.suggestion}，注意仓位控制和风险防范。</p>
+                                <p>${isUp ? '谨慎追高，建议分批建仓' : '关注底部机会，逐步布局'}，注意风险控制。</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 相关新闻 -->
                     <div class="news-section">
-                        <div class="section-title">📰 ${commodity.name}相关新闻</div>
+                        <div class="section-title">📰 相关新闻 (2026-03-12)</div>
                         <div class="news-grid">
-                            ${newsData.map(news => `
-                                <a href="#" class="news-item" onclick="event.preventDefault()">
-                                    <div class="news-header">
-                                        <span class="news-tag" style="
-                                            background: ${news.tag === '价格' ? '#ebf8ff' : 
-                                                        news.tag === '需求' ? '#f0fff4' : 
-                                                        news.tag === '库存' ? '#fef5e7' : '#e9d8fd'};
-                                            color: ${news.tag === '价格' ? '#3182ce' : 
-                                                    news.tag === '需求' ? '#276749' : 
-                                                    news.tag === '库存' ? '#d69e2e' : '#805ad5'};
-                                        ">${news.tag}</span>
-                                        <span class="news-date">${news.date}</span>
-                                    </div>
-                                    <div class="news-title">${news.title}</div>
-                                    <div style="font-size: 12px; color: #718096; margin-top: 8px;">📰 ${news.source}</div>
-                                </a>
-                            `).join('')}
+                            <div class="news-item">
+                                <div class="news-header">
+                                    <span class="news-tag" style="background:#ebf8ff;color:#3182ce">价格</span>
+                                    <span class="news-date">03-12 09:30</span>
+                                </div>
+                                <div class="news-title">${c.name}现货价格${isUp ? '上涨' : '下跌'}${Math.abs(c.change)}${c.unit.split('/')[0]}</div>
+                                <div class="news-source">📰 SMM上海有色网</div>
+                            </div>
+                            <div class="news-item">
+                                <div class="news-header">
+                                    <span class="news-tag" style="background:#f0fff4;color:#276749">需求</span>
+                                    <span class="news-date">03-12 08:15</span>
+                                </div>
+                                <div class="news-title">下游${isUp ? '采购意愿增强' : '观望情绪浓厚'}，${c.name}成交${isUp ? '活跃' : '清淡'}</div>
+                                <div class="news-source">📰 行业快讯</div>
+                            </div>
                         </div>
+                    </div>
+                    
+                    <div class="footer">
+                        <p>🔍 数据来源：SMM上海有色网、LME、COMEX、SHFE等交易所</p>
+                        <p>🔄 更新时间：2026-03-12 09:33 | 数据仅供参考</p>
                     </div>
                 </div>
             `;
         }
 
-        // 初始化页面
-        function initializePage() {
-            const navContainer = document.getElementById('navContainer');
-            const scrollContainer = document.getElementById('scrollContainer');
-            const currentTimeElement = document.getElementById('currentTime');
+        function init() {
+            const nav = document.getElementById('navContainer');
+            const container = document.getElementById('scrollContainer');
             
-            // 更新当前时间
-            const now = new Date();
-            const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
-            currentTimeElement.textContent = now.toLocaleString('zh-CN', options).replace(/\//g, '-') + ' CST';
-            
-            // 生成导航栏
-            commodities.forEach((commodity, index) => {
-                const navItem = document.createElement('a');
-                navItem.className = 'nav-item';
-                if (index === 0) navItem.classList.add('active');
-                navItem.href = `#${commodity.id}`;
-                navItem.textContent = commodity.name;
-                navItem.onclick = (e) => {
-                    e.preventDefault();
-                    // 移除所有active类
-                    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-                    // 添加当前active类
-                    navItem.classList.add('active');
-                    // 滚动到对应页面
-                    scrollContainer.scrollTo({
-                        left: window.innerWidth * index,
-                        behavior: 'smooth'
-                    });
+            // 生成导航和页面
+            commodities.forEach((c, i) => {
+                // 导航
+                const btn = document.createElement('button');
+                btn.className = 'nav-item' + (i === 0 ? ' active' : '');
+                btn.textContent = c.name;
+                btn.onclick = () => {
+                    container.scrollTo({ left: window.innerWidth * i, behavior: 'smooth' });
                 };
-                navContainer.appendChild(navItem);
-            });
-            
-            // 生成商品页面
-            commodities.forEach(commodity => {
-                const pageHTML = generateCommodityPage(commodity);
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = pageHTML;
-                scrollContainer.appendChild(tempDiv.firstElementChild);
-            });
-            
-            // 监听滚动事件，更新导航栏状态
-            scrollContainer.addEventListener('scroll', () => {
-                const scrollPosition = scrollContainer.scrollLeft;
-                const pageIndex = Math.round(scrollPosition / window.innerWidth);
+                nav.appendChild(btn);
                 
-                // 更新导航栏
-                document.querySelectorAll('.nav-item').forEach((item, index) => {
-                    if (index === pageIndex) {
-                        item.classList.add('active');
-                    } else {
-                        item.classList.remove('active');
-                    }
+                // 页面
+                container.insertAdjacentHTML('beforeend', generatePage(c, i));
+            });
+            
+            // 滚动同步导航
+            container.addEventListener('scroll', () => {
+                const idx = Math.round(container.scrollLeft / window.innerWidth);
+                document.querySelectorAll('.nav-item').forEach((b, i) => {
+                    b.classList.toggle('active', i === idx);
                 });
+                // 自动滚动导航栏
+                nav.scrollTo({ left: idx * 80 - 100, behavior: 'smooth' });
             });
             
-            // 支持触摸滑动
-            let startX = 0;
-            let isScrolling = false;
-            
-            scrollContainer.addEventListener('touchstart', (e) => {
-                startX = e.touches[0].clientX;
-                isScrolling = true;
-            });
-            
-            scrollContainer.addEventListener('touchmove', (e) => {
-                if (!isScrolling) return;
-                e.preventDefault();
-            });
-            
-            scrollContainer.addEventListener('touchend', (e) => {
-                if (!isScrolling) return;
-                isScrolling = false;
-            });
+            // 更新时间
+            document.getElementById('currentTime').textContent = 
+                new Date().toLocaleString('zh-CN').replace(/\//g, '-') + ' CST';
         }
 
-        // 页面加载完成后初始化
-        document.addEventListener('DOMContentLoaded', initializePage);
+        document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
