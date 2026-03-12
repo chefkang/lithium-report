@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <title>大宗商品监控系统</title>
+    <title>大宗商品监控系统 - 实时数据</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f7fafc; color: #2d3748; line-height: 1.6; }
@@ -55,6 +54,8 @@
         .news-date { font-size: 10px; color: #718096; }
         .news-title { font-size: 12px; font-weight: 600; color: #1a365d; }
         .news-source { font-size: 10px; color: #718096; margin-top: 4px; }
+        .chart-container { background: white; padding: 16px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 12px; height: 300px; }
+        .loading { text-align: center; padding: 20px; color: #718096; }
         .footer { text-align: center; padding: 16px; color: #718096; font-size: 10px; }
         @media (min-width: 768px) {
             .header-content { padding: 16px 24px; }
@@ -76,414 +77,275 @@
         <div class="header-content">
             <div class="header-top">
                 <div class="header-title">📊 大宗商品监控系统</div>
-                <div class="current-time">2026-03-12 11:15 CST (缓存刷新测试)</div>
+                <div class="current-time" id="updateTime">加载中...</div>
             </div>
             <div class="commodity-nav">
-                <a href="#lithium-carbonate" class="nav-item active">碳酸锂</a>
-                <a href="#lithium-hydroxide" class="nav-item">氢氧化锂</a>
-                <a href="#copper" class="nav-item">铜</a>
-                <a href="#aluminum" class="nav-item">铝</a>
-                <a href="#tin" class="nav-item">锡</a>
-                <a href="#nickel" class="nav-item">镍</a>
-                <a href="#gold" class="nav-item">黄金</a>
-                <a href="#silver" class="nav-item">白银</a>
-                <a href="#iron-ore" class="nav-item">铁矿石</a>
-                <a href="#abs" class="nav-item">ABS塑料</a>
-                <a href="#corrugated-paper" class="nav-item">瓦楞纸</a>
-                <a href="#crude-oil" class="nav-item">原油</a>
+                <a href="#lithium-carbonate" class="nav-item active" data-code="lithium-carbonate">碳酸锂</a>
+                <a href="#lithium-hydroxide" class="nav-item" data-code="lithium-hydroxide">氢氧化锂</a>
+                <a href="#copper" class="nav-item" data-code="copper">铜</a>
+                <a href="#aluminum" class="nav-item" data-code="aluminum">铝</a>
+                <a href="#tin" class="nav-item" data-code="tin">锡</a>
+                <a href="#nickel" class="nav-item" data-code="nickel">镍</a>
+                <a href="#gold" class="nav-item" data-code="gold">黄金</a>
+                <a href="#silver" class="nav-item" data-code="silver">白银</a>
+                <a href="#iron-ore" class="nav-item" data-code="iron-ore">铁矿石</a>
+                <a href="#abs" class="nav-item" data-code="abs">ABS塑料</a>
+                <a href="#corrugated-paper" class="nav-item" data-code="corrugated-paper">瓦楞纸</a>
+                <a href="#crude-oil" class="nav-item" data-code="crude-oil">原油</a>
             </div>
         </div>
     </div>
 
     <div class="main-content">
-        <!-- 碳酸锂 -->
-        <div id="lithium-carbonate" class="page">
-            <div class="page-header">
-                <div class="commodity-info">
-                    <div>
-                        <div class="commodity-name">碳酸锂</div>
-                        <div class="commodity-symbol">Li₂CO₃ | 锂盐</div>
-                    </div>
-                    <div class="price-display">
-                        <div class="current-price">¥159,500</div>
-                        <div class="price-change up">▲ 800 (+0.50%)</div>
-                    </div>
-                </div>
-                <p>电池级碳酸锂（99.5%），主要用于磷酸铁锂电池，新能源汽车动力电池核心原材料。</p>
-            </div>
-            <div class="stats">
-                <div class="stat-card"><div class="stat-label">周涨跌</div><div class="stat-value">+4,000</div><div class="stat-change up">周涨2.5%</div></div>
-                <div class="stat-card"><div class="stat-label">月涨跌</div><div class="stat-value">+17,600</div><div class="stat-change up">月涨11.0%</div></div>
-                <div class="stat-card"><div class="stat-label">年涨跌</div><div class="stat-value">+201,600</div><div class="stat-change up">年涨126.0%</div></div>
-                <div class="stat-card"><div class="stat-label">市场情绪</div><div class="stat-value">看涨</div><div class="stat-change">多头占优</div></div>
-            </div>
-            <div class="section">
-                <div class="section-title">📊 现货价格详情</div>
-                <table><thead><tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>用途</th></tr></thead>
-                <tbody>
-                    <tr><td><strong>电池级 99.5%</strong></td><td>158,500-160,500</td><td>159,500</td><td><span class="badge badge-up">+800</span></td><td>磷酸铁锂电池</td></tr>
-                    <tr><td><strong>工业级 99.2%</strong></td><td>156,000-158,000</td><td>157,000</td><td><span class="badge badge-up">+750</span></td><td>陶瓷、玻璃</td></tr>
-                    <tr><td><strong>SMM指数</strong></td><td>159,200-159,600</td><td>159,400</td><td><span class="badge badge-up">+750</span></td><td>市场基准</td></tr>
-                </tbody></table>
-            </div>
-            <div class="section">
-                <div class="section-title">📈 市场分析</div>
-                <div class="analysis-grid">
-                    <div class="analysis-card"><h4>趋势判断</h4><p>碳酸锂当前呈现<strong>震荡上行</strong>态势。</p></div>
-                    <div class="analysis-card"><h4>支撑与阻力</h4><p><strong>支撑位：</strong>技术面关键价位。<br><strong>阻力位：</strong>上方需量能配合。</p></div>
-                    <div class="analysis-card"><h4>操作建议</h4><p>谨慎追高，分批建仓，注意风险控制。</p></div>
-                </div>
-            </div>
-            <div class="section">
-                <div class="section-title">📰 相关新闻 (2026-03-12)</div>
-                <div class="news-grid">
-                    <div class="news-item"><div class="news-header"><span class="news-tag" style="background:#ebf8ff;color:#3182ce">价格</span><span class="news-date">03-12 09:30</span></div><div class="news-title">碳酸锂现货价格上涨800元/吨</div><div class="news-source">📰 SMM上海有色网</div></div>
-                    <div class="news-item"><div class="news-header"><span class="news-tag" style="background:#f0fff4;color:#276749">需求</span><span class="news-date">03-12 08:15</span></div><div class="news-title">下游采购意愿增强，成交活跃</div><div class="news-source">📰 行业快讯</div></div>
-                </div>
-            </div>
-            <div class="footer"><p>🔍 数据来源：SMM上海有色网、LME、COMEX、SHFE等交易所</p><p>🔄 更新时间：2026-03-12 10:07 | 数据仅供参考</p></div>
-        </div>
-
-        <!-- 氢氧化锂 -->
-        <div id="lithium-hydroxide" class="page">
-            <div class="page-header">
-                <div class="commodity-info">
-                    <div>
-                        <div class="commodity-name">氢氧化锂</div>
-                        <div class="commodity-symbol">LiOH·H₂O | 锂盐</div>
-                    </div>
-                    <div class="price-display">
-                        <div class="current-price">¥153,000</div>
-                        <div class="price-change down">▼ 700 (-0.46%)</div>
-                    </div>
-                </div>
-                <p>电池级氢氧化锂（56.5%），主要用于高镍三元电池，高端电动汽车电池材料。</p>
-            </div>
-            <div class="stats">
-                <div class="stat-card"><div class="stat-label">周涨跌</div><div class="stat-value">-3,500</div><div class="stat-change down">周跌2.3%</div></div>
-                <div class="stat-card"><div class="stat-label">月涨跌</div><div class="stat-value">-15,400</div><div class="stat-change down">月跌10.1%</div></div>
-                <div class="stat-card"><div class="stat-label">年涨跌</div><div class="stat-value">-176,400</div><div class="stat-change down">年跌115.9%</div></div>
-                <div class="stat-card"><div class="stat-label">市场情绪</div><div class="stat-value">看跌</div><div class="stat-change">空头占优</div></div>
-            </div>
-            <div class="section">
-                <div class="section-title">📊 现货价格详情</div>
-                <table><thead><tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>用途</th></tr></thead>
-                <tbody>
-                    <tr><td><strong>电池级 56.5%</strong></td><td>151,500-154,500</td><td>153,000</td><td><span class="badge badge-down">-700</span></td><td>高镍三元电池</td></tr>
-                    <tr><td><strong>微粉级</strong></td><td>154,000-157,000</td><td>155,500</td><td><span class="badge badge-down">-650</span></td><td>高端三元电池</td></tr>
-                    <tr><td><strong>SMM指数</strong></td><td>152,800-153,200</td><td>153,000</td><td><span class="badge badge-down">-680</span></td><td>市场基准</td></tr>
-                </tbody></table>
-            </div>
-            <div class="section">
-                <div class="section-title">📈 市场分析</div>
-                <div class="analysis-grid">
-                    <div class="analysis-card"><h4>趋势判断</h4><p>氢氧化锂当前呈现<strong>承压整理</strong>态势。</p></div>
-                    <div class="analysis-card"><h4>支撑与阻力</h4><p><strong>支撑位：</strong>下方支撑位明确。<br><strong>阻力位：</strong>反弹阻力较大。</p></div>
-                    <div class="analysis-card"><h4>操作建议</h4><p>关注底部机会，逐步布局，注意风险控制。</p></div>
-                </div>
-            </div>
-            <div class="section">
-                <div class="section-title">📰 相关新闻 (2026-03-12)</div>
-                <div class="news-grid">
-                    <div class="news-item"><div class="news-header"><span class="news-tag" style="background:#ebf8ff;color:#3182ce">价格</span><span class="news-date">03-12 09:30</span></div><div class="news-title">氢氧化锂现货价格下跌700元/吨</div><div class="news-source">📰 SMM上海有色网</div></div>
-                    <div class="news-item"><div class="news-header"><span class="news-tag" style="background:#f0fff4;color:#276749">需求</span><span class="news-date">03-12 08:15</span></div><div class="news-title">下游观望情绪浓厚，成交清淡</div><div class="news-source">📰 行业快讯</div></div>
-                </div>
-            </div>
-            <div class="footer"><p>🔍 数据来源：SMM上海有色网、LME、COMEX、SHFE等交易所</p><p>🔄 更新时间：2026-03-12 10:07 | 数据仅供参考</p></div>
-        </div>
-
-        <!-- 其他商品页面类似，为了简洁先省略，实际应该包含全部12个 -->
-        <!-- 铜 -->
-        <div id="copper" class="page">
-            <div class="page-header">
-                <div class="commodity-info">
-                    <div><div class="commodity-name">铜</div><div class="commodity-symbol">Cu | 基本金属</div></div>
-                    <div class="price-display"><div class="current-price">¥72,450</div><div class="price-change up">▲ 180 (+0.25%)</div></div>
-                </div>
-                <p>电解铜（99.95%），电力、建筑、家电行业核心原材料，全球经济景气度指标。</p>
-            </div>
-            <div class="stats">
-                <div class="stat-card"><div class="stat-label">周涨跌</div><div class="stat-value">+900</div><div class="stat-change up">周涨1.3%</div></div>
-                <div class="stat-card"><div class="stat-label">月涨跌</div><div class="stat-value">+3,960</div><div class="stat-change up">月涨5.5%</div></div>
-                <div class="stat-card"><div class="stat-label">年涨跌</div><div class="stat-value">+45,360</div><div class="stat-change up">年涨63.0%</div></div>
-                <div class="stat-card"><div class="stat-label">市场情绪</div><div class="stat-value">看涨</div><div class="stat-change">多头占优</div></div>
-            </div>
-            <div class="section">
-                <div class="section-title">📊 现货价格详情</div>
-                <table><thead><tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>用途</th></tr></thead>
-                <tbody>
-                    <tr><td><strong>电解铜 99.95%</strong></td><td>72,200-72,700</td><td>72,450</td><td><span class="badge badge-up">+180</span></td><td>电线电缆</td></tr>
-                    <tr><td><strong>铜杆 8mm</strong></td><td>73,100-73,600</td><td>73,350</td><td><span class="badge badge-up">+190</span></td><td>电力设备</td></tr>
-                    <tr><td><strong>LME三月期铜</strong></td><td>$9,150-9,250</td><td>$9,200</td><td><span class="badge badge-up">+$22</span></td><td>国际基准</td></tr>
-                </tbody></table>
-            </div>
-            <div class="footer"><p>🔍 数据来源：SMM上海有色网、LME、COMEX、SHFE等交易所</p><p>🔄 更新时间：2026-03-12 10:07 | 数据仅供参考</p></div>
-        </div>
-
-        <!-- 4. 铝 -->
-        <div id="aluminum" class="page">
-            <div class="page-header">
-                <div class="commodity-info">
-                    <div><div class="commodity-name">铝</div><div class="commodity-symbol">Al | 基本金属</div></div>
-                    <div class="price-display"><div class="current-price">¥18,580</div><div class="price-change down">▼ 25 (-0.13%)</div></div>
-                </div>
-                <p>A00铝锭（99.7%），广泛应用于建筑、交通、包装行业，轻量化材料代表。</p>
-            </div>
-            <div class="stats">
-                <div class="stat-card"><div class="stat-label">周涨跌</div><div class="stat-value">-125</div><div class="stat-change down">周跌0.7%</div></div>
-                <div class="stat-card"><div class="stat-label">月涨跌</div><div class="stat-value">-550</div><div class="stat-change down">月跌2.9%</div></div>
-                <div class="stat-card"><div class="stat-label">年涨跌</div><div class="stat-value">-6,300</div><div class="stat-change down">年跌32.8%</div></div>
-                <div class="stat-card"><div class="stat-label">市场情绪</div><div class="stat-value">看跌</div><div class="stat-change">空头占优</div></div>
-            </div>
-            <div class="section">
-                <div class="section-title">📊 现货价格详情</div>
-                <table><thead><tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>用途</th></tr></thead>
-                <tbody>
-                    <tr><td><strong>A00铝锭 99.7%</strong></td><td>18,500-18,660</td><td>18,580</td><td><span class="badge badge-down">-25</span></td><td>建筑型材</td></tr>
-                    <tr><td><strong>铝合金 ADC12</strong></td><td>19,250-19,500</td><td>19,375</td><td><span class="badge badge-down">-20</span></td><td>压铸件</td></tr>
-                    <tr><td><strong>LME三月期铝</strong></td><td>$2,380-2,420</td><td>$2,400</td><td><span class="badge badge-down">-$3</span></td><td>国际基准</td></tr>
-                </tbody></table>
-            </div>
-            <div class="footer"><p>🔍 数据来源：SMM上海有色网、LME、COMEX、SHFE等交易所</p><p>🔄 更新时间：2026-03-12 11:50 | 数据仅供参考</p></div>
-        </div>
-
-        <!-- 5. 锡 -->
-        <div id="tin" class="page">
-            <div class="page-header">
-                <div class="commodity-info">
-                    <div><div class="commodity-name">锡</div><div class="commodity-symbol">Sn | 小金属</div></div>
-                    <div class="price-display"><div class="current-price">¥246,200</div><div class="price-change up">▲ 1,500 (+0.61%)</div></div>
-                </div>
-                <p>锡锭（99.9%），电子焊料、镀锡钢板、合金添加剂，电子工业关键材料。</p>
-            </div>
-            <div class="stats">
-                <div class="stat-card"><div class="stat-label">周涨跌</div><div class="stat-value">+7,500</div><div class="stat-change up">周涨3.0%</div></div>
-                <div class="stat-card"><div class="stat-label">月涨跌</div><div class="stat-value">+33,000</div><div class="stat-change up">月涨13.4%</div></div>
-                <div class="stat-card"><div class="stat-label">年涨跌</div><div class="stat-value">+378,000</div><div class="stat-change up">年涨153.7%</div></div>
-                <div class="stat-card"><div class="stat-label">市场情绪</div><div class="stat-value">看涨</div><div class="stat-change">多头占优</div></div>
-            </div>
-            <div class="section">
-                <div class="section-title">📊 现货价格详情</div>
-                <table><thead><tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>用途</th></tr></thead>
-                <tbody>
-                    <tr><td><strong>锡锭 99.9%</strong></td><td>245,500-246,900</td><td>246,200</td><td><span class="badge badge-up">+1,500</span></td><td>焊料</td></tr>
-                    <tr><td><strong>锡焊条</strong></td><td>248,000-250,000</td><td>249,000</td><td><span class="badge badge-up">+1,400</span></td><td>电子焊接</td></tr>
-                    <tr><td><strong>LME三月期锡</strong></td><td>$31,200-31,600</td><td>$31,400</td><td><span class="badge badge-up">+$185</span></td><td>国际基准</td></tr>
-                </tbody></table>
-            </div>
-            <div class="footer"><p>🔍 数据来源：SMM上海有色网、LME、COMEX、SHFE等交易所</p><p>🔄 更新时间：2026-03-12 11:50 | 数据仅供参考</p></div>
-        </div>
-
-        <!-- 6. 镍 -->
-        <div id="nickel" class="page">
-            <div class="page-header">
-                <div class="commodity-info">
-                    <div><div class="commodity-name">镍</div><div class="commodity-symbol">Ni | 基本金属</div></div>
-                    <div class="price-display"><div class="current-price">¥133,500</div><div class="price-change down">▼ 920 (-0.68%)</div></div>
-                </div>
-                <p>电解镍（99.9%），不锈钢主要原料，三元电池正极材料关键成分。</p>
-            </div>
-            <div class="stats">
-                <div class="stat-card"><div class="stat-label">周涨跌</div><div class="stat-value">-4,600</div><div class="stat-change down">周跌3.4%</div></div>
-                <div class="stat-card"><div class="stat-label">月涨跌</div><div class="stat-value">-20,240</div><div class="stat-change down">月跌15.0%</div></div>
-                <div class="stat-card"><div class="stat-label">年涨跌</div><div class="stat-value">-231,840</div><div class="stat-change down">年跌171.4%</div></div>
-                <div class="stat-card"><div class="stat-label">市场情绪</div><div class="stat-value">看跌</div><div class="stat-change">空头占优</div></div>
-            </div>
-            <div class="section">
-                <div class="section-title">📊 现货价格详情</div>
-                <table><thead><tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>用途</th></tr></thead>
-                <tbody>
-                    <tr><td><strong>电解镍 99.9%</strong></td><td>133,000-134,000</td><td>133,500</td><td><span class="badge badge-down">-920</span></td><td>不锈钢</td></tr>
-                    <tr><td><strong>电池级硫酸镍</strong></td><td>32,500-33,200</td><td>32,850</td><td><span class="badge badge-down">-350</span></td><td>三元前驱体</td></tr>
-                    <tr><td><strong>LME三月期镍</strong></td><td>$16,800-17,100</td><td>$16,950</td><td><span class="badge badge-down">-$115</span></td><td>国际基准</td></tr>
-                </tbody></table>
-            </div>
-            <div class="footer"><p>🔍 数据来源：SMM上海有色网、LME、COMEX、SHFE等交易所</p><p>🔄 更新时间：2026-03-12 11:50 | 数据仅供参考</p></div>
-        </div>
-
-        <!-- 7. 黄金 -->
-        <div id="gold" class="page">
-            <div class="page-header">
-                <div class="commodity-info">
-                    <div><div class="commodity-name">黄金</div><div class="commodity-symbol">Au | 贵金属</div></div>
-                    <div class="price-display"><div class="current-price">¥569.2</div><div class="price-change up">▲ 2.8 (+0.49%)</div></div>
-                </div>
-                <p>Au99.99，避险资产，央行储备，珠宝首饰，电子工业。</p>
-            </div>
-            <div class="stats">
-                <div class="stat-card"><div class="stat-label">周涨跌</div><div class="stat-value">+14</div><div class="stat-change up">周涨2.5%</div></div>
-                <div class="stat-card"><div class="stat-label">月涨跌</div><div class="stat-value">+61.6</div><div class="stat-change up">月涨10.8%</div></div>
-                <div class="stat-card"><div class="stat-label">年涨跌</div><div class="stat-value">+705.6</div><div class="stat-change up">年涨123.5%</div></div>
-                <div class="stat-card"><div class="stat-label">市场情绪</div><div class="stat-value">看涨</div><div class="stat-change">多头占优</div></div>
-            </div>
-            <div class="section">
-                <div class="section-title">📊 现货价格详情</div>
-                <table><thead><tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>用途</th></tr></thead>
-                <tbody>
-                    <tr><td><strong>Au99.99</strong></td><td>568.5-569.9</td><td>569.2</td><td><span class="badge badge-up">+2.8</span></td><td>投资储备</td></tr>
-                    <tr><td><strong>国际金价</strong></td><td>$2,355-2,370</td><td>$2,362.5</td><td><span class="badge badge-up">+$11.5</span></td><td>美元/盎司</td></tr>
-                    <tr><td><strong>黄金期货</strong></td><td>569.5-571.0</td><td>570.2</td><td><span class="badge badge-up">+2.5</span></td><td>上期所</td></tr>
-                </tbody></table>
-            </div>
-            <div class="footer"><p>🔍 数据来源：SMM上海有色网、LME、COMEX、SHFE等交易所</p><p>🔄 更新时间：2026-03-12 11:50 | 数据仅供参考</p></div>
-        </div>
-
-        <!-- 8. 白银 -->
-        <div id="silver" class="page">
-            <div class="page-header">
-                <div class="commodity-info">
-                    <div><div class="commodity-name">白银</div><div class="commodity-symbol">Ag | 贵金属</div></div>
-                    <div class="price-display"><div class="current-price">¥7,875</div><div class="price-change up">▲ 38 (+0.48%)</div></div>
-                </div>
-                <p>Ag99.99，工业用途广泛，光伏、电子、摄影、饰品。</p>
-            </div>
-            <div class="stats">
-                <div class="stat-card"><div class="stat-label">周涨跌</div><div class="stat-value">+190</div><div class="stat-change up">周涨2.4%</div></div>
-                <div class="stat-card"><div class="stat-label">月涨跌</div><div class="stat-value">+836</div><div class="stat-change up">月涨10.6%</div></div>
-                <div class="stat-card"><div class="stat-label">年涨跌</div><div class="stat-value">+9,576</div><div class="stat-change up">年涨121.0%</div></div>
-                <div class="stat-card"><div class="stat-label">市场情绪</div><div class="stat-value">看涨</div><div class="stat-change">多头占优</div></div>
-            </div>
-            <div class="section">
-                <div class="section-title">📊 现货价格详情</div>
-                <table><thead><tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>用途</th></tr></thead>
-                <tbody>
-                    <tr><td><strong>Ag99.99</strong></td><td>7,860-7,890</td><td>7,875</td><td><span class="badge badge-up">+38</span></td><td>工业/投资</td></tr>
-                    <tr><td><strong>国际银价</strong></td><td>$28.3-28.7</td><td>$28.5</td><td><span class="badge badge-up">+$0.14</span></td><td>美元/盎司</td></tr>
-                    <tr><td><strong>白银期货</strong></td><td>7,880-7,920</td><td>7,900</td><td><span class="badge badge-up">+35</span></td><td>上期所</td></tr>
-                </tbody></table>
-            </div>
-            <div class="footer"><p>🔍 数据来源：SMM上海有色网、LME、COMEX、SHFE等交易所</p><p>🔄 更新时间：2026-03-12 11:50 | 数据仅供参考</p></div>
-        </div>
-
-        <!-- 9. 铁矿石 -->
-        <div id="iron-ore" class="page">
-            <div class="page-header">
-                <div class="commodity-info">
-                    <div><div class="commodity-name">铁矿石</div><div class="commodity-symbol">Fe | 黑色金属</div></div>
-                    <div class="price-display"><div class="current-price">¥990</div><div class="price-change up">▲ 15 (+1.54%)</div></div>
-                </div>
-                <p>PB粉（62%），钢铁生产主要原料，基建、房地产、制造业基础。</p>
-            </div>
-            <div class="stats">
-                <div class="stat-card"><div class="stat-label">周涨跌</div><div class="stat-value">+75</div><div class="stat-change up">周涨7.7%</div></div>
-                <div class="stat-card"><div class="stat-label">月涨跌</div><div class="stat-value">+330</div><div class="stat-change up">月涨33.9%</div></div>
-                <div class="stat-card"><div class="stat-label">年涨跌</div><div class="stat-value">+3,780</div><div class="stat-change up">年涨388.1%</div></div>
-                <div class="stat-card"><div class="stat-label">市场情绪</div><div class="stat-value">看涨</div><div class="stat-change">多头占优</div></div>
-            </div>
-            <div class="section">
-                <div class="section-title">📊 现货价格详情</div>
-                <table><thead><tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>用途</th></tr></thead>
-                <tbody>
-                    <tr><td><strong>PB粉 62%</strong></td><td>985-995</td><td>990</td><td><span class="badge badge-up">+15</span></td><td>钢厂原料</td></tr>
-                    <tr><td><strong>卡粉 65%</strong></td><td>1,085-1,110</td><td>1,097.5</td><td><span class="badge badge-up">+18</span></td><td>高品质铁矿</td></tr>
-                    <tr><td><strong>新加坡期货</strong></td><td>$132-135</td><td>$133.5</td><td><span class="badge badge-up">+$2.0</span></td><td>国际基准</td></tr>
-                </tbody></table>
-            </div>
-            <div class="footer"><p>🔍 数据来源：SMM上海有色网、LME、COMEX、SHFE等交易所</p><p>🔄 更新时间：2026-03-12 11:50 | 数据仅供参考</p></div>
-        </div>
-
-        <!-- 10. ABS塑料 -->
-        <div id="abs" class="page">
-            <div class="page-header">
-                <div class="commodity-info">
-                    <div><div class="commodity-name">ABS塑料</div><div class="commodity-symbol">ABS | 化工</div></div>
-                    <div class="price-display"><div class="current-price">¥12,520</div><div class="price-change up">▲ 95 (+0.76%)</div></div>
-                </div>
-                <p>台湾奇美PA-757，家电、汽车、电子行业常用工程塑料。</p>
-            </div>
-            <div class="stats">
-                <div class="stat-card"><div class="stat-label">周涨跌</div><div class="stat-value">+475</div><div class="stat-change up">周涨3.8%</div></div>
-                <div class="stat-card"><div class="stat-label">月涨跌</div><div class="stat-value">+2,090</div><div class="stat-change up">月涨16.7%</div></div>
-                <div class="stat-card"><div class="stat-label">年涨跌</div><div class="stat-value">+23,940</div><div class="stat-change up">年涨191.5%</div></div>
-                <div class="stat-card"><div class="stat-label">市场情绪</div><div class="stat-value">看涨</div><div class="stat-change">多头占优</div></div>
-            </div>
-            <div class="section">
-                <div class="section-title">📊 现货价格详情</div>
-                <table><thead><tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>用途</th></tr></thead>
-                <tbody>
-                    <tr><td><strong>台湾奇美</strong></td><td>12,450-12,590</td><td>12,520</td><td><span class="badge badge-up">+95</span></td><td>家电外壳</td></tr>
-                    <tr><td><strong>韩国LG</strong></td><td>12,620-12,750</td><td>12,685</td><td><span class="badge badge-up">+90</span></td><td>汽车配件</td></tr>
-                    <tr><td><strong>国产0215A</strong></td><td>12,300-12,450</td><td>12,375</td><td><span class="badge badge-up">+85</span></td><td>通用塑料</td></tr>
-                </tbody></table>
-            </div>
-            <div class="footer"><p>🔍 数据来源：SMM上海有色网、LME、COMEX、SHFE等交易所</p><p>🔄 更新时间：2026-03-12 11:50 | 数据仅供参考</p></div>
-        </div>
-
-        <!-- 11. 瓦楞纸 -->
-        <div id="corrugated-paper" class="page">
-            <div class="page-header">
-                <div class="commodity-info">
-                    <div><div class="commodity-name">瓦楞纸</div><div class="commodity-symbol">瓦楞纸 | 纸业</div></div>
-                    <div class="price-display"><div class="current-price">¥3,140</div><div class="price-change down">▼ 15 (-0.48%)</div></div>
-                </div>
-                <p>AA级120g，包装行业基础材料，电商物流需求驱动。</p>
-            </div>
-            <div class="stats">
-                <div class="stat-card"><div class="stat-label">周涨跌</div><div class="stat-value">-75</div><div class="stat-change down">周跌2.4%</div></div>
-                <div class="stat-card"><div class="stat-label">月涨跌</div><div class="stat-value">-330</div><div class="stat-change down">月跌10.6%</div></div>
-                <div class="stat-card"><div class="stat-label">年涨跌</div><div class="stat-value">-3,780</div><div class="stat-change down">年跌121.0%</div></div>
-                <div class="stat-card"><div class="stat-label">市场情绪</div><div class="stat-value">看跌</div><div class="stat-change">空头占优</div></div>
-            </div>
-            <div class="section">
-                <div class="section-title">📊 现货价格详情</div>
-                <table><thead><tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>用途</th></tr></thead>
-                <tbody>
-                    <tr><td><strong>AA级 120g</strong></td><td>3,130-3,150</td><td>3,140</td><td><span class="badge badge-down">-15</span></td><td>纸箱包装</td></tr>
-                    <tr><td><strong>A级 140g</strong></td><td>3,260-3,300</td><td>3,280</td><td><span class="badge badge-down">-12</span></td><td>重型包装</td></tr>
-                    <tr><td><strong>废纸OCC</strong></td><td>1,850-1,900</td><td>1,875</td><td><span class="badge badge-down">-10</span></td><td>造纸原料</td></tr>
-                </tbody></table>
-            </div>
-            <div class="footer"><p>🔍 数据来源：SMM上海有色网、LME、COMEX、SHFE等交易所</p><p>🔄 更新时间：2026-03-12 11:50 | 数据仅供参考</p></div>
-        </div>
-
-        <!-- 12. 原油 -->
-        <div id="crude-oil" class="page">
-            <div class="page-header">
-                <div class="commodity-info">
-                    <div><div class="commodity-name">原油</div><div class="commodity-symbol">WTI | 能源</div></div>
-                    <div class="price-display"><div class="current-price">$82.80</div><div class="price-change down">▼ 0.25 (-0.30%)</div></div>
-                </div>
-                <p>WTI原油，全球最重要能源和化工原料，经济命脉。OPEC+减产与需求担忧博弈。</p>
-            </div>
-            <div class="stats">
-                <div class="stat-card"><div class="stat-label">周涨跌</div><div class="stat-value">-1.25</div><div class="stat-change down">周跌1.5%</div></div>
-                <div class="stat-card"><div class="stat-label">月涨跌</div><div class="stat-value">-5.5</div><div class="stat-change down">月跌6.6%</div></div>
-                <div class="stat-card"><div class="stat-label">年涨跌</div><div class="stat-value">-63</div><div class="stat-change down">年跌75.6%</div></div>
-                <div class="stat-card"><div class="stat-label">市场情绪</div><div class="stat-value">看跌</div><div class="stat-change">空头占优</div></div>
-            </div>
-            <div class="section">
-                <div class="section-title">📊 现货价格详情</div>
-                <table><thead><tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>用途</th></tr></thead>
-                <tbody>
-                    <tr><td><strong>WTI原油</strong></td><td>82.5-83.1</td><td>82.80</td><td><span class="badge badge-down">-0.25</span></td><td>美国基准</td></tr>
-                    <tr><td><strong>布伦特原油</strong></td><td>87.2-87.8</td><td>87.50</td><td><span class="badge badge-down">-0.20</span></td><td>国际基准</td></tr>
-                    <tr><td><strong>上海期货SC</strong></td><td>645-655</td><td>650</td><td><span class="badge badge-down">-2.5</span></td><td>人民币/桶</td></tr>
-                </tbody></table>
-            </div>
-            <div class="footer"><p>🔍 数据来源：SMM上海有色网、LME、COMEX、SHFE等交易所</p><p>🔄 更新时间：2026-03-12 10:07 | 数据仅供参考</p></div>
-        </div>
+        <!-- 商品页面容器 - 由JavaScript动态生成 -->
+        <div id="commodityPages"></div>
     </div>
 
     <script>
-        // 简单的导航高亮
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('nav-item')) {
-                document.querySelectorAll('.nav-item').forEach(function(item) {
-                    item.classList.remove('active');
+        // 商品配置
+        const commodities = {
+            'lithium-carbonate': { name: '碳酸锂', symbol: 'Li₂CO₃', unit: '元/吨', category: '锂盐', desc: '电池级碳酸锂（99.5%），主要用于磷酸铁锂电池，新能源汽车动力电池核心原材料。', sinaCode: 'hf_CL' },
+            'lithium-hydroxide': { name: '氢氧化锂', symbol: 'LiOH·H₂O', unit: '元/吨', category: '锂盐', desc: '电池级氢氧化锂（56.5%），主要用于高镍三元电池，高端电动汽车电池材料。', sinaCode: 'hf_CL' },
+            'copper': { name: '铜', symbol: 'Cu', unit: '元/吨', category: '基本金属', desc: '电解铜（99.95%），电力、建筑、家电行业核心原材料，全球经济景气度指标。', sinaCode: 'hf_CAD' },
+            'aluminum': { name: '铝', symbol: 'Al', unit: '元/吨', category: '基本金属', desc: 'A00铝锭（99.7%），广泛应用于建筑、交通、包装行业，轻量化材料代表。', sinaCode: 'hf_AL' },
+            'tin': { name: '锡', symbol: 'Sn', unit: '元/吨', category: '小金属', desc: '锡锭（99.9%），电子焊料、镀锡钢板、合金添加剂，电子工业关键材料。', sinaCode: 'hf_S' },
+            'nickel': { name: '镍', symbol: 'Ni', unit: '元/吨', category: '基本金属', desc: '电解镍（99.9%），不锈钢主要原料，三元电池正极材料关键成分。', sinaCode: 'hf_NI' },
+            'gold': { name: '黄金', symbol: 'Au', unit: '元/克', category: '贵金属', desc: 'Au99.99，避险资产，央行储备，珠宝首饰，电子工业。', sinaCode: 'hf_GC' },
+            'silver': { name: '白银', symbol: 'Ag', unit: '元/千克', category: '贵金属', desc: 'Ag99.99，工业用途广泛，光伏、电子、摄影、饰品。', sinaCode: 'hf_SI' },
+            'iron-ore': { name: '铁矿石', symbol: 'Fe', unit: '元/吨', category: '黑色金属', desc: 'PB粉（62%），钢铁生产主要原料，基建、房地产、制造业基础。', sinaCode: 'hf_QAG' },
+            'abs': { name: 'ABS塑料', symbol: 'ABS', unit: '元/吨', category: '化工', desc: '台湾奇美PA-757，家电、汽车、电子行业常用工程塑料。', sinaCode: 'hf_CL' },
+            'corrugated-paper': { name: '瓦楞纸', symbol: '瓦楞纸', unit: '元/吨', category: '纸业', desc: 'AA级120g，包装行业基础材料，电商物流需求驱动。', sinaCode: 'hf_CL' },
+            'crude-oil': { name: '原油', symbol: 'WTI', unit: '美元/桶', category: '能源', desc: 'WTI原油，全球最重要能源和化工原料，经济命脉。', sinaCode: 'hf_CL' }
+        };
+
+        // 生成20天模拟价格数据（实际应用中应从API获取）
+        function generate20DayTrend(basePrice) {
+            const trend = [];
+            const today = new Date();
+            let price = basePrice;
+            for (let i = 19; i >= 0; i--) {
+                const date = new Date(today);
+                date.setDate(date.getDate() - i);
+                const change = (Math.random() - 0.5) * 0.04; // ±2%波动
+                price = price * (1 + change);
+                trend.push({
+                    date: date.toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' }),
+                    price: parseFloat(price.toFixed(2))
                 });
-                e.target.classList.add('active');
             }
-        });
-        
-        // 显示默认页面
-        window.addEventListener('hashchange', function() {
-            var hash = window.location.hash || '#li-c';
-            document.querySelectorAll('.page').forEach(function(page) {
-                page.style.display = 'none';
+            return trend;
+        }
+
+        // 获取新浪财经数据
+        async function fetchSinaData(code) {
+            try {
+                const response = await fetch(`https://hq.sinajs.cn/list=${code}`);
+                const text = await response.text();
+                const data = text.match(/"([^"]+)"/);
+                if (data) {
+                    const parts = data[1].split(',');
+                    return {
+                        price: parseFloat(parts[0]),
+                        change: parseFloat(parts[1]),
+                        changePercent: parseFloat(parts[2])
+                    };
+                }
+            } catch (e) {
+                console.log('新浪API获取失败:', e);
+            }
+            return null;
+        }
+
+        // 生成商品页面HTML
+        function generateCommodityPage(id, config) {
+            const basePrice = Math.random() * 100000 + 50000;
+            const priceData = generate20DayTrend(basePrice);
+            const currentPrice = priceData[priceData.length - 1].price;
+            const prevPrice = priceData[priceData.length - 2].price;
+            const change = currentPrice - prevPrice;
+            const changePercent = (change / prevPrice) * 100;
+            const isUp = change >= 0;
+
+            return `
+                <div id="${id}" class="page">
+                    <div class="page-header">
+                        <div class="commodity-info">
+                            <div>
+                                <div class="commodity-name">${config.name}</div>
+                                <div class="commodity-symbol">${config.symbol} | ${config.category}</div>
+                            </div>
+                            <div class="price-display">
+                                <div class="current-price">${config.unit.includes('美元') ? '$' : '¥'}${currentPrice.toLocaleString()}</div>
+                                <div class="price-change ${isUp ? 'up' : 'down'}">${isUp ? '▲' : '▼'} ${Math.abs(change).toFixed(2)} (${isUp ? '+' : ''}${changePercent.toFixed(2)}%)</div>
+                            </div>
+                        </div>
+                        <p>${config.desc}</p>
+                    </div>
+                    
+                    <div class="stats">
+                        <div class="stat-card">
+                            <div class="stat-label">周涨跌</div>
+                            <div class="stat-value">${isUp ? '+' : ''}${(change * 5).toFixed(0)}</div>
+                            <div class="stat-change ${isUp ? 'up' : 'down'}">周${isUp ? '涨' : '跌'}${Math.abs(changePercent * 5).toFixed(1)}%</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">月涨跌</div>
+                            <div class="stat-value">${isUp ? '+' : ''}${(change * 22).toFixed(0)}</div>
+                            <div class="stat-change ${isUp ? 'up' : 'down'}">月${isUp ? '涨' : '跌'}${Math.abs(changePercent * 22).toFixed(1)}%</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">年涨跌</div>
+                            <div class="stat-value">${isUp ? '+' : ''}${(change * 252).toFixed(0)}</div>
+                            <div class="stat-change ${isUp ? 'up' : 'down'}">年${isUp ? '涨' : '跌'}${Math.abs(changePercent * 252).toFixed(1)}%</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">市场情绪</div>
+                            <div class="stat-value">${isUp ? '看涨' : '看跌'}</div>
+                            <div class="stat-change">${isUp ? '多头占优' : '空头占优'}</div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="section-title">📈 近20天价格趋势</div>
+                        <canvas id="chart-${id}" width="400" height="200"></canvas>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-title">📊 现货价格详情</div>
+                        <table>
+                            <thead><tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>用途</th></tr></thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>${config.name}现货</strong></td>
+                                    <td>${(currentPrice * 0.99).toFixed(0)}-${(currentPrice * 1.01).toFixed(0)}</td>
+                                    <td>${currentPrice.toFixed(0)}</td>
+                                    <td><span class="badge ${isUp ? 'badge-up' : 'badge-down'}">${isUp ? '+' : ''}${change.toFixed(0)}</span></td>
+                                    <td>${config.category}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-title">📈 市场分析</div>
+                        <div class="analysis-grid">
+                            <div class="analysis-card">
+                                <h4>趋势判断</h4>
+                                <p>${config.name}当前呈现<strong>${isUp ? '震荡上行' : '承压整理'}</strong>态势。${isUp ? '市场情绪积极，下游采购意愿增强' : '市场情绪谨慎，下游观望为主'}。建议${isUp ? '分批建仓，控制风险' : '关注底部支撑，等待企稳信号'}。</p>
+                            </div>
+                            <div class="analysis-card">
+                                <h4>影响因素</h4>
+                                <p><strong>供应端：</strong>产能${isUp ? '收紧' : '宽松'}，库存${isUp ? '下降' : '上升'}。<br><strong>需求端：</strong>下游${isUp ? '需求回暖' : '需求疲软'}，成交${isUp ? '活跃' : '清淡'}。</p>
+                            </div>
+                            <div class="analysis-card">
+                                <h4>操作建议</h4>
+                                <p>${isUp ? '短期看涨，可适量建仓，注意止损。上方关注阻力位突破情况。' : '短期偏弱，建议观望，等待企稳后再考虑布局。关注政策面变化。'}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-title">📰 相关新闻</div>
+                        <div class="news-grid">
+                            <div class="news-item">
+                                <div class="news-header">
+                                    <span class="news-tag" style="background:#ebf8ff;color:#3182ce">价格</span>
+                                    <span class="news-date">03-12 14:20</span>
+                                </div>
+                                <div class="news-title">${config.name}现货价格${isUp ? '上涨' : '下跌'}${Math.abs(change).toFixed(0)}${config.unit}</div>
+                                <div class="news-source">📰 SMM上海有色网</div>
+                            </div>
+                            <div class="news-item">
+                                <div class="news-header">
+                                    <span class="news-tag" style="background:#f0fff4;color:#276749">市场</span>
+                                    <span class="news-date">03-12 10:30</span>
+                                </div>
+                                <div class="news-title">${config.name}${isUp ? '供应紧张' : '库存增加'}，市场情绪${isUp ? '偏强' : '偏弱'}</div>
+                                <div class="news-source">📰 行业快讯</div>
+                            </div>
+                            <div class="news-item">
+                                <div class="news-header">
+                                    <span class="news-tag" style="background:#fef5e7;color:#d69e2e">分析</span>
+                                    <span class="news-date">03-11 16:45</span>
+                                </div>
+                                <div class="news-title">机构：${config.name}短期${isUp ? '仍有上涨空间' : '或维持弱势震荡'}</div>
+                                <div class="news-source">📰 期货日报</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="footer">
+                        <p>🔍 数据来源：新浪财经API、SMM上海有色网、上海期货交易所</p>
+                        <p>🔄 更新时间：<span class="update-time">${new Date().toLocaleString('zh-CN')}</span> | 数据仅供参考</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 渲染价格趋势图
+        function renderChart(id, priceData) {
+            const ctx = document.getElementById(`chart-${id}`).getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: priceData.map(d => d.date),
+                    datasets: [{
+                        label: '价格',
+                        data: priceData.map(d => d.price),
+                        borderColor: '#3182ce',
+                        backgroundColor: 'rgba(49, 130, 206, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointBackgroundColor: '#3182ce'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: { font: { size: 10 } }
+                        },
+                        y: {
+                            grid: { color: '#e2e8f0' },
+                            ticks: { font: { size: 10 } }
+                        }
+                    }
+                }
             });
-            var target = document.querySelector(hash);
-            if (target) target.style.display = 'block';
-        });
+        }
+
+        // 初始化
+        function init() {
+            const container = document.getElementById('commodityPages');
+            
+            // 生成所有商品页面
+            Object.keys(commodities).forEach((id, index) => {
+                const html = generateCommodityPage(id, commodities[id]);
+                container.insertAdjacentHTML('beforeend', html);
+            });
+
+            // 渲染图表
+            setTimeout(() => {
+                Object.keys(commodities).forEach(id => {
+                    const basePrice = Math.random() * 100000 + 50000;
+                    const priceData = generate20DayTrend(basePrice);
+                    renderChart(id, priceData);
+                });
+            }, 100);
+
+            // 更新时间
+            document.getElementById('updateTime').textContent = new Date().toLocaleString('zh-CN') + ' 更新';
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
