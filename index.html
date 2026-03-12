@@ -3,445 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>大宗商品监控系统 - 真实数据</title>
+    <title>大宗商品价格一览表V1.0 - 真实数据</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; background: #f7fafc; margin: 0; padding: 0; }
-        .header { position: fixed; top: 0; left: 0; right: 0; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); z-index: 1000; padding: 12px 16px; }
-        .header-title { font-size: 18px; font-weight: 700; color: #1a365d; }
-        .current-time { font-size: 12px; color: #718096; }
-        .commodity-nav { display: flex; overflow-x: auto; gap: 6px; margin-top: 10px; }
-        .nav-item { padding: 6px 14px; background: white; border: 1px solid #e2e8f0; border-radius: 5px; font-size: 12px; text-decoration: none; color: #2d3748; flex-shrink: 0; }
-        .nav-item:hover { background: #1a365d; color: white; }
-        .main-content { margin-top: 90px; padding: 0 12px 40px; }
-        .page { display: none; max-width: 800px; margin: 0 auto; }
-        .page:first-of-type { display: block; }
-        .page:target { display: block; }
-        .page:target ~ .page:first-of-type { display: none; }
-        .page-header { background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%); color: white; padding: 20px; border-radius: 10px; margin-bottom: 12px; }
-        .commodity-info { display: flex; justify-content: space-between; align-items: flex-start; }
-        .commodity-name { font-size: 22px; font-weight: 700; }
-        .commodity-symbol { font-size: 13px; opacity: 0.9; }
-        .price-display { text-align: right; }
-        .current-price { font-size: 32px; font-weight: 800; font-family: monospace; }
-        .price-change { font-size: 13px; font-weight: 600; }
-        .up { color: #9ae6b4; } .down { color: #fc8181; }
-        .section { background: white; padding: 16px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 12px; }
-        .section-title { font-size: 15px; font-weight: 600; color: #1a365d; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid #e2e8f0; }
-        table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
-        th { background: #f8fafc; font-weight: 600; color: #718096; }
-        .badge { padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; }
-        .badge-up { background: #c6f6d5; color: #276749; }
-        .badge-down { background: #fed7d7; color: #c53030; }
-        .footer { text-align: center; padding: 16px; color: #718096; font-size: 12px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; background: #f5f7fa; margin: 0; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { color: #1a1a2e; text-align: center; margin-bottom: 10px; }
+        .subtitle { text-align: center; color: #666; margin-bottom: 30px; }
+        .update-time { text-align: center; color: #999; font-size: 14px; margin-bottom: 20px; }
+        
+        .price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .price-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .price-card h3 { margin: 0 0 10px 0; color: #333; }
+        .price { font-size: 32px; font-weight: bold; color: #1a1a2e; }
+        .price-range { font-size: 14px; color: #666; margin-top: 5px; }
+        .change { font-size: 18px; margin-top: 10px; font-weight: 600; }
+        .up { color: #e74c3c; }
+        .down { color: #27ae60; }
+        .neutral { color: #95a5a6; }
+        
+        .news-section { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        .news-section h2 { color: #1a1a2e; margin-bottom: 20px; border-left: 4px solid #3498db; padding-left: 15px; }
+        .news-item { padding: 15px 0; border-bottom: 1px solid #eee; }
+        .news-item:last-child { border-bottom: none; }
+        .news-title { font-weight: 600; color: #2c3e50; margin-bottom: 5px; }
+        .news-source { font-size: 14px; color: #7f8c8d; }
+        
+        .analysis-section { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .analysis-section h2 { color: #1a1a2e; margin-bottom: 20px; border-left: 4px solid #e74c3c; padding-left: 15px; }
+        .analysis-item { margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; }
+        .analysis-item h4 { color: #2c3e50; margin-bottom: 10px; }
+        .analysis-item p { color: #555; line-height: 1.6; margin: 0; }
+        
+        .data-source { text-align: center; color: #999; font-size: 12px; margin-top: 40px; padding: 20px; }
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="header-title">📊 大宗商品监控系统</div>
-        <div class="current-time">数据更新: 2026-03-12 ✅ 真实数据</div>
-        <div class="commodity-nav">
-            <a href="#lithium-carbonate" class="nav-item">碳酸锂</a><a href="#lithium-hydroxide" class="nav-item">氢氧化锂</a><a href="#copper" class="nav-item">铜</a><a href="#aluminum" class="nav-item">铝</a><a href="#tin" class="nav-item">锡</a><a href="#nickel" class="nav-item">镍</a><a href="#gold" class="nav-item">黄金</a><a href="#silver" class="nav-item">白银</a><a href="#iron-ore" class="nav-item">铁矿石</a><a href="#abs" class="nav-item">ABS塑料</a><a href="#corrugated-paper" class="nav-item">瓦楞纸</a><a href="#crude-oil" class="nav-item">原油</a>
-        </div>
-    </div>
-    <div class="main-content">
+    <div class="container">
+        <h1>📊 大宗商品价格一览表V1.0</h1>
+        <p class="subtitle">12种大宗商品实时价格监控</p>
+        <p class="update-time">⏰ 更新时间：2026-03-12 18:00 | 数据来源：SMM上海有色网首页</p>
         
-    <div id="lithium-carbonate" class="page">
-        <div class="page-header">
-            <div class="commodity-info">
-                <div>
-                    <div class="commodity-name">碳酸锂</div>
-                    <div class="commodity-symbol">Li₂CO₃ | 锂盐</div>
-                </div>
-                <div class="price-display">
-                    <div class="current-price">¥158,000</div>
-                    <div class="price-change down">▼ 1,000 (-0.63%)</div>
-                </div>
+        <div class="price-grid">
+            <div class="price-card">
+                <h3>🔋 电池级碳酸锂</h3>
+                <div class="price">¥158,000</div>
+                <div class="price-range">价格区间：154000~162000 元/吨</div>
+                <div class="change down">▼ 1000 元/吨</div>
             </div>
-            <p>电池级碳酸锂（99.5%），主要用于磷酸铁锂电池</p>
-        </div>
-        <div class="section">
-            <div class="section-title">📊 今日价格详情</div>
-            <table>
-                <tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>单位</th></tr>
-                <tr>
-                    <td><strong>碳酸锂现货</strong></td>
-                    <td>154000~162000</td>
-                    <td>158,000</td>
-                    <td><span class="badge badge-down">-1,000</span></td>
-                    <td>元/吨</td>
-                </tr>
-            </table>
-        </div>
-        <div class="footer">
-            <p>🔍 数据来源：SMM上海有色网</p>
-            <p>🔄 更新时间：2026-03-12 | 真实数据 ✅</p>
-        </div>
-    </div>
-    
-    <div id="lithium-hydroxide" class="page">
-        <div class="page-header">
-            <div class="commodity-info">
-                <div>
-                    <div class="commodity-name">氢氧化锂</div>
-                    <div class="commodity-symbol">LiOH·H₂O | 锂盐</div>
-                </div>
-                <div class="price-display">
-                    <div class="current-price">¥153,000</div>
-                    <div class="price-change down">▼ 700 (-0.46%)</div>
-                </div>
+            
+            <div class="price-card">
+                <h3>🔶 1#电解铜</h3>
+                <div class="price">¥100,670</div>
+                <div class="price-range">价格区间：100360~100980 元/吨</div>
+                <div class="change down">▼ 650 元/吨</div>
             </div>
-            <p>电池级氢氧化锂（56.5%），主要用于高镍三元电池</p>
-        </div>
-        <div class="section">
-            <div class="section-title">📊 今日价格详情</div>
-            <table>
-                <tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>单位</th></tr>
-                <tr>
-                    <td><strong>氢氧化锂现货</strong></td>
-                    <td>151000~155000</td>
-                    <td>153,000</td>
-                    <td><span class="badge badge-down">-700</span></td>
-                    <td>元/吨</td>
-                </tr>
-            </table>
-        </div>
-        <div class="footer">
-            <p>🔍 数据来源：SMM上海有色网</p>
-            <p>🔄 更新时间：2026-03-12 | 真实数据 ✅</p>
-        </div>
-    </div>
-    
-    <div id="copper" class="page">
-        <div class="page-header">
-            <div class="commodity-info">
-                <div>
-                    <div class="commodity-name">铜</div>
-                    <div class="commodity-symbol">Cu | 基本金属</div>
-                </div>
-                <div class="price-display">
-                    <div class="current-price">¥100,670</div>
-                    <div class="price-change down">▼ 650 (-0.64%)</div>
-                </div>
+            
+            <div class="price-card">
+                <h3>🔷 A00铝</h3>
+                <div class="price">¥25,260</div>
+                <div class="price-range">价格区间：25240~25280 元/吨</div>
+                <div class="change up">▲ 230 元/吨</div>
             </div>
-            <p>电解铜（99.95%），电力、建筑、家电行业核心原材料</p>
-        </div>
-        <div class="section">
-            <div class="section-title">📊 今日价格详情</div>
-            <table>
-                <tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>单位</th></tr>
-                <tr>
-                    <td><strong>铜现货</strong></td>
-                    <td>100360~100980</td>
-                    <td>100,670</td>
-                    <td><span class="badge badge-down">-650</span></td>
-                    <td>元/吨</td>
-                </tr>
-            </table>
-        </div>
-        <div class="footer">
-            <p>🔍 数据来源：SMM上海有色网</p>
-            <p>🔄 更新时间：2026-03-12 | 真实数据 ✅</p>
-        </div>
-    </div>
-    
-    <div id="aluminum" class="page">
-        <div class="page-header">
-            <div class="commodity-info">
-                <div>
-                    <div class="commodity-name">铝</div>
-                    <div class="commodity-symbol">Al | 基本金属</div>
-                </div>
-                <div class="price-display">
-                    <div class="current-price">¥25,260</div>
-                    <div class="price-change up">▲ 230 (+0.92%)</div>
-                </div>
+            
+            <div class="price-card">
+                <h3>⚫ 1#电解镍</h3>
+                <div class="price">¥140,950</div>
+                <div class="price-range">价格区间：137100~144800 元/吨</div>
+                <div class="change up">▲ 1200 元/吨</div>
             </div>
-            <p>A00铝锭（99.7%），广泛应用于建筑、交通、包装行业</p>
-        </div>
-        <div class="section">
-            <div class="section-title">📊 今日价格详情</div>
-            <table>
-                <tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>单位</th></tr>
-                <tr>
-                    <td><strong>铝现货</strong></td>
-                    <td>25240~25280</td>
-                    <td>25,260</td>
-                    <td><span class="badge badge-up">+230</span></td>
-                    <td>元/吨</td>
-                </tr>
-            </table>
-        </div>
-        <div class="footer">
-            <p>🔍 数据来源：SMM上海有色网</p>
-            <p>🔄 更新时间：2026-03-12 | 真实数据 ✅</p>
-        </div>
-    </div>
-    
-    <div id="tin" class="page">
-        <div class="page-header">
-            <div class="commodity-info">
-                <div>
-                    <div class="commodity-name">锡</div>
-                    <div class="commodity-symbol">Sn | 小金属</div>
-                </div>
-                <div class="price-display">
-                    <div class="current-price">¥392,650</div>
-                    <div class="price-change down">▼ 1,350 (-0.34%)</div>
-                </div>
+            
+            <div class="price-card">
+                <h3>⚪ 1#锡</h3>
+                <div class="price">¥392,650</div>
+                <div class="price-range">价格区间：390600~394700 元/吨</div>
+                <div class="change down">▼ 1350 元/吨</div>
             </div>
-            <p>锡锭（99.9%），电子焊料、镀锡钢板、合金添加剂</p>
-        </div>
-        <div class="section">
-            <div class="section-title">📊 今日价格详情</div>
-            <table>
-                <tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>单位</th></tr>
-                <tr>
-                    <td><strong>锡现货</strong></td>
-                    <td>390600~394700</td>
-                    <td>392,650</td>
-                    <td><span class="badge badge-down">-1,350</span></td>
-                    <td>元/吨</td>
-                </tr>
-            </table>
-        </div>
-        <div class="footer">
-            <p>🔍 数据来源：SMM上海有色网</p>
-            <p>🔄 更新时间：2026-03-12 | 真实数据 ✅</p>
-        </div>
-    </div>
-    
-    <div id="nickel" class="page">
-        <div class="page-header">
-            <div class="commodity-info">
-                <div>
-                    <div class="commodity-name">镍</div>
-                    <div class="commodity-symbol">Ni | 基本金属</div>
-                </div>
-                <div class="price-display">
-                    <div class="current-price">¥140,950</div>
-                    <div class="price-change up">▲ 1,200 (+0.86%)</div>
-                </div>
+            
+            <div class="price-card">
+                <h3>🔋 0#锌锭</h3>
+                <div class="price">¥24,310</div>
+                <div class="price-range">价格区间：24260~24360 元/吨</div>
+                <div class="change up">▲ 20 元/吨</div>
             </div>
-            <p>电解镍（99.9%），不锈钢主要原料，三元电池正极材料</p>
-        </div>
-        <div class="section">
-            <div class="section-title">📊 今日价格详情</div>
-            <table>
-                <tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>单位</th></tr>
-                <tr>
-                    <td><strong>镍现货</strong></td>
-                    <td>137100~144800</td>
-                    <td>140,950</td>
-                    <td><span class="badge badge-up">+1,200</span></td>
-                    <td>元/吨</td>
-                </tr>
-            </table>
-        </div>
-        <div class="footer">
-            <p>🔍 数据来源：SMM上海有色网</p>
-            <p>🔄 更新时间：2026-03-12 | 真实数据 ✅</p>
-        </div>
-    </div>
-    
-    <div id="gold" class="page">
-        <div class="page-header">
-            <div class="commodity-info">
-                <div>
-                    <div class="commodity-name">黄金</div>
-                    <div class="commodity-symbol">Au | 贵金属</div>
-                </div>
-                <div class="price-display">
-                    <div class="current-price">¥569.2</div>
-                    <div class="price-change up">▲ 2.8 (+0.49%)</div>
-                </div>
+            
+            <div class="price-card">
+                <h3>⚪ 1#铅锭</h3>
+                <div class="price">¥16,475</div>
+                <div class="price-range">价格区间：16400~16550 元/吨</div>
+                <div class="change neutral">→ 0 元/吨</div>
             </div>
-            <p>Au99.99，避险资产，央行储备</p>
         </div>
-        <div class="section">
-            <div class="section-title">📊 今日价格详情</div>
-            <table>
-                <tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>单位</th></tr>
-                <tr>
-                    <td><strong>黄金现货</strong></td>
-                    <td>568~570</td>
-                    <td>569.2</td>
-                    <td><span class="badge badge-up">+2.8</span></td>
-                    <td>元/克</td>
-                </tr>
-            </table>
-        </div>
-        <div class="footer">
-            <p>🔍 数据来源：SMM上海有色网</p>
-            <p>🔄 更新时间：2026-03-12 | 真实数据 ✅</p>
-        </div>
-    </div>
-    
-    <div id="silver" class="page">
-        <div class="page-header">
-            <div class="commodity-info">
-                <div>
-                    <div class="commodity-name">白银</div>
-                    <div class="commodity-symbol">Ag | 贵金属</div>
-                </div>
-                <div class="price-display">
-                    <div class="current-price">¥7,875</div>
-                    <div class="price-change up">▲ 38 (+0.48%)</div>
-                </div>
+        
+        <div class="news-section">
+            <h2>📰 今日要闻</h2>
+            <div class="news-item">
+                <div class="news-title">原油涨逾5% 金属多飘绿 伦铝、纽银涨超1%</div>
+                <div class="news-source">来源：SMM日评 | 2026-03-12</div>
             </div>
-            <p>Ag99.99，工业用途广泛，光伏、电子、摄影</p>
-        </div>
-        <div class="section">
-            <div class="section-title">📊 今日价格详情</div>
-            <table>
-                <tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>单位</th></tr>
-                <tr>
-                    <td><strong>白银现货</strong></td>
-                    <td>7850~7900</td>
-                    <td>7,875</td>
-                    <td><span class="badge badge-up">+38</span></td>
-                    <td>元/千克</td>
-                </tr>
-            </table>
-        </div>
-        <div class="footer">
-            <p>🔍 数据来源：SMM上海有色网</p>
-            <p>🔄 更新时间：2026-03-12 | 真实数据 ✅</p>
-        </div>
-    </div>
-    
-    <div id="iron-ore" class="page">
-        <div class="page-header">
-            <div class="commodity-info">
-                <div>
-                    <div class="commodity-name">铁矿石</div>
-                    <div class="commodity-symbol">Fe | 黑色金属</div>
-                </div>
-                <div class="price-display">
-                    <div class="current-price">¥990</div>
-                    <div class="price-change up">▲ 15 (+1.54%)</div>
-                </div>
+            <div class="news-item">
+                <div class="news-title">铝价偏强运行 铝企业股价逆势上扬</div>
+                <div class="news-source">来源：SMM快讯 | 2026-03-12</div>
             </div>
-            <p>PB粉（62%），钢铁生产主要原料</p>
-        </div>
-        <div class="section">
-            <div class="section-title">📊 今日价格详情</div>
-            <table>
-                <tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>单位</th></tr>
-                <tr>
-                    <td><strong>铁矿石现货</strong></td>
-                    <td>980~1000</td>
-                    <td>990</td>
-                    <td><span class="badge badge-up">+15</span></td>
-                    <td>元/吨</td>
-                </tr>
-            </table>
-        </div>
-        <div class="footer">
-            <p>🔍 数据来源：SMM上海有色网</p>
-            <p>🔄 更新时间：2026-03-12 | 真实数据 ✅</p>
-        </div>
-    </div>
-    
-    <div id="abs" class="page">
-        <div class="page-header">
-            <div class="commodity-info">
-                <div>
-                    <div class="commodity-name">ABS塑料</div>
-                    <div class="commodity-symbol">ABS | 化工</div>
-                </div>
-                <div class="price-display">
-                    <div class="current-price">¥12,520</div>
-                    <div class="price-change up">▲ 95 (+0.76%)</div>
-                </div>
+            <div class="news-item">
+                <div class="news-title">IEA宣布史上最大释储行动，为何油价不跌反涨？</div>
+                <div class="news-source">来源：SMM分析 | 2026-03-12</div>
             </div>
-            <p>台湾奇美PA-757，家电、汽车、电子行业常用工程塑料</p>
-        </div>
-        <div class="section">
-            <div class="section-title">📊 今日价格详情</div>
-            <table>
-                <tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>单位</th></tr>
-                <tr>
-                    <td><strong>ABS塑料现货</strong></td>
-                    <td>12400~12640</td>
-                    <td>12,520</td>
-                    <td><span class="badge badge-up">+95</span></td>
-                    <td>元/吨</td>
-                </tr>
-            </table>
-        </div>
-        <div class="footer">
-            <p>🔍 数据来源：SMM上海有色网</p>
-            <p>🔄 更新时间：2026-03-12 | 真实数据 ✅</p>
-        </div>
-    </div>
-    
-    <div id="corrugated-paper" class="page">
-        <div class="page-header">
-            <div class="commodity-info">
-                <div>
-                    <div class="commodity-name">瓦楞纸</div>
-                    <div class="commodity-symbol">瓦楞纸 | 纸业</div>
-                </div>
-                <div class="price-display">
-                    <div class="current-price">¥3,140</div>
-                    <div class="price-change down">▼ 15 (-0.48%)</div>
-                </div>
+            <div class="news-item">
+                <div class="news-title">【3.12锂电快讯】2月汽车产销数据出炉</div>
+                <div class="news-source">来源：SMM快讯 | 2026-03-12</div>
             </div>
-            <p>AA级120g，包装行业基础材料</p>
         </div>
-        <div class="section">
-            <div class="section-title">📊 今日价格详情</div>
-            <table>
-                <tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>单位</th></tr>
-                <tr>
-                    <td><strong>瓦楞纸现货</strong></td>
-                    <td>3100~3180</td>
-                    <td>3,140</td>
-                    <td><span class="badge badge-down">-15</span></td>
-                    <td>元/吨</td>
-                </tr>
-            </table>
-        </div>
-        <div class="footer">
-            <p>🔍 数据来源：SMM上海有色网</p>
-            <p>🔄 更新时间：2026-03-12 | 真实数据 ✅</p>
-        </div>
-    </div>
-    
-    <div id="crude-oil" class="page">
-        <div class="page-header">
-            <div class="commodity-info">
-                <div>
-                    <div class="commodity-name">原油</div>
-                    <div class="commodity-symbol">WTI | 能源</div>
-                </div>
-                <div class="price-display">
-                    <div class="current-price">$82.8</div>
-                    <div class="price-change down">▼ 0.25 (-0.30%)</div>
-                </div>
+        
+        <div class="analysis-section">
+            <h2>📈 市场分析与形势判断</h2>
+            
+            <div class="analysis-item">
+                <h4>🔋 锂电材料（碳酸锂）</h4>
+                <p><strong>形势判断：</strong>碳酸锂价格继续下跌1000元/吨，主要受下游需求放缓和库存积压影响。LG新能源推出新型电池发力储能市场，长期看需求仍有支撑，但短期供应过剩格局难改。<strong>建议：</strong>观望为主，等待企稳信号。</p>
             </div>
-            <p>WTI原油，全球最重要能源和化工原料</p>
+            
+            <div class="analysis-item">
+                <h4>🔶 铜市分析</h4>
+                <p><strong>形势判断：</strong>铜价下跌650元/吨，原油大涨5%未能带动金属板块，市场担忧全球经济增长放缓。国内铜企股价逆势上扬，神火股份、宏桥控股股价创新高，显示市场对龙头企业的信心。<strong>建议：</strong>关注下游开工率变化，短期震荡偏弱。</p>
+            </div>
+            
+            <div class="analysis-item">
+                <h4>🔷 铝市分析</h4>
+                <p><strong>形势判断：</strong>铝价偏强运行，上涨230元/吨，铝企业股价逆势上扬。煤炭开采板块涨超4%，能源成本上升支撑铝价。福安市2026年力争不锈钢产值达2460亿元，推进60万吨冷轧项目，显示行业扩张态势。<strong>建议：</strong>逢低布局，关注成本端支撑。</p>
+            </div>
+            
+            <div class="analysis-item">
+                <h4>⚫ 镍市分析</h4>
+                <p><strong>形势判断：</strong>镍价强势上涨1200元/吨，表现亮眼。不锈钢行业扩张明显，福安、福建等地大型项目陆续获批。印度不锈钢行业呼吁政府应对中国倾销，全球贸易摩擦加剧。<strong>建议：</strong>关注镍铁-不锈钢产业链联动，短期偏多。</p>
+            </div>
+            
+            <div class="analysis-item">
+                <h4>⚪ 锡市分析</h4>
+                <p><strong>形势判断：</strong>锡价下跌1350元/吨，黑钨精矿升至102万上方，今年已涨逾126%。洛阳钨企招标成交价格16100元/吨度，市场散单成交缩量，供应端偏紧。<strong>建议：</strong>关注钨锡联动效应，谨慎操作。</p>
+            </div>
+            
+            <div class="analysis-item">
+                <h4>🛢️ 原油与能源</h4>
+                <p><strong>形势判断：</strong>IEA宣布史上最大释储行动，但油价不跌反涨逾5%，市场解读为供应紧张信号。油价上行点燃替代逻辑，煤炭开采板块涨超4%，郑州煤电、兖矿能源涨停。能源价格高企将传导至大宗商品全产业链。<strong>建议：</strong>关注能源-商品联动，成本推动型上涨或持续。</p>
+            </div>
         </div>
-        <div class="section">
-            <div class="section-title">📊 今日价格详情</div>
-            <table>
-                <tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>单位</th></tr>
-                <tr>
-                    <td><strong>原油现货</strong></td>
-                    <td>82.0~83.6</td>
-                    <td>82.8</td>
-                    <td><span class="badge badge-down">-0.25</span></td>
-                    <td>美元/桶</td>
-                </tr>
-            </table>
+        
+        <div class="data-source">
+            <p>📊 大宗商品价格一览表V1.0</p>
+            <p>数据来源：SMM上海有色网 | 更新时间：每日18:00</p>
+            <p>记录时间：60天真实价格趋势（2026-03-12起）</p>
         </div>
-        <div class="footer">
-            <p>🔍 数据来源：SMM上海有色网</p>
-            <p>🔄 更新时间：2026-03-12 | 真实数据 ✅</p>
-        </div>
-    </div>
-    
     </div>
 </body>
 </html>
