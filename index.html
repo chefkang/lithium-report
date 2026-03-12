@@ -3,32 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>大宗商品监控系统 | Commodity Monitor</title>
+    <title>大宗商品监控系统</title>
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary: #1a365d;
             --secondary: #2c5282;
-            --accent: #3182ce;
             --success: #276749;
             --danger: #c53030;
-            --warning: #d69e2e;
             --bg: #f7fafc;
-            --card: #ffffff;
             --text: #2d3748;
             --text-light: #718096;
             --border: #e2e8f0;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; 
-            background: var(--bg); 
-            color: var(--text); 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.6;
-            overflow: hidden;
-            height: 100vh;
         }
         
-        /* 顶部导航栏 - 固定 */
+        /* 固定头部 */
         .header {
             position: fixed;
             top: 0;
@@ -47,180 +42,116 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
-        .header-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--primary);
-        }
-        .current-time {
-            font-size: 13px;
-            color: var(--text-light);
-        }
+        .header-title { font-size: 18px; font-weight: 700; color: var(--primary); }
+        .current-time { font-size: 12px; color: var(--text-light); }
         
-        /* 商品导航栏 */
+        /* 导航 */
         .commodity-nav {
             display: flex;
             overflow-x: auto;
-            gap: 8px;
-            padding-bottom: 8px;
+            gap: 6px;
             scrollbar-width: none;
-            -ms-overflow-style: none;
         }
         .commodity-nav::-webkit-scrollbar { display: none; }
         .nav-item {
-            padding: 8px 16px;
+            padding: 6px 14px;
             background: white;
             border: 1px solid var(--border);
-            border-radius: 6px;
-            color: var(--text);
-            font-size: 13px;
+            border-radius: 5px;
+            font-size: 12px;
             font-weight: 500;
             white-space: nowrap;
             cursor: pointer;
-            transition: all 0.2s;
             flex-shrink: 0;
         }
-        .nav-item:hover, .nav-item.active {
+        .nav-item.active {
             background: var(--primary);
             color: white;
             border-color: var(--primary);
         }
         
-        /* 主内容区域 - 水平滑动 */
-        .main-container {
-            position: fixed;
-            top: 100px;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            overflow: hidden;
+        /* 主内容 - 每个商品独立页面 */
+        .main-content {
+            margin-top: 90px;
+            padding: 0 12px 40px;
         }
-        .scroll-container {
-            display: flex;
-            height: 100%;
-            overflow-x: auto;
-            overflow-y: hidden;
-            scroll-snap-type: x mandatory;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-        .scroll-container::-webkit-scrollbar { display: none; }
-        
-        /* 商品页面 - 独立可滚动 */
         .commodity-page {
-            flex: 0 0 100vw;
-            width: 100vw;
-            height: 100%;
-            scroll-snap-align: start;
-            overflow-y: auto;
-            overflow-x: hidden;
-            -webkit-overflow-scrolling: touch;
-            padding: 16px;
+            display: none;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .commodity-page.active {
+            display: block;
         }
         
         /* 页面头部 */
         .page-header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
-            padding: 24px;
-            border-radius: 12px;
-            margin-bottom: 16px;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 12px;
         }
         .commodity-info {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 8px;
         }
-        .commodity-name {
-            font-size: 26px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-        .commodity-symbol {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-        .price-display {
-            text-align: right;
-        }
-        .current-price {
-            font-size: 36px;
-            font-weight: 800;
-            font-family: monospace;
-        }
-        .price-change {
-            font-size: 14px;
-            font-weight: 600;
-        }
+        .commodity-name { font-size: 22px; font-weight: 700; }
+        .commodity-symbol { font-size: 13px; opacity: 0.9; }
+        .price-display { text-align: right; }
+        .current-price { font-size: 32px; font-weight: 800; font-family: monospace; }
+        .price-change { font-size: 13px; font-weight: 600; }
         .change-up { color: #9ae6b4; }
         .change-down { color: #fc8181; }
-        
-        .page-header p {
-            font-size: 13px;
-            opacity: 0.9;
-            line-height: 1.5;
-        }
+        .page-header p { font-size: 12px; opacity: 0.9; line-height: 1.5; }
         
         /* 快速统计 */
         .quick-stats {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-bottom: 16px;
+            gap: 10px;
+            margin-bottom: 12px;
         }
         .stat-card {
             background: white;
-            padding: 16px;
+            padding: 14px;
             border-radius: 8px;
             border: 1px solid var(--border);
         }
-        .stat-label {
-            font-size: 11px;
-            color: var(--text-light);
-            margin-bottom: 6px;
-        }
-        .stat-value {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--primary);
-            font-family: monospace;
-        }
-        .stat-change {
-            font-size: 12px;
-            margin-top: 4px;
-        }
+        .stat-label { font-size: 11px; color: var(--text-light); margin-bottom: 4px; }
+        .stat-value { font-size: 16px; font-weight: 700; color: var(--primary); font-family: monospace; }
+        .stat-change { font-size: 11px; margin-top: 2px; }
         
         /* 数据表格 */
         .data-section, .analysis-section, .news-section {
             background: white;
-            padding: 20px;
-            border-radius: 10px;
+            padding: 16px;
+            border-radius: 8px;
             border: 1px solid var(--border);
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
         .section-title {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             color: var(--primary);
-            margin-bottom: 16px;
-            padding-bottom: 10px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
             border-bottom: 2px solid var(--border);
         }
         .data-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 12px;
+            font-size: 11px;
         }
         .data-table th {
             background: #f8fafc;
-            padding: 10px 8px;
+            padding: 10px 6px;
             text-align: left;
             font-weight: 600;
             color: var(--text-light);
@@ -228,77 +159,58 @@
             border-bottom: 2px solid var(--border);
         }
         .data-table td {
-            padding: 12px 8px;
+            padding: 10px 6px;
             border-bottom: 1px solid var(--border);
         }
         
-        /* 分析卡片 */
+        /* 分析 */
         .analysis-grid {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
         .analysis-card {
             background: #f8fafc;
-            padding: 16px;
-            border-radius: 8px;
+            padding: 14px;
+            border-radius: 6px;
             border: 1px solid var(--border);
         }
-        .analysis-card h4 {
-            font-size: 14px;
-            margin-bottom: 8px;
-            color: var(--primary);
-        }
-        .analysis-card p {
-            font-size: 13px;
-            color: var(--text);
-            line-height: 1.5;
-        }
+        .analysis-card h4 { font-size: 13px; margin-bottom: 6px; color: var(--primary); }
+        .analysis-card p { font-size: 12px; line-height: 1.5; }
         
         /* 新闻 */
         .news-grid {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
         .news-item {
-            padding: 14px;
+            padding: 12px;
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 6px;
             background: #fafafa;
         }
         .news-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         .news-tag {
             font-size: 10px;
-            padding: 3px 8px;
-            border-radius: 4px;
+            padding: 2px 8px;
+            border-radius: 3px;
             font-weight: 600;
         }
-        .news-date { font-size: 11px; color: var(--text-light); }
-        .news-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--primary);
-            line-height: 1.4;
-        }
-        .news-source {
-            font-size: 11px;
-            color: var(--text-light);
-            margin-top: 6px;
-        }
+        .news-date { font-size: 10px; color: var(--text-light); }
+        .news-title { font-size: 12px; font-weight: 600; color: var(--primary); }
+        .news-source { font-size: 10px; color: var(--text-light); margin-top: 4px; }
         
         .badge {
             display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 10px;
             font-weight: 600;
         }
         .badge-up { background: #c6f6d5; color: var(--success); }
@@ -306,48 +218,42 @@
         
         .footer {
             text-align: center;
-            padding: 20px;
+            padding: 16px;
             color: var(--text-light);
-            font-size: 11px;
+            font-size: 10px;
         }
         
         /* 平板及以上 */
         @media (min-width: 768px) {
             .header-content { padding: 16px 24px; }
             .header-title { font-size: 24px; }
-            .commodity-page { padding: 24px; max-width: 1400px; margin: 0 auto; }
+            .main-content { margin-top: 110px; padding: 0 24px 40px; }
             .page-header { padding: 32px 40px; }
-            .commodity-name { font-size: 32px; }
-            .current-price { font-size: 48px; }
+            .commodity-name { font-size: 28px; }
+            .current-price { font-size: 42px; }
             .quick-stats { grid-template-columns: repeat(4, 1fr); }
-            .stat-value { font-size: 24px; }
-            .data-section, .analysis-section, .news-section { padding: 28px; }
+            .stat-value { font-size: 20px; }
             .analysis-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
             .news-grid { display: grid; grid-template-columns: repeat(2, 1fr); }
-            .data-table { font-size: 14px; }
-            .data-table th, .data-table td { padding: 16px 12px; }
+            .data-table { font-size: 13px; }
+            .data-table th, .data-table td { padding: 14px 10px; }
         }
     </style>
 </head>
 <body>
-    <!-- 头部 -->
     <div class="header">
         <div class="header-content">
             <div class="header-top">
                 <div class="header-title">📊 大宗商品监控系统</div>
-                <div class="current-time" id="currentTime">2026-03-12 09:33 CST</div>
+                <div class="current-time" id="currentTime"></div>
             </div>
             <div class="commodity-nav" id="navContainer"></div>
         </div>
     </div>
 
-    <!-- 主内容 -->
-    <div class="main-container">
-        <div class="scroll-container" id="scrollContainer"></div>
-    </div>
+    <div class="main-content" id="mainContent"></div>
 
     <script>
-        // 商品数据
         const commodities = [
             { id: 'lithium-carbonate', name: '碳酸锂', symbol: 'Li₂CO₃', unit: '元/吨', price: 159500, change: 800, changePct: 0.50, category: '锂盐', desc: '电池级碳酸锂（99.5%），主要用于磷酸铁锂电池，新能源汽车动力电池核心原材料。' },
             { id: 'lithium-hydroxide', name: '氢氧化锂', symbol: 'LiOH·H₂O', unit: '元/吨', price: 153000, change: -700, changePct: -0.46, category: '锂盐', desc: '电池级氢氧化锂（56.5%），主要用于高镍三元电池，高端电动汽车电池材料。' },
@@ -426,6 +332,8 @@
             ]
         };
 
+        let currentIndex = 0;
+
         function generatePage(c, i) {
             const isUp = c.change >= 0;
             const prefix = c.unit === '美元/桶' ? '$' : '¥';
@@ -440,7 +348,7 @@
             `).join('');
 
             return `
-                <div class="commodity-page" id="${c.id}">
+                <div class="commodity-page ${i === 0 ? 'active' : ''}" id="page-${c.id}" data-index="${i}">
                     <div class="page-header">
                         <div class="commodity-info">
                             <div>
@@ -493,15 +401,15 @@
                         <div class="analysis-grid">
                             <div class="analysis-card">
                                 <h4>趋势判断</h4>
-                                <p>${c.name}当前呈现<strong>${isUp ? '震荡上行' : '承压整理'}</strong>态势，市场情绪${isUp ? '积极' : '谨慎'}。</p>
+                                <p>${c.name}当前呈现<strong>${isUp ? '震荡上行' : '承压整理'}</strong>态势。</p>
                             </div>
                             <div class="analysis-card">
                                 <h4>支撑与阻力</h4>
-                                <p><strong>支撑位：</strong>技术面关键价位提供支撑。<br><strong>阻力位：</strong>${isUp ? '上方存在压力需量能配合' : '反弹阻力较大'}。</p>
+                                <p><strong>支撑位：</strong>技术面关键价位。<br><strong>阻力位：</strong>${isUp ? '上方需量能配合' : '反弹阻力较大'}。</p>
                             </div>
                             <div class="analysis-card">
                                 <h4>操作建议</h4>
-                                <p>${isUp ? '谨慎追高，建议分批建仓' : '关注底部机会，逐步布局'}，注意风险控制。</p>
+                                <p>${isUp ? '谨慎追高，分批建仓' : '关注底部，逐步布局'}，注意风险控制。</p>
                             </div>
                         </div>
                     </div>
@@ -522,7 +430,7 @@
                                     <span class="news-tag" style="background:#f0fff4;color:#276749">需求</span>
                                     <span class="news-date">03-12 08:15</span>
                                 </div>
-                                <div class="news-title">下游${isUp ? '采购意愿增强' : '观望情绪浓厚'}，${c.name}成交${isUp ? '活跃' : '清淡'}</div>
+                                <div class="news-title">下游${isUp ? '采购意愿增强' : '观望情绪浓厚'}，成交${isUp ? '活跃' : '清淡'}</div>
                                 <div class="news-source">📰 行业快讯</div>
                             </div>
                         </div>
@@ -530,44 +438,61 @@
                     
                     <div class="footer">
                         <p>🔍 数据来源：SMM上海有色网、LME、COMEX、SHFE等交易所</p>
-                        <p>🔄 更新时间：2026-03-12 09:33 | 数据仅供参考</p>
+                        <p>🔄 更新时间：2026-03-12 09:40 | 数据仅供参考</p>
                     </div>
                 </div>
             `;
         }
 
+        function switchTab(index) {
+            // 更新导航
+            document.querySelectorAll('.nav-item').forEach((b, i) => {
+                b.classList.toggle('active', i === index);
+            });
+            // 更新页面
+            document.querySelectorAll('.commodity-page').forEach((p, i) => {
+                p.classList.toggle('active', i === index);
+            });
+            currentIndex = index;
+            // 滚动到顶部
+            window.scrollTo(0, 0);
+        }
+
         function init() {
             const nav = document.getElementById('navContainer');
-            const container = document.getElementById('scrollContainer');
+            const content = document.getElementById('mainContent');
             
-            // 生成导航和页面
+            // 生成导航
             commodities.forEach((c, i) => {
-                // 导航
                 const btn = document.createElement('button');
                 btn.className = 'nav-item' + (i === 0 ? ' active' : '');
                 btn.textContent = c.name;
-                btn.onclick = () => {
-                    container.scrollTo({ left: window.innerWidth * i, behavior: 'smooth' });
-                };
+                btn.onclick = () => switchTab(i);
                 nav.appendChild(btn);
                 
-                // 页面
-                container.insertAdjacentHTML('beforeend', generatePage(c, i));
-            });
-            
-            // 滚动同步导航
-            container.addEventListener('scroll', () => {
-                const idx = Math.round(container.scrollLeft / window.innerWidth);
-                document.querySelectorAll('.nav-item').forEach((b, i) => {
-                    b.classList.toggle('active', i === idx);
-                });
-                // 自动滚动导航栏
-                nav.scrollTo({ left: idx * 80 - 100, behavior: 'smooth' });
+                // 生成页面
+                content.insertAdjacentHTML('beforeend', generatePage(c, i));
             });
             
             // 更新时间
             document.getElementById('currentTime').textContent = 
                 new Date().toLocaleString('zh-CN').replace(/\//g, '-') + ' CST';
+            
+            // 左右滑动切换
+            let touchStartX = 0;
+            document.addEventListener('touchstart', e => {
+                touchStartX = e.touches[0].clientX;
+            });
+            document.addEventListener('touchend', e => {
+                const diff = touchStartX - e.changedTouches[0].clientX;
+                if (Math.abs(diff) > 50) {
+                    if (diff > 0 && currentIndex < commodities.length - 1) {
+                        switchTab(currentIndex + 1);
+                    } else if (diff < 0 && currentIndex > 0) {
+                        switchTab(currentIndex - 1);
+                    }
+                }
+            });
         }
 
         document.addEventListener('DOMContentLoaded', init);
