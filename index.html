@@ -22,6 +22,8 @@
         .main-content { margin-top: 90px; padding: 0 12px 40px; }
         .page { display: none; max-width: 1400px; margin: 0 auto; }
         .page:target { display: block; }
+        .page:first-of-type { display: block; }
+        .page:target ~ .page:first-of-type { display: none; }
         .page-header { background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%); color: white; padding: 20px; border-radius: 10px; margin-bottom: 12px; }
         .commodity-info { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
         .commodity-name { font-size: 22px; font-weight: 700; }
@@ -95,7 +97,7 @@
 
     <div class="main-content">
         <!-- 碳酸锂 -->
-        <div id="lithium-carbonate" class="page" style="display: block;">
+        <div id="lithium-carbonate" class="page">
             <div class="page-header">
                 <div class="commodity-info">
                     <div>
