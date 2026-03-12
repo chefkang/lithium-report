@@ -3,1366 +3,445 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <title>大宗商品监控系统 - 真实价格趋势</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>大宗商品监控系统 - 真实数据</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f7fafc; color: #2d3748; line-height: 1.6; }
-        .header { position: fixed; top: 0; left: 0; right: 0; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); z-index: 1000; }
-        .header-content { max-width: 1400px; margin: 0 auto; padding: 12px 16px; }
-        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; background: #f7fafc; margin: 0; padding: 0; }
+        .header { position: fixed; top: 0; left: 0; right: 0; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); z-index: 1000; padding: 12px 16px; }
         .header-title { font-size: 18px; font-weight: 700; color: #1a365d; }
         .current-time { font-size: 12px; color: #718096; }
-        .commodity-nav { display: flex; overflow-x: auto; gap: 6px; scrollbar-width: none; }
-        .commodity-nav::-webkit-scrollbar { display: none; }
-        .nav-item { padding: 6px 14px; background: white; border: 1px solid #e2e8f0; border-radius: 5px; font-size: 12px; font-weight: 500; white-space: nowrap; cursor: pointer; flex-shrink: 0; text-decoration: none; color: #2d3748; }
-        .nav-item:hover, .nav-item.active { background: #1a365d; color: white; border-color: #1a365d; }
+        .commodity-nav { display: flex; overflow-x: auto; gap: 6px; margin-top: 10px; }
+        .nav-item { padding: 6px 14px; background: white; border: 1px solid #e2e8f0; border-radius: 5px; font-size: 12px; text-decoration: none; color: #2d3748; flex-shrink: 0; }
+        .nav-item:hover { background: #1a365d; color: white; }
         .main-content { margin-top: 90px; padding: 0 12px 40px; }
-        .page { display: none; max-width: 1400px; margin: 0 auto; }
-        .page:target { display: block; }
+        .page { display: none; max-width: 800px; margin: 0 auto; }
         .page:first-of-type { display: block; }
+        .page:target { display: block; }
         .page:target ~ .page:first-of-type { display: none; }
         .page-header { background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%); color: white; padding: 20px; border-radius: 10px; margin-bottom: 12px; }
-        .commodity-info { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
+        .commodity-info { display: flex; justify-content: space-between; align-items: flex-start; }
         .commodity-name { font-size: 22px; font-weight: 700; }
         .commodity-symbol { font-size: 13px; opacity: 0.9; }
         .price-display { text-align: right; }
         .current-price { font-size: 32px; font-weight: 800; font-family: monospace; }
         .price-change { font-size: 13px; font-weight: 600; }
         .up { color: #9ae6b4; } .down { color: #fc8181; }
-        .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 12px; }
-        .stat-card { background: white; padding: 14px; border-radius: 8px; border: 1px solid #e2e8f0; }
-        .stat-label { font-size: 11px; color: #718096; margin-bottom: 4px; }
-        .stat-value { font-size: 16px; font-weight: 700; color: #1a365d; font-family: monospace; }
-        .stat-change { font-size: 11px; margin-top: 2px; }
-        .chart-container { background: white; padding: 16px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 12px; height: 350px; }
         .section { background: white; padding: 16px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 12px; }
         .section-title { font-size: 15px; font-weight: 600; color: #1a365d; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid #e2e8f0; }
-        .analysis-card { background: #f8fafc; padding: 14px; border-radius: 6px; border: 1px solid #e2e8f0; }
-        .analysis-card h4 { font-size: 13px; margin-bottom: 6px; color: #1a365d; }
-        .analysis-card p, .analysis-card ul { font-size: 12px; line-height: 1.6; }
-        .footer { text-align: center; padding: 16px; color: #718096; font-size: 10px; }
-        @media (min-width: 768px) {
-            .header-content { padding: 16px 24px; }
-            .main-content { margin-top: 110px; padding: 0 24px 40px; }
-            .page-header { padding: 32px 40px; }
-            .commodity-name { font-size: 28px; }
-            .current-price { font-size: 42px; }
-            .stats { grid-template-columns: repeat(4, 1fr); }
-        }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        th { background: #f8fafc; font-weight: 600; color: #718096; }
+        .badge { padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; }
+        .badge-up { background: #c6f6d5; color: #276749; }
+        .badge-down { background: #fed7d7; color: #c53030; }
+        .footer { text-align: center; padding: 16px; color: #718096; font-size: 12px; }
     </style>
 </head>
 <body>
     <div class="header">
-        <div class="header-content">
-            <div class="header-top">
-                <div class="header-title">📊 大宗商品监控系统</div>
-                <div class="current-time">数据更新: 2026-03-12 | 真实数据累计中</div>
-            </div>
-            <div class="commodity-nav">
-                <a href="#lithium-carbonate" class="nav-item active">碳酸锂</a>
-                <a href="#lithium-hydroxide" class="nav-item">氢氧化锂</a>
-                <a href="#copper" class="nav-item">铜</a>
-                <a href="#aluminum" class="nav-item">铝</a>
-                <a href="#tin" class="nav-item">锡</a>
-                <a href="#nickel" class="nav-item">镍</a>
-                <a href="#gold" class="nav-item">黄金</a>
-                <a href="#silver" class="nav-item">白银</a>
-                <a href="#iron-ore" class="nav-item">铁矿石</a>
-                <a href="#abs" class="nav-item">ABS塑料</a>
-                <a href="#corrugated-paper" class="nav-item">瓦楞纸</a>
-                <a href="#crude-oil" class="nav-item">原油</a>
-            </div>
+        <div class="header-title">📊 大宗商品监控系统</div>
+        <div class="current-time">数据更新: 2026-03-12 ✅ 真实数据</div>
+        <div class="commodity-nav">
+            <a href="#lithium-carbonate" class="nav-item">碳酸锂</a><a href="#lithium-hydroxide" class="nav-item">氢氧化锂</a><a href="#copper" class="nav-item">铜</a><a href="#aluminum" class="nav-item">铝</a><a href="#tin" class="nav-item">锡</a><a href="#nickel" class="nav-item">镍</a><a href="#gold" class="nav-item">黄金</a><a href="#silver" class="nav-item">白银</a><a href="#iron-ore" class="nav-item">铁矿石</a><a href="#abs" class="nav-item">ABS塑料</a><a href="#corrugated-paper" class="nav-item">瓦楞纸</a><a href="#crude-oil" class="nav-item">原油</a>
         </div>
     </div>
-
     <div class="main-content">
         
-        <!-- 碳酸锂 -->
-        <div id="lithium-carbonate" class="page active">
-            <div class="page-header">
-                <div class="commodity-info">
-                    <div>
-                        <div class="commodity-name">碳酸锂</div>
-                        <div class="commodity-symbol">Lithium Carbonate | 商品</div>
-                    </div>
-                    <div class="price-display">
-                        <div class="current-price">¥159,500.00</div>
-                        <div class="price-change down">▼ 18,826.92 (-10.56%)</div>
-                    </div>
+    <div id="lithium-carbonate" class="page">
+        <div class="page-header">
+            <div class="commodity-info">
+                <div>
+                    <div class="commodity-name">碳酸锂</div>
+                    <div class="commodity-symbol">Li₂CO₃ | 锂盐</div>
                 </div>
-                <p>价格趋势数据：真实1天 + 模拟59天。从今天开始每天更新，60天后全部为真实数据。</p>
-            </div>
-            
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-label">今日涨跌</div>
-                    <div class="stat-value">-18,827</div>
-                    <div class="stat-change down">-10.56%</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">20天最高</div>
-                    <div class="stat-value">191,839</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">20天最低</div>
-                    <div class="stat-value">159,500</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">数据状态</div>
-                    <div class="stat-value">1/60</div>
-                    <div class="stat-change">真实天数</div>
+                <div class="price-display">
+                    <div class="current-price">¥158,000</div>
+                    <div class="price-change down">▼ 1,000 (-0.63%)</div>
                 </div>
             </div>
-            
-            <div class="chart-container">
-                <div class="section-title">📈 近20天价格趋势</div>
-                <canvas id="chart-lithium-carbonate"></canvas>
-            </div>
-            
-            <script>
-                // 碳酸锂 价格趋势图
-                new Chart(document.getElementById('chart-lithium-carbonate'), {
-                    type: 'line',
-                    data: {
-                        labels: ["02-21", "02-22", "02-23", "02-24", "02-25", "02-26", "02-27", "02-28", "03-01", "03-02", "03-03", "03-04", "03-05", "03-06", "03-07", "03-08", "03-09", "03-10", "03-11", "03-12"],
-                        datasets: [{
-                            label: '碳酸锂价格 (元/吨)',
-                            data: [188477.03, 186008.15, 187135.53, 185750.0, 189341.75, 191838.57, 188716.87, 187853.17, 185373.75, 184713.92, 180528.96, 183906.16, 179757.29, 182455.58, 177961.92, 181359.05, 184087.48, 181013.13, 178326.92, 159500],
-                            borderColor: '#3182ce',
-                            backgroundColor: 'rgba(49, 130, 206, 0.1)',
-                            borderWidth: 2,
-                            fill: true,
-                            tension: 0.4,
-                            pointRadius: 4,
-                            pointBackgroundColor: function(context) {
-                                const index = context.dataIndex;
-                                const isReal = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true];
-                                return isReal[index] ? '#e53e3e' : '#3182ce';  // 真实数据红色，模拟数据蓝色
-                            }
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: { display: false },
-                            tooltip: {
-                                callbacks: {
-                                    afterLabel: function(context) {
-                                        const isReal = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true];
-                                        return isReal[context.dataIndex] ? '真实数据' : '模拟数据';
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            x: { grid: { display: false } },
-                            y: { grid: { color: '#e2e8f0' } }
-                        }
-                    }
-                });
-            </script>
-            
-            <div class="section">
-                <div class="section-title">📊 价格数据说明</div>
-                <div class="analysis-card">
-                    <h4>数据来源</h4>
-                    <p>从今天开始每天记录SMM真实价格。当前显示：</p>
-                    <ul style="margin-left: 20px; margin-top: 10px;">
-                        <li>真实数据：1 天</li>
-                        <li>模拟数据：19 天</li>
-                        <li>累计记录：20 天</li>
-                        <li>预计完成：59 天后全部为真实数据</li>
-                    </ul>
-                    <p style="margin-top: 10px;"><strong>提示：</strong>红色数据点为今日及之后记录的真实价格，蓝色为基于历史波动生成的模拟数据。</p>
-                </div>
-            </div>
-            
-            <div class="footer">
-                <p>🔍 数据来源：SMM上海有色网（每日更新）</p>
-                <p>🔄 数据记录：2026-03-12 | 真实数据累计：1/60 天</p>
-            </div>
+            <p>电池级碳酸锂（99.5%），主要用于磷酸铁锂电池</p>
         </div>
-        
-        <!-- 氢氧化锂 -->
-        <div id="lithium-hydroxide" class="page">
-            <div class="page-header">
-                <div class="commodity-info">
-                    <div>
-                        <div class="commodity-name">氢氧化锂</div>
-                        <div class="commodity-symbol">Lithium Hydroxide | 商品</div>
-                    </div>
-                    <div class="price-display">
-                        <div class="current-price">¥153,000.00</div>
-                        <div class="price-change down">▼ 50.99 (-0.03%)</div>
-                    </div>
-                </div>
-                <p>价格趋势数据：真实1天 + 模拟59天。从今天开始每天更新，60天后全部为真实数据。</p>
-            </div>
-            
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-label">今日涨跌</div>
-                    <div class="stat-value">-51</div>
-                    <div class="stat-change down">-0.03%</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">20天最高</div>
-                    <div class="stat-value">167,167</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">20天最低</div>
-                    <div class="stat-value">153,000</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">数据状态</div>
-                    <div class="stat-value">1/60</div>
-                    <div class="stat-change">真实天数</div>
-                </div>
-            </div>
-            
-            <div class="chart-container">
-                <div class="section-title">📈 近20天价格趋势</div>
-                <canvas id="chart-lithium-hydroxide"></canvas>
-            </div>
-            
-            <script>
-                // 氢氧化锂 价格趋势图
-                new Chart(document.getElementById('chart-lithium-hydroxide'), {
-                    type: 'line',
-                    data: {
-                        labels: ["02-21", "02-22", "02-23", "02-24", "02-25", "02-26", "02-27", "02-28", "03-01", "03-02", "03-03", "03-04", "03-05", "03-06", "03-07", "03-08", "03-09", "03-10", "03-11", "03-12"],
-                        datasets: [{
-                            label: '氢氧化锂价格 (元/吨)',
-                            data: [162296.29, 160070.41, 161817.67, 163223.04, 164661.34, 167166.93, 163656.53, 159779.03, 159195.99, 158401.28, 157281.99, 158187.97, 157516.76, 154615.51, 155778.52, 157610.32, 155113.73, 155631.7, 153050.99, 153000],
-                            borderColor: '#3182ce',
-                            backgroundColor: 'rgba(49, 130, 206, 0.1)',
-                            borderWidth: 2,
-                            fill: true,
-                            tension: 0.4,
-                            pointRadius: 4,
-                            pointBackgroundColor: function(context) {
-                                const index = context.dataIndex;
-                                const isReal = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true];
-                                return isReal[index] ? '#e53e3e' : '#3182ce';  // 真实数据红色，模拟数据蓝色
-                            }
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: { display: false },
-                            tooltip: {
-                                callbacks: {
-                                    afterLabel: function(context) {
-                                        const isReal = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true];
-                                        return isReal[context.dataIndex] ? '真实数据' : '模拟数据';
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            x: { grid: { display: false } },
-                            y: { grid: { color: '#e2e8f0' } }
-                        }
-                    }
-                });
-            </script>
-            
-            <div class="section">
-                <div class="section-title">📊 价格数据说明</div>
-                <div class="analysis-card">
-                    <h4>数据来源</h4>
-                    <p>从今天开始每天记录SMM真实价格。当前显示：</p>
-                    <ul style="margin-left: 20px; margin-top: 10px;">
-                        <li>真实数据：1 天</li>
-                        <li>模拟数据：19 天</li>
-                        <li>累计记录：20 天</li>
-                        <li>预计完成：59 天后全部为真实数据</li>
-                    </ul>
-                    <p style="margin-top: 10px;"><strong>提示：</strong>红色数据点为今日及之后记录的真实价格，蓝色为基于历史波动生成的模拟数据。</p>
-                </div>
-            </div>
-            
-            <div class="footer">
-                <p>🔍 数据来源：SMM上海有色网（每日更新）</p>
-                <p>🔄 数据记录：2026-03-12 | 真实数据累计：1/60 天</p>
-            </div>
+        <div class="section">
+            <div class="section-title">📊 今日价格详情</div>
+            <table>
+                <tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>单位</th></tr>
+                <tr>
+                    <td><strong>碳酸锂现货</strong></td>
+                    <td>154000~162000</td>
+                    <td>158,000</td>
+                    <td><span class="badge badge-down">-1,000</span></td>
+                    <td>元/吨</td>
+                </tr>
+            </table>
         </div>
-        
-        <!-- 铜 -->
-        <div id="copper" class="page">
-            <div class="page-header">
-                <div class="commodity-info">
-                    <div>
-                        <div class="commodity-name">铜</div>
-                        <div class="commodity-symbol">Copper | 商品</div>
-                    </div>
-                    <div class="price-display">
-                        <div class="current-price">¥72,450.00</div>
-                        <div class="price-change up">▲ 2,941.41 (+4.23%)</div>
-                    </div>
-                </div>
-                <p>价格趋势数据：真实1天 + 模拟59天。从今天开始每天更新，60天后全部为真实数据。</p>
-            </div>
-            
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-label">今日涨跌</div>
-                    <div class="stat-value">+2,941</div>
-                    <div class="stat-change up">+4.23%</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">20天最高</div>
-                    <div class="stat-value">73,641</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">20天最低</div>
-                    <div class="stat-value">68,771</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">数据状态</div>
-                    <div class="stat-value">1/60</div>
-                    <div class="stat-change">真实天数</div>
-                </div>
-            </div>
-            
-            <div class="chart-container">
-                <div class="section-title">📈 近20天价格趋势</div>
-                <canvas id="chart-copper"></canvas>
-            </div>
-            
-            <script>
-                // 铜 价格趋势图
-                new Chart(document.getElementById('chart-copper'), {
-                    type: 'line',
-                    data: {
-                        labels: ["02-21", "02-22", "02-23", "02-24", "02-25", "02-26", "02-27", "02-28", "03-01", "03-02", "03-03", "03-04", "03-05", "03-06", "03-07", "03-08", "03-09", "03-10", "03-11", "03-12"],
-                        datasets: [{
-                            label: '铜价格 (元/吨)',
-                            data: [73641.4, 72149.36, 71334.51, 69920.57, 68917.41, 69048.56, 69247.56, 70916.86, 70928.57, 69302.11, 70093.25, 71379.06, 69978.49, 69182.45, 68771.19, 70357.06, 71581.6, 70348.04, 69508.59, 72450],
-                            borderColor: '#3182ce',
-                            backgroundColor: 'rgba(49, 130, 206, 0.1)',
-                            borderWidth: 2,
-                            fill: true,
-                            tension: 0.4,
-                            pointRadius: 4,
-                            pointBackgroundColor: function(context) {
-                                const index = context.dataIndex;
-                                const isReal = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true];
-                                return isReal[index] ? '#e53e3e' : '#3182ce';  // 真实数据红色，模拟数据蓝色
-                            }
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: { display: false },
-                            tooltip: {
-                                callbacks: {
-                                    afterLabel: function(context) {
-                                        const isReal = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true];
-                                        return isReal[context.dataIndex] ? '真实数据' : '模拟数据';
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            x: { grid: { display: false } },
-                            y: { grid: { color: '#e2e8f0' } }
-                        }
-                    }
-                });
-            </script>
-            
-            <div class="section">
-                <div class="section-title">📊 价格数据说明</div>
-                <div class="analysis-card">
-                    <h4>数据来源</h4>
-                    <p>从今天开始每天记录SMM真实价格。当前显示：</p>
-                    <ul style="margin-left: 20px; margin-top: 10px;">
-                        <li>真实数据：1 天</li>
-                        <li>模拟数据：19 天</li>
-                        <li>累计记录：20 天</li>
-                        <li>预计完成：59 天后全部为真实数据</li>
-                    </ul>
-                    <p style="margin-top: 10px;"><strong>提示：</strong>红色数据点为今日及之后记录的真实价格，蓝色为基于历史波动生成的模拟数据。</p>
-                </div>
-            </div>
-            
-            <div class="footer">
-                <p>🔍 数据来源：SMM上海有色网（每日更新）</p>
-                <p>🔄 数据记录：2026-03-12 | 真实数据累计：1/60 天</p>
-            </div>
+        <div class="footer">
+            <p>🔍 数据来源：SMM上海有色网</p>
+            <p>🔄 更新时间：2026-03-12 | 真实数据 ✅</p>
         </div>
-        
-        <!-- 铝 -->
-        <div id="aluminum" class="page">
-            <div class="page-header">
-                <div class="commodity-info">
-                    <div>
-                        <div class="commodity-name">铝</div>
-                        <div class="commodity-symbol">Aluminum | 商品</div>
-                    </div>
-                    <div class="price-display">
-                        <div class="current-price">¥18,580.00</div>
-                        <div class="price-change up">▲ 1,857.76 (+11.11%)</div>
-                    </div>
+    </div>
+    
+    <div id="lithium-hydroxide" class="page">
+        <div class="page-header">
+            <div class="commodity-info">
+                <div>
+                    <div class="commodity-name">氢氧化锂</div>
+                    <div class="commodity-symbol">LiOH·H₂O | 锂盐</div>
                 </div>
-                <p>价格趋势数据：真实1天 + 模拟59天。从今天开始每天更新，60天后全部为真实数据。</p>
-            </div>
-            
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-label">今日涨跌</div>
-                    <div class="stat-value">+1,858</div>
-                    <div class="stat-change up">+11.11%</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">20天最高</div>
-                    <div class="stat-value">18,580</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">20天最低</div>
-                    <div class="stat-value">16,264</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">数据状态</div>
-                    <div class="stat-value">1/60</div>
-                    <div class="stat-change">真实天数</div>
+                <div class="price-display">
+                    <div class="current-price">¥153,000</div>
+                    <div class="price-change down">▼ 700 (-0.46%)</div>
                 </div>
             </div>
-            
-            <div class="chart-container">
-                <div class="section-title">📈 近20天价格趋势</div>
-                <canvas id="chart-aluminum"></canvas>
-            </div>
-            
-            <script>
-                // 铝 价格趋势图
-                new Chart(document.getElementById('chart-aluminum'), {
-                    type: 'line',
-                    data: {
-                        labels: ["02-21", "02-22", "02-23", "02-24", "02-25", "02-26", "02-27", "02-28", "03-01", "03-02", "03-03", "03-04", "03-05", "03-06", "03-07", "03-08", "03-09", "03-10", "03-11", "03-12"],
-                        datasets: [{
-                            label: '铝价格 (元/吨)',
-                            data: [16376.23, 16621.96, 16506.5, 16664.98, 16263.81, 16584.85, 16620.45, 16783.27, 16718.88, 16626.19, 16939.64, 17089.08, 17063.01, 16777.19, 16381.95, 16284.0, 16292.04, 16693.51, 16722.24, 18580],
-                            borderColor: '#3182ce',
-                            backgroundColor: 'rgba(49, 130, 206, 0.1)',
-                            borderWidth: 2,
-                            fill: true,
-                            tension: 0.4,
-                            pointRadius: 4,
-                            pointBackgroundColor: function(context) {
-                                const index = context.dataIndex;
-                                const isReal = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true];
-                                return isReal[index] ? '#e53e3e' : '#3182ce';  // 真实数据红色，模拟数据蓝色
-                            }
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: { display: false },
-                            tooltip: {
-                                callbacks: {
-                                    afterLabel: function(context) {
-                                        const isReal = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true];
-                                        return isReal[context.dataIndex] ? '真实数据' : '模拟数据';
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            x: { grid: { display: false } },
-                            y: { grid: { color: '#e2e8f0' } }
-                        }
-                    }
-                });
-            </script>
-            
-            <div class="section">
-                <div class="section-title">📊 价格数据说明</div>
-                <div class="analysis-card">
-                    <h4>数据来源</h4>
-                    <p>从今天开始每天记录SMM真实价格。当前显示：</p>
-                    <ul style="margin-left: 20px; margin-top: 10px;">
-                        <li>真实数据：1 天</li>
-                        <li>模拟数据：19 天</li>
-                        <li>累计记录：20 天</li>
-                        <li>预计完成：59 天后全部为真实数据</li>
-                    </ul>
-                    <p style="margin-top: 10px;"><strong>提示：</strong>红色数据点为今日及之后记录的真实价格，蓝色为基于历史波动生成的模拟数据。</p>
-                </div>
-            </div>
-            
-            <div class="footer">
-                <p>🔍 数据来源：SMM上海有色网（每日更新）</p>
-                <p>🔄 数据记录：2026-03-12 | 真实数据累计：1/60 天</p>
-            </div>
+            <p>电池级氢氧化锂（56.5%），主要用于高镍三元电池</p>
         </div>
-        
-        <!-- 锡 -->
-        <div id="tin" class="page">
-            <div class="page-header">
-                <div class="commodity-info">
-                    <div>
-                        <div class="commodity-name">锡</div>
-                        <div class="commodity-symbol">Tin | 商品</div>
-                    </div>
-                    <div class="price-display">
-                        <div class="current-price">¥246,200.00</div>
-                        <div class="price-change up">▲ 2,305.75 (+0.95%)</div>
-                    </div>
-                </div>
-                <p>价格趋势数据：真实1天 + 模拟59天。从今天开始每天更新，60天后全部为真实数据。</p>
-            </div>
-            
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-label">今日涨跌</div>
-                    <div class="stat-value">+2,306</div>
-                    <div class="stat-change up">+0.95%</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">20天最高</div>
-                    <div class="stat-value">252,535</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">20天最低</div>
-                    <div class="stat-value">237,980</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">数据状态</div>
-                    <div class="stat-value">1/60</div>
-                    <div class="stat-change">真实天数</div>
-                </div>
-            </div>
-            
-            <div class="chart-container">
-                <div class="section-title">📈 近20天价格趋势</div>
-                <canvas id="chart-tin"></canvas>
-            </div>
-            
-            <script>
-                // 锡 价格趋势图
-                new Chart(document.getElementById('chart-tin'), {
-                    type: 'line',
-                    data: {
-                        labels: ["02-21", "02-22", "02-23", "02-24", "02-25", "02-26", "02-27", "02-28", "03-01", "03-02", "03-03", "03-04", "03-05", "03-06", "03-07", "03-08", "03-09", "03-10", "03-11", "03-12"],
-                        datasets: [{
-                            label: '锡价格 (元/吨)',
-                            data: [252535.02, 251469.27, 248155.39, 248876.78, 244159.88, 242776.94, 244654.21, 241035.77, 243381.24, 239220.19, 242747.85, 246771.45, 244554.74, 244710.91, 243575.11, 241538.73, 237980.29, 240988.87, 243894.25, 246200],
-                            borderColor: '#3182ce',
-                            backgroundColor: 'rgba(49, 130, 206, 0.1)',
-                            borderWidth: 2,
-                            fill: true,
-                            tension: 0.4,
-                            pointRadius: 4,
-                            pointBackgroundColor: function(context) {
-                                const index = context.dataIndex;
-                                const isReal = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true];
-                                return isReal[index] ? '#e53e3e' : '#3182ce';  // 真实数据红色，模拟数据蓝色
-                            }
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: { display: false },
-                            tooltip: {
-                                callbacks: {
-                                    afterLabel: function(context) {
-                                        const isReal = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true];
-                                        return isReal[context.dataIndex] ? '真实数据' : '模拟数据';
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            x: { grid: { display: false } },
-                            y: { grid: { color: '#e2e8f0' } }
-                        }
-                    }
-                });
-            </script>
-            
-            <div class="section">
-                <div class="section-title">📊 价格数据说明</div>
-                <div class="analysis-card">
-                    <h4>数据来源</h4>
-                    <p>从今天开始每天记录SMM真实价格。当前显示：</p>
-                    <ul style="margin-left: 20px; margin-top: 10px;">
-                        <li>真实数据：1 天</li>
-                        <li>模拟数据：19 天</li>
-                        <li>累计记录：20 天</li>
-                        <li>预计完成：59 天后全部为真实数据</li>
-                    </ul>
-                    <p style="margin-top: 10px;"><strong>提示：</strong>红色数据点为今日及之后记录的真实价格，蓝色为基于历史波动生成的模拟数据。</p>
-                </div>
-            </div>
-            
-            <div class="footer">
-                <p>🔍 数据来源：SMM上海有色网（每日更新）</p>
-                <p>🔄 数据记录：2026-03-12 | 真实数据累计：1/60 天</p>
-            </div>
+        <div class="section">
+            <div class="section-title">📊 今日价格详情</div>
+            <table>
+                <tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>单位</th></tr>
+                <tr>
+                    <td><strong>氢氧化锂现货</strong></td>
+                    <td>151000~155000</td>
+                    <td>153,000</td>
+                    <td><span class="badge badge-down">-700</span></td>
+                    <td>元/吨</td>
+                </tr>
+            </table>
         </div>
-        
-        <!-- 镍 -->
-        <div id="nickel" class="page">
-            <div class="page-header">
-                <div class="commodity-info">
-                    <div>
-                        <div class="commodity-name">镍</div>
-                        <div class="commodity-symbol">Nickel | 商品</div>
-                    </div>
-                    <div class="price-display">
-                        <div class="current-price">¥133,500.00</div>
-                        <div class="price-change down">▼ 12,167.11 (-8.35%)</div>
-                    </div>
-                </div>
-                <p>价格趋势数据：真实1天 + 模拟59天。从今天开始每天更新，60天后全部为真实数据。</p>
-            </div>
-            
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-label">今日涨跌</div>
-                    <div class="stat-value">-12,167</div>
-                    <div class="stat-change down">-8.35%</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">20天最高</div>
-                    <div class="stat-value">156,506</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">20天最低</div>
-                    <div class="stat-value">133,500</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">数据状态</div>
-                    <div class="stat-value">1/60</div>
-                    <div class="stat-change">真实天数</div>
-                </div>
-            </div>
-            
-            <div class="chart-container">
-                <div class="section-title">📈 近20天价格趋势</div>
-                <canvas id="chart-nickel"></canvas>
-            </div>
-            
-            <script>
-                // 镍 价格趋势图
-                new Chart(document.getElementById('chart-nickel'), {
-                    type: 'line',
-                    data: {
-                        labels: ["02-21", "02-22", "02-23", "02-24", "02-25", "02-26", "02-27", "02-28", "03-01", "03-02", "03-03", "03-04", "03-05", "03-06", "03-07", "03-08", "03-09", "03-10", "03-11", "03-12"],
-                        datasets: [{
-                            label: '镍价格 (元/吨)',
-                            data: [151242.37, 149886.06, 153127.95, 150363.43, 153340.05, 156506.18, 154483.3, 155065.55, 151404.76, 150179.73, 149727.96, 148372.97, 149968.54, 146687.77, 147781.57, 144607.61, 146588.87, 144606.28, 145667.11, 133500],
-                            borderColor: '#3182ce',
-                            backgroundColor: 'rgba(49, 130, 206, 0.1)',
-                            borderWidth: 2,
-                            fill: true,
-                            tension: 0.4,
-                            pointRadius: 4,
-                            pointBackgroundColor: function(context) {
-                                const index = context.dataIndex;
-                                const isReal = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true];
-                                return isReal[index] ? '#e53e3e' : '#3182ce';  // 真实数据红色，模拟数据蓝色
-                            }
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: { display: false },
-                            tooltip: {
-                                callbacks: {
-                                    afterLabel: function(context) {
-                                        const isReal = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true];
-                                        return isReal[context.dataIndex] ? '真实数据' : '模拟数据';
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            x: { grid: { display: false } },
-                            y: { grid: { color: '#e2e8f0' } }
-                        }
-                    }
-                });
-            </script>
-            
-            <div class="section">
-                <div class="section-title">📊 价格数据说明</div>
-                <div class="analysis-card">
-                    <h4>数据来源</h4>
-                    <p>从今天开始每天记录SMM真实价格。当前显示：</p>
-                    <ul style="margin-left: 20px; margin-top: 10px;">
-                        <li>真实数据：1 天</li>
-                        <li>模拟数据：19 天</li>
-                        <li>累计记录：20 天</li>
-                        <li>预计完成：59 天后全部为真实数据</li>
-                    </ul>
-                    <p style="margin-top: 10px;"><strong>提示：</strong>红色数据点为今日及之后记录的真实价格，蓝色为基于历史波动生成的模拟数据。</p>
-                </div>
-            </div>
-            
-            <div class="footer">
-                <p>🔍 数据来源：SMM上海有色网（每日更新）</p>
-                <p>🔄 数据记录：2026-03-12 | 真实数据累计：1/60 天</p>
-            </div>
+        <div class="footer">
+            <p>🔍 数据来源：SMM上海有色网</p>
+            <p>🔄 更新时间：2026-03-12 | 真实数据 ✅</p>
         </div>
-        
-        <!-- 黄金 -->
-        <div id="gold" class="page">
-            <div class="page-header">
-                <div class="commodity-info">
-                    <div>
-                        <div class="commodity-name">黄金</div>
-                        <div class="commodity-symbol">Gold | 商品</div>
-                    </div>
-                    <div class="price-display">
-                        <div class="current-price">¥569.20</div>
-                        <div class="price-change up">▲ 24.87 (+4.57%)</div>
-                    </div>
+    </div>
+    
+    <div id="copper" class="page">
+        <div class="page-header">
+            <div class="commodity-info">
+                <div>
+                    <div class="commodity-name">铜</div>
+                    <div class="commodity-symbol">Cu | 基本金属</div>
                 </div>
-                <p>价格趋势数据：真实1天 + 模拟59天。从今天开始每天更新，60天后全部为真实数据。</p>
-            </div>
-            
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-label">今日涨跌</div>
-                    <div class="stat-value">+25</div>
-                    <div class="stat-change up">+4.57%</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">20天最高</div>
-                    <div class="stat-value">601</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">20天最低</div>
-                    <div class="stat-value">540</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">数据状态</div>
-                    <div class="stat-value">1/60</div>
-                    <div class="stat-change">真实天数</div>
+                <div class="price-display">
+                    <div class="current-price">¥100,670</div>
+                    <div class="price-change down">▼ 650 (-0.64%)</div>
                 </div>
             </div>
-            
-            <div class="chart-container">
-                <div class="section-title">📈 近20天价格趋势</div>
-                <canvas id="chart-gold"></canvas>
-            </div>
-            
-            <script>
-                // 黄金 价格趋势图
-                new Chart(document.getElementById('chart-gold'), {
-                    type: 'line',
-                    data: {
-                        labels: ["02-21", "02-22", "02-23", "02-24", "02-25", "02-26", "02-27", "02-28", "03-01", "03-02", "03-03", "03-04", "03-05", "03-06", "03-07", "03-08", "03-09", "03-10", "03-11", "03-12"],
-                        datasets: [{
-                            label: '黄金价格 (元/克)',
-                            data: [601.49, 596.11, 594.14, 582.81, 587.41, 573.15, 565.54, 557.69, 565.1, 563.08, 569.28, 557.33, 548.55, 551.86, 543.91, 550.15, 552.49, 539.79, 544.33, 569.2],
-                            borderColor: '#3182ce',
-                            backgroundColor: 'rgba(49, 130, 206, 0.1)',
-                            borderWidth: 2,
-                            fill: true,
-                            tension: 0.4,
-                            pointRadius: 4,
-                            pointBackgroundColor: function(context) {
-                                const index = context.dataIndex;
-                                const isReal = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true];
-                                return isReal[index] ? '#e53e3e' : '#3182ce';  // 真实数据红色，模拟数据蓝色
-                            }
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: { display: false },
-                            tooltip: {
-                                callbacks: {
-                                    afterLabel: function(context) {
-                                        const isReal = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true];
-                                        return isReal[context.dataIndex] ? '真实数据' : '模拟数据';
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            x: { grid: { display: false } },
-                            y: { grid: { color: '#e2e8f0' } }
-                        }
-                    }
-                });
-            </script>
-            
-            <div class="section">
-                <div class="section-title">📊 价格数据说明</div>
-                <div class="analysis-card">
-                    <h4>数据来源</h4>
-                    <p>从今天开始每天记录SMM真实价格。当前显示：</p>
-                    <ul style="margin-left: 20px; margin-top: 10px;">
-                        <li>真实数据：1 天</li>
-                        <li>模拟数据：19 天</li>
-                        <li>累计记录：20 天</li>
-                        <li>预计完成：59 天后全部为真实数据</li>
-                    </ul>
-                    <p style="margin-top: 10px;"><strong>提示：</strong>红色数据点为今日及之后记录的真实价格，蓝色为基于历史波动生成的模拟数据。</p>
-                </div>
-            </div>
-            
-            <div class="footer">
-                <p>🔍 数据来源：SMM上海有色网（每日更新）</p>
-                <p>🔄 数据记录：2026-03-12 | 真实数据累计：1/60 天</p>
-            </div>
+            <p>电解铜（99.95%），电力、建筑、家电行业核心原材料</p>
         </div>
-        
-        <!-- 白银 -->
-        <div id="silver" class="page">
-            <div class="page-header">
-                <div class="commodity-info">
-                    <div>
-                        <div class="commodity-name">白银</div>
-                        <div class="commodity-symbol">Silver | 商品</div>
-                    </div>
-                    <div class="price-display">
-                        <div class="current-price">¥7,875.00</div>
-                        <div class="price-change down">▼ 498.65 (-5.95%)</div>
-                    </div>
-                </div>
-                <p>价格趋势数据：真实1天 + 模拟59天。从今天开始每天更新，60天后全部为真实数据。</p>
-            </div>
-            
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-label">今日涨跌</div>
-                    <div class="stat-value">-499</div>
-                    <div class="stat-change down">-5.95%</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">20天最高</div>
-                    <div class="stat-value">8,384</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">20天最低</div>
-                    <div class="stat-value">7,857</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">数据状态</div>
-                    <div class="stat-value">1/60</div>
-                    <div class="stat-change">真实天数</div>
-                </div>
-            </div>
-            
-            <div class="chart-container">
-                <div class="section-title">📈 近20天价格趋势</div>
-                <canvas id="chart-silver"></canvas>
-            </div>
-            
-            <script>
-                // 白银 价格趋势图
-                new Chart(document.getElementById('chart-silver'), {
-                    type: 'line',
-                    data: {
-                        labels: ["02-21", "02-22", "02-23", "02-24", "02-25", "02-26", "02-27", "02-28", "03-01", "03-02", "03-03", "03-04", "03-05", "03-06", "03-07", "03-08", "03-09", "03-10", "03-11", "03-12"],
-                        datasets: [{
-                            label: '白银价格 (元/千克)',
-                            data: [8209.83, 8068.82, 7997.9, 8010.88, 7857.49, 7888.45, 8077.36, 7987.95, 7943.03, 8009.21, 8201.6, 8115.07, 8249.25, 8357.81, 8220.41, 8383.82, 8192.78, 8353.58, 8373.65, 7875],
-                            borderColor: '#3182ce',
-                            backgroundColor: 'rgba(49, 130, 206, 0.1)',
-                            borderWidth: 2,
-                            fill: true,
-                            tension: 0.4,
-                            pointRadius: 4,
-                            pointBackgroundColor: function(context) {
-                                const index = context.dataIndex;
-                                const isReal = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true];
-                                return isReal[index] ? '#e53e3e' : '#3182ce';  // 真实数据红色，模拟数据蓝色
-                            }
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: { display: false },
-                            tooltip: {
-                                callbacks: {
-                                    afterLabel: function(context) {
-                                        const isReal = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true];
-                                        return isReal[context.dataIndex] ? '真实数据' : '模拟数据';
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            x: { grid: { display: false } },
-                            y: { grid: { color: '#e2e8f0' } }
-                        }
-                    }
-                });
-            </script>
-            
-            <div class="section">
-                <div class="section-title">📊 价格数据说明</div>
-                <div class="analysis-card">
-                    <h4>数据来源</h4>
-                    <p>从今天开始每天记录SMM真实价格。当前显示：</p>
-                    <ul style="margin-left: 20px; margin-top: 10px;">
-                        <li>真实数据：1 天</li>
-                        <li>模拟数据：19 天</li>
-                        <li>累计记录：20 天</li>
-                        <li>预计完成：59 天后全部为真实数据</li>
-                    </ul>
-                    <p style="margin-top: 10px;"><strong>提示：</strong>红色数据点为今日及之后记录的真实价格，蓝色为基于历史波动生成的模拟数据。</p>
-                </div>
-            </div>
-            
-            <div class="footer">
-                <p>🔍 数据来源：SMM上海有色网（每日更新）</p>
-                <p>🔄 数据记录：2026-03-12 | 真实数据累计：1/60 天</p>
-            </div>
+        <div class="section">
+            <div class="section-title">📊 今日价格详情</div>
+            <table>
+                <tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>单位</th></tr>
+                <tr>
+                    <td><strong>铜现货</strong></td>
+                    <td>100360~100980</td>
+                    <td>100,670</td>
+                    <td><span class="badge badge-down">-650</span></td>
+                    <td>元/吨</td>
+                </tr>
+            </table>
         </div>
-        
-        <!-- 铁矿石 -->
-        <div id="iron-ore" class="page">
-            <div class="page-header">
-                <div class="commodity-info">
-                    <div>
-                        <div class="commodity-name">铁矿石</div>
-                        <div class="commodity-symbol">Iron Ore | 商品</div>
-                    </div>
-                    <div class="price-display">
-                        <div class="current-price">¥990.00</div>
-                        <div class="price-change up">▲ 181.03 (+22.38%)</div>
-                    </div>
-                </div>
-                <p>价格趋势数据：真实1天 + 模拟59天。从今天开始每天更新，60天后全部为真实数据。</p>
-            </div>
-            
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-label">今日涨跌</div>
-                    <div class="stat-value">+181</div>
-                    <div class="stat-change up">+22.38%</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">20天最高</div>
-                    <div class="stat-value">990</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">20天最低</div>
-                    <div class="stat-value">779</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">数据状态</div>
-                    <div class="stat-value">1/60</div>
-                    <div class="stat-change">真实天数</div>
-                </div>
-            </div>
-            
-            <div class="chart-container">
-                <div class="section-title">📈 近20天价格趋势</div>
-                <canvas id="chart-iron-ore"></canvas>
-            </div>
-            
-            <script>
-                // 铁矿石 价格趋势图
-                new Chart(document.getElementById('chart-iron-ore'), {
-                    type: 'line',
-                    data: {
-                        labels: ["02-21", "02-22", "02-23", "02-24", "02-25", "02-26", "02-27", "02-28", "03-01", "03-02", "03-03", "03-04", "03-05", "03-06", "03-07", "03-08", "03-09", "03-10", "03-11", "03-12"],
-                        datasets: [{
-                            label: '铁矿石价格 (元/吨)',
-                            data: [829.45, 834.39, 828.13, 841.17, 821.0, 822.15, 814.73, 795.63, 802.68, 787.71, 802.55, 808.63, 790.47, 787.02, 783.83, 778.75, 790.7, 797.36, 808.97, 990],
-                            borderColor: '#3182ce',
-                            backgroundColor: 'rgba(49, 130, 206, 0.1)',
-                            borderWidth: 2,
-                            fill: true,
-                            tension: 0.4,
-                            pointRadius: 4,
-                            pointBackgroundColor: function(context) {
-                                const index = context.dataIndex;
-                                const isReal = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true];
-                                return isReal[index] ? '#e53e3e' : '#3182ce';  // 真实数据红色，模拟数据蓝色
-                            }
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: { display: false },
-                            tooltip: {
-                                callbacks: {
-                                    afterLabel: function(context) {
-                                        const isReal = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true];
-                                        return isReal[context.dataIndex] ? '真实数据' : '模拟数据';
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            x: { grid: { display: false } },
-                            y: { grid: { color: '#e2e8f0' } }
-                        }
-                    }
-                });
-            </script>
-            
-            <div class="section">
-                <div class="section-title">📊 价格数据说明</div>
-                <div class="analysis-card">
-                    <h4>数据来源</h4>
-                    <p>从今天开始每天记录SMM真实价格。当前显示：</p>
-                    <ul style="margin-left: 20px; margin-top: 10px;">
-                        <li>真实数据：1 天</li>
-                        <li>模拟数据：19 天</li>
-                        <li>累计记录：20 天</li>
-                        <li>预计完成：59 天后全部为真实数据</li>
-                    </ul>
-                    <p style="margin-top: 10px;"><strong>提示：</strong>红色数据点为今日及之后记录的真实价格，蓝色为基于历史波动生成的模拟数据。</p>
-                </div>
-            </div>
-            
-            <div class="footer">
-                <p>🔍 数据来源：SMM上海有色网（每日更新）</p>
-                <p>🔄 数据记录：2026-03-12 | 真实数据累计：1/60 天</p>
-            </div>
+        <div class="footer">
+            <p>🔍 数据来源：SMM上海有色网</p>
+            <p>🔄 更新时间：2026-03-12 | 真实数据 ✅</p>
         </div>
-        
-        <!-- ABS塑料 -->
-        <div id="abs" class="page">
-            <div class="page-header">
-                <div class="commodity-info">
-                    <div>
-                        <div class="commodity-name">ABS塑料</div>
-                        <div class="commodity-symbol">Abs | 商品</div>
-                    </div>
-                    <div class="price-display">
-                        <div class="current-price">¥12,520.00</div>
-                        <div class="price-change up">▲ 1,673.57 (+15.43%)</div>
-                    </div>
+    </div>
+    
+    <div id="aluminum" class="page">
+        <div class="page-header">
+            <div class="commodity-info">
+                <div>
+                    <div class="commodity-name">铝</div>
+                    <div class="commodity-symbol">Al | 基本金属</div>
                 </div>
-                <p>价格趋势数据：真实1天 + 模拟59天。从今天开始每天更新，60天后全部为真实数据。</p>
-            </div>
-            
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-label">今日涨跌</div>
-                    <div class="stat-value">+1,674</div>
-                    <div class="stat-change up">+15.43%</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">20天最高</div>
-                    <div class="stat-value">12,520</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">20天最低</div>
-                    <div class="stat-value">10,099</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">数据状态</div>
-                    <div class="stat-value">1/60</div>
-                    <div class="stat-change">真实天数</div>
+                <div class="price-display">
+                    <div class="current-price">¥25,260</div>
+                    <div class="price-change up">▲ 230 (+0.92%)</div>
                 </div>
             </div>
-            
-            <div class="chart-container">
-                <div class="section-title">📈 近20天价格趋势</div>
-                <canvas id="chart-abs"></canvas>
-            </div>
-            
-            <script>
-                // ABS塑料 价格趋势图
-                new Chart(document.getElementById('chart-abs'), {
-                    type: 'line',
-                    data: {
-                        labels: ["02-21", "02-22", "02-23", "02-24", "02-25", "02-26", "02-27", "02-28", "03-01", "03-02", "03-03", "03-04", "03-05", "03-06", "03-07", "03-08", "03-09", "03-10", "03-11", "03-12"],
-                        datasets: [{
-                            label: 'ABS塑料价格 (元/吨)',
-                            data: [10528.68, 10529.12, 10416.45, 10305.46, 10161.34, 10252.68, 10253.17, 10099.38, 10118.91, 10337.45, 10307.43, 10293.01, 10525.59, 10644.76, 10413.06, 10573.28, 10544.71, 10771.09, 10846.43, 12520],
-                            borderColor: '#3182ce',
-                            backgroundColor: 'rgba(49, 130, 206, 0.1)',
-                            borderWidth: 2,
-                            fill: true,
-                            tension: 0.4,
-                            pointRadius: 4,
-                            pointBackgroundColor: function(context) {
-                                const index = context.dataIndex;
-                                const isReal = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true];
-                                return isReal[index] ? '#e53e3e' : '#3182ce';  // 真实数据红色，模拟数据蓝色
-                            }
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: { display: false },
-                            tooltip: {
-                                callbacks: {
-                                    afterLabel: function(context) {
-                                        const isReal = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true];
-                                        return isReal[context.dataIndex] ? '真实数据' : '模拟数据';
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            x: { grid: { display: false } },
-                            y: { grid: { color: '#e2e8f0' } }
-                        }
-                    }
-                });
-            </script>
-            
-            <div class="section">
-                <div class="section-title">📊 价格数据说明</div>
-                <div class="analysis-card">
-                    <h4>数据来源</h4>
-                    <p>从今天开始每天记录SMM真实价格。当前显示：</p>
-                    <ul style="margin-left: 20px; margin-top: 10px;">
-                        <li>真实数据：1 天</li>
-                        <li>模拟数据：19 天</li>
-                        <li>累计记录：20 天</li>
-                        <li>预计完成：59 天后全部为真实数据</li>
-                    </ul>
-                    <p style="margin-top: 10px;"><strong>提示：</strong>红色数据点为今日及之后记录的真实价格，蓝色为基于历史波动生成的模拟数据。</p>
-                </div>
-            </div>
-            
-            <div class="footer">
-                <p>🔍 数据来源：SMM上海有色网（每日更新）</p>
-                <p>🔄 数据记录：2026-03-12 | 真实数据累计：1/60 天</p>
-            </div>
+            <p>A00铝锭（99.7%），广泛应用于建筑、交通、包装行业</p>
         </div>
-        
-        <!-- 瓦楞纸 -->
-        <div id="corrugated-paper" class="page">
-            <div class="page-header">
-                <div class="commodity-info">
-                    <div>
-                        <div class="commodity-name">瓦楞纸</div>
-                        <div class="commodity-symbol">Corrugated Paper | 商品</div>
-                    </div>
-                    <div class="price-display">
-                        <div class="current-price">¥3,140.00</div>
-                        <div class="price-change up">▲ 323.81 (+11.50%)</div>
-                    </div>
-                </div>
-                <p>价格趋势数据：真实1天 + 模拟59天。从今天开始每天更新，60天后全部为真实数据。</p>
-            </div>
-            
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-label">今日涨跌</div>
-                    <div class="stat-value">+324</div>
-                    <div class="stat-change up">+11.50%</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">20天最高</div>
-                    <div class="stat-value">3,140</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">20天最低</div>
-                    <div class="stat-value">2,816</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">数据状态</div>
-                    <div class="stat-value">1/60</div>
-                    <div class="stat-change">真实天数</div>
-                </div>
-            </div>
-            
-            <div class="chart-container">
-                <div class="section-title">📈 近20天价格趋势</div>
-                <canvas id="chart-corrugated-paper"></canvas>
-            </div>
-            
-            <script>
-                // 瓦楞纸 价格趋势图
-                new Chart(document.getElementById('chart-corrugated-paper'), {
-                    type: 'line',
-                    data: {
-                        labels: ["02-21", "02-22", "02-23", "02-24", "02-25", "02-26", "02-27", "02-28", "03-01", "03-02", "03-03", "03-04", "03-05", "03-06", "03-07", "03-08", "03-09", "03-10", "03-11", "03-12"],
-                        datasets: [{
-                            label: '瓦楞纸价格 (元/吨)',
-                            data: [2912.33, 2842.42, 2881.7, 2917.03, 2923.19, 2860.98, 2889.62, 2881.59, 2948.44, 2984.82, 2920.39, 2985.04, 2962.58, 2915.9, 2890.41, 2822.73, 2835.36, 2879.04, 2816.19, 3140],
-                            borderColor: '#3182ce',
-                            backgroundColor: 'rgba(49, 130, 206, 0.1)',
-                            borderWidth: 2,
-                            fill: true,
-                            tension: 0.4,
-                            pointRadius: 4,
-                            pointBackgroundColor: function(context) {
-                                const index = context.dataIndex;
-                                const isReal = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true];
-                                return isReal[index] ? '#e53e3e' : '#3182ce';  // 真实数据红色，模拟数据蓝色
-                            }
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: { display: false },
-                            tooltip: {
-                                callbacks: {
-                                    afterLabel: function(context) {
-                                        const isReal = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true];
-                                        return isReal[context.dataIndex] ? '真实数据' : '模拟数据';
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            x: { grid: { display: false } },
-                            y: { grid: { color: '#e2e8f0' } }
-                        }
-                    }
-                });
-            </script>
-            
-            <div class="section">
-                <div class="section-title">📊 价格数据说明</div>
-                <div class="analysis-card">
-                    <h4>数据来源</h4>
-                    <p>从今天开始每天记录SMM真实价格。当前显示：</p>
-                    <ul style="margin-left: 20px; margin-top: 10px;">
-                        <li>真实数据：1 天</li>
-                        <li>模拟数据：19 天</li>
-                        <li>累计记录：20 天</li>
-                        <li>预计完成：59 天后全部为真实数据</li>
-                    </ul>
-                    <p style="margin-top: 10px;"><strong>提示：</strong>红色数据点为今日及之后记录的真实价格，蓝色为基于历史波动生成的模拟数据。</p>
-                </div>
-            </div>
-            
-            <div class="footer">
-                <p>🔍 数据来源：SMM上海有色网（每日更新）</p>
-                <p>🔄 数据记录：2026-03-12 | 真实数据累计：1/60 天</p>
-            </div>
+        <div class="section">
+            <div class="section-title">📊 今日价格详情</div>
+            <table>
+                <tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>单位</th></tr>
+                <tr>
+                    <td><strong>铝现货</strong></td>
+                    <td>25240~25280</td>
+                    <td>25,260</td>
+                    <td><span class="badge badge-up">+230</span></td>
+                    <td>元/吨</td>
+                </tr>
+            </table>
         </div>
-        
-        <!-- 原油 -->
-        <div id="crude-oil" class="page">
-            <div class="page-header">
-                <div class="commodity-info">
-                    <div>
-                        <div class="commodity-name">原油</div>
-                        <div class="commodity-symbol">Crude Oil | 商品</div>
-                    </div>
-                    <div class="price-display">
-                        <div class="current-price">$82.80</div>
-                        <div class="price-change up">▲ 13.45 (+19.39%)</div>
-                    </div>
-                </div>
-                <p>价格趋势数据：真实1天 + 模拟59天。从今天开始每天更新，60天后全部为真实数据。</p>
-            </div>
-            
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-label">今日涨跌</div>
-                    <div class="stat-value">+13</div>
-                    <div class="stat-change up">+19.39%</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">20天最高</div>
-                    <div class="stat-value">83</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">20天最低</div>
-                    <div class="stat-value">67</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">数据状态</div>
-                    <div class="stat-value">1/60</div>
-                    <div class="stat-change">真实天数</div>
-                </div>
-            </div>
-            
-            <div class="chart-container">
-                <div class="section-title">📈 近20天价格趋势</div>
-                <canvas id="chart-crude-oil"></canvas>
-            </div>
-            
-            <script>
-                // 原油 价格趋势图
-                new Chart(document.getElementById('chart-crude-oil'), {
-                    type: 'line',
-                    data: {
-                        labels: ["02-21", "02-22", "02-23", "02-24", "02-25", "02-26", "02-27", "02-28", "03-01", "03-02", "03-03", "03-04", "03-05", "03-06", "03-07", "03-08", "03-09", "03-10", "03-11", "03-12"],
-                        datasets: [{
-                            label: '原油价格 (美元/桶)',
-                            data: [73.06, 72.74, 73.88, 72.55, 72.36, 73.3, 71.76, 71.21, 71.13, 69.46, 67.97, 67.22, 66.51, 66.62, 67.37, 68.41, 69.35, 67.87, 69.35, 82.8],
-                            borderColor: '#3182ce',
-                            backgroundColor: 'rgba(49, 130, 206, 0.1)',
-                            borderWidth: 2,
-                            fill: true,
-                            tension: 0.4,
-                            pointRadius: 4,
-                            pointBackgroundColor: function(context) {
-                                const index = context.dataIndex;
-                                const isReal = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true];
-                                return isReal[index] ? '#e53e3e' : '#3182ce';  // 真实数据红色，模拟数据蓝色
-                            }
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: { display: false },
-                            tooltip: {
-                                callbacks: {
-                                    afterLabel: function(context) {
-                                        const isReal = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true];
-                                        return isReal[context.dataIndex] ? '真实数据' : '模拟数据';
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            x: { grid: { display: false } },
-                            y: { grid: { color: '#e2e8f0' } }
-                        }
-                    }
-                });
-            </script>
-            
-            <div class="section">
-                <div class="section-title">📊 价格数据说明</div>
-                <div class="analysis-card">
-                    <h4>数据来源</h4>
-                    <p>从今天开始每天记录SMM真实价格。当前显示：</p>
-                    <ul style="margin-left: 20px; margin-top: 10px;">
-                        <li>真实数据：1 天</li>
-                        <li>模拟数据：19 天</li>
-                        <li>累计记录：20 天</li>
-                        <li>预计完成：59 天后全部为真实数据</li>
-                    </ul>
-                    <p style="margin-top: 10px;"><strong>提示：</strong>红色数据点为今日及之后记录的真实价格，蓝色为基于历史波动生成的模拟数据。</p>
-                </div>
-            </div>
-            
-            <div class="footer">
-                <p>🔍 数据来源：SMM上海有色网（每日更新）</p>
-                <p>🔄 数据记录：2026-03-12 | 真实数据累计：1/60 天</p>
-            </div>
+        <div class="footer">
+            <p>🔍 数据来源：SMM上海有色网</p>
+            <p>🔄 更新时间：2026-03-12 | 真实数据 ✅</p>
         </div>
-        
+    </div>
+    
+    <div id="tin" class="page">
+        <div class="page-header">
+            <div class="commodity-info">
+                <div>
+                    <div class="commodity-name">锡</div>
+                    <div class="commodity-symbol">Sn | 小金属</div>
+                </div>
+                <div class="price-display">
+                    <div class="current-price">¥392,650</div>
+                    <div class="price-change down">▼ 1,350 (-0.34%)</div>
+                </div>
+            </div>
+            <p>锡锭（99.9%），电子焊料、镀锡钢板、合金添加剂</p>
+        </div>
+        <div class="section">
+            <div class="section-title">📊 今日价格详情</div>
+            <table>
+                <tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>单位</th></tr>
+                <tr>
+                    <td><strong>锡现货</strong></td>
+                    <td>390600~394700</td>
+                    <td>392,650</td>
+                    <td><span class="badge badge-down">-1,350</span></td>
+                    <td>元/吨</td>
+                </tr>
+            </table>
+        </div>
+        <div class="footer">
+            <p>🔍 数据来源：SMM上海有色网</p>
+            <p>🔄 更新时间：2026-03-12 | 真实数据 ✅</p>
+        </div>
+    </div>
+    
+    <div id="nickel" class="page">
+        <div class="page-header">
+            <div class="commodity-info">
+                <div>
+                    <div class="commodity-name">镍</div>
+                    <div class="commodity-symbol">Ni | 基本金属</div>
+                </div>
+                <div class="price-display">
+                    <div class="current-price">¥140,950</div>
+                    <div class="price-change up">▲ 1,200 (+0.86%)</div>
+                </div>
+            </div>
+            <p>电解镍（99.9%），不锈钢主要原料，三元电池正极材料</p>
+        </div>
+        <div class="section">
+            <div class="section-title">📊 今日价格详情</div>
+            <table>
+                <tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>单位</th></tr>
+                <tr>
+                    <td><strong>镍现货</strong></td>
+                    <td>137100~144800</td>
+                    <td>140,950</td>
+                    <td><span class="badge badge-up">+1,200</span></td>
+                    <td>元/吨</td>
+                </tr>
+            </table>
+        </div>
+        <div class="footer">
+            <p>🔍 数据来源：SMM上海有色网</p>
+            <p>🔄 更新时间：2026-03-12 | 真实数据 ✅</p>
+        </div>
+    </div>
+    
+    <div id="gold" class="page">
+        <div class="page-header">
+            <div class="commodity-info">
+                <div>
+                    <div class="commodity-name">黄金</div>
+                    <div class="commodity-symbol">Au | 贵金属</div>
+                </div>
+                <div class="price-display">
+                    <div class="current-price">¥569.2</div>
+                    <div class="price-change up">▲ 2.8 (+0.49%)</div>
+                </div>
+            </div>
+            <p>Au99.99，避险资产，央行储备</p>
+        </div>
+        <div class="section">
+            <div class="section-title">📊 今日价格详情</div>
+            <table>
+                <tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>单位</th></tr>
+                <tr>
+                    <td><strong>黄金现货</strong></td>
+                    <td>568~570</td>
+                    <td>569.2</td>
+                    <td><span class="badge badge-up">+2.8</span></td>
+                    <td>元/克</td>
+                </tr>
+            </table>
+        </div>
+        <div class="footer">
+            <p>🔍 数据来源：SMM上海有色网</p>
+            <p>🔄 更新时间：2026-03-12 | 真实数据 ✅</p>
+        </div>
+    </div>
+    
+    <div id="silver" class="page">
+        <div class="page-header">
+            <div class="commodity-info">
+                <div>
+                    <div class="commodity-name">白银</div>
+                    <div class="commodity-symbol">Ag | 贵金属</div>
+                </div>
+                <div class="price-display">
+                    <div class="current-price">¥7,875</div>
+                    <div class="price-change up">▲ 38 (+0.48%)</div>
+                </div>
+            </div>
+            <p>Ag99.99，工业用途广泛，光伏、电子、摄影</p>
+        </div>
+        <div class="section">
+            <div class="section-title">📊 今日价格详情</div>
+            <table>
+                <tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>单位</th></tr>
+                <tr>
+                    <td><strong>白银现货</strong></td>
+                    <td>7850~7900</td>
+                    <td>7,875</td>
+                    <td><span class="badge badge-up">+38</span></td>
+                    <td>元/千克</td>
+                </tr>
+            </table>
+        </div>
+        <div class="footer">
+            <p>🔍 数据来源：SMM上海有色网</p>
+            <p>🔄 更新时间：2026-03-12 | 真实数据 ✅</p>
+        </div>
+    </div>
+    
+    <div id="iron-ore" class="page">
+        <div class="page-header">
+            <div class="commodity-info">
+                <div>
+                    <div class="commodity-name">铁矿石</div>
+                    <div class="commodity-symbol">Fe | 黑色金属</div>
+                </div>
+                <div class="price-display">
+                    <div class="current-price">¥990</div>
+                    <div class="price-change up">▲ 15 (+1.54%)</div>
+                </div>
+            </div>
+            <p>PB粉（62%），钢铁生产主要原料</p>
+        </div>
+        <div class="section">
+            <div class="section-title">📊 今日价格详情</div>
+            <table>
+                <tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>单位</th></tr>
+                <tr>
+                    <td><strong>铁矿石现货</strong></td>
+                    <td>980~1000</td>
+                    <td>990</td>
+                    <td><span class="badge badge-up">+15</span></td>
+                    <td>元/吨</td>
+                </tr>
+            </table>
+        </div>
+        <div class="footer">
+            <p>🔍 数据来源：SMM上海有色网</p>
+            <p>🔄 更新时间：2026-03-12 | 真实数据 ✅</p>
+        </div>
+    </div>
+    
+    <div id="abs" class="page">
+        <div class="page-header">
+            <div class="commodity-info">
+                <div>
+                    <div class="commodity-name">ABS塑料</div>
+                    <div class="commodity-symbol">ABS | 化工</div>
+                </div>
+                <div class="price-display">
+                    <div class="current-price">¥12,520</div>
+                    <div class="price-change up">▲ 95 (+0.76%)</div>
+                </div>
+            </div>
+            <p>台湾奇美PA-757，家电、汽车、电子行业常用工程塑料</p>
+        </div>
+        <div class="section">
+            <div class="section-title">📊 今日价格详情</div>
+            <table>
+                <tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>单位</th></tr>
+                <tr>
+                    <td><strong>ABS塑料现货</strong></td>
+                    <td>12400~12640</td>
+                    <td>12,520</td>
+                    <td><span class="badge badge-up">+95</span></td>
+                    <td>元/吨</td>
+                </tr>
+            </table>
+        </div>
+        <div class="footer">
+            <p>🔍 数据来源：SMM上海有色网</p>
+            <p>🔄 更新时间：2026-03-12 | 真实数据 ✅</p>
+        </div>
+    </div>
+    
+    <div id="corrugated-paper" class="page">
+        <div class="page-header">
+            <div class="commodity-info">
+                <div>
+                    <div class="commodity-name">瓦楞纸</div>
+                    <div class="commodity-symbol">瓦楞纸 | 纸业</div>
+                </div>
+                <div class="price-display">
+                    <div class="current-price">¥3,140</div>
+                    <div class="price-change down">▼ 15 (-0.48%)</div>
+                </div>
+            </div>
+            <p>AA级120g，包装行业基础材料</p>
+        </div>
+        <div class="section">
+            <div class="section-title">📊 今日价格详情</div>
+            <table>
+                <tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>单位</th></tr>
+                <tr>
+                    <td><strong>瓦楞纸现货</strong></td>
+                    <td>3100~3180</td>
+                    <td>3,140</td>
+                    <td><span class="badge badge-down">-15</span></td>
+                    <td>元/吨</td>
+                </tr>
+            </table>
+        </div>
+        <div class="footer">
+            <p>🔍 数据来源：SMM上海有色网</p>
+            <p>🔄 更新时间：2026-03-12 | 真实数据 ✅</p>
+        </div>
+    </div>
+    
+    <div id="crude-oil" class="page">
+        <div class="page-header">
+            <div class="commodity-info">
+                <div>
+                    <div class="commodity-name">原油</div>
+                    <div class="commodity-symbol">WTI | 能源</div>
+                </div>
+                <div class="price-display">
+                    <div class="current-price">$82.8</div>
+                    <div class="price-change down">▼ 0.25 (-0.30%)</div>
+                </div>
+            </div>
+            <p>WTI原油，全球最重要能源和化工原料</p>
+        </div>
+        <div class="section">
+            <div class="section-title">📊 今日价格详情</div>
+            <table>
+                <tr><th>规格</th><th>价格区间</th><th>均价</th><th>涨跌</th><th>单位</th></tr>
+                <tr>
+                    <td><strong>原油现货</strong></td>
+                    <td>82.0~83.6</td>
+                    <td>82.8</td>
+                    <td><span class="badge badge-down">-0.25</span></td>
+                    <td>美元/桶</td>
+                </tr>
+            </table>
+        </div>
+        <div class="footer">
+            <p>🔍 数据来源：SMM上海有色网</p>
+            <p>🔄 更新时间：2026-03-12 | 真实数据 ✅</p>
+        </div>
+    </div>
+    
     </div>
 </body>
 </html>
