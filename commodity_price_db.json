@@ -1,0 +1,3786 @@
+{
+  "start_date": "2026-03-12",
+  "last_update": "2026-03-12",
+  "commodities": {
+    "lithium-carbonate": {
+      "name": "碳酸锂",
+      "unit": "元/吨",
+      "base_price": 159500,
+      "price_history": [
+        {
+          "date": "2026-01-12",
+          "price": 161792.35,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-13",
+          "price": 163486.83,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-14",
+          "price": 164446.29,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-15",
+          "price": 165406.26,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-16",
+          "price": 164993.74,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-17",
+          "price": 163765.29,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-18",
+          "price": 163094.99,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-19",
+          "price": 167084.02,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-20",
+          "price": 165081.94,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-21",
+          "price": 161271.72,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-22",
+          "price": 159288.07,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-23",
+          "price": 160710.36,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-24",
+          "price": 161123.68,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-25",
+          "price": 163044.28,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-26",
+          "price": 166384.29,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-27",
+          "price": 164568.87,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-28",
+          "price": 166033.32,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-29",
+          "price": 167994.39,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-30",
+          "price": 169004.2,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-31",
+          "price": 168727.86,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-01",
+          "price": 168156.54,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-02",
+          "price": 171529.04,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-03",
+          "price": 169961.85,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-04",
+          "price": 170592.97,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-05",
+          "price": 169718.54,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-06",
+          "price": 170871.08,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-07",
+          "price": 167496.23,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-08",
+          "price": 170212.32,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-09",
+          "price": 173697.38,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-10",
+          "price": 177424.24,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-11",
+          "price": 180089.49,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-12",
+          "price": 176653.15,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-13",
+          "price": 177637.43,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-14",
+          "price": 181179.99,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-15",
+          "price": 185655.18,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-16",
+          "price": 190228.09,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-17",
+          "price": 189490.06,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-18",
+          "price": 187928.85,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-19",
+          "price": 190293.87,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-20",
+          "price": 190025.71,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-21",
+          "price": 188477.03,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-22",
+          "price": 186008.15,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-23",
+          "price": 187135.53,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-24",
+          "price": 185750.0,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-25",
+          "price": 189341.75,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-26",
+          "price": 191838.57,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-27",
+          "price": 188716.87,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-28",
+          "price": 187853.17,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-01",
+          "price": 185373.75,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-02",
+          "price": 184713.92,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-03",
+          "price": 180528.96,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-04",
+          "price": 183906.16,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-05",
+          "price": 179757.29,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-06",
+          "price": 182455.58,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-07",
+          "price": 177961.92,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-08",
+          "price": 181359.05,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-09",
+          "price": 184087.48,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-10",
+          "price": 181013.13,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-11",
+          "price": 178326.92,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-12",
+          "price": 159500,
+          "is_real": true
+        }
+      ],
+      "daily_records": {
+        "2026-03-12": {
+          "price": 159500,
+          "change": 0,
+          "change_percent": 0,
+          "is_real": true
+        }
+      }
+    },
+    "lithium-hydroxide": {
+      "name": "氢氧化锂",
+      "unit": "元/吨",
+      "base_price": 153000,
+      "price_history": [
+        {
+          "date": "2026-01-12",
+          "price": 156704.61,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-13",
+          "price": 153067.43,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-14",
+          "price": 149716.72,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-15",
+          "price": 148867.34,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-16",
+          "price": 151032.55,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-17",
+          "price": 153537.51,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-18",
+          "price": 152235.99,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-19",
+          "price": 148810.48,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-20",
+          "price": 150239.51,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-21",
+          "price": 147790.35,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-22",
+          "price": 150445.1,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-23",
+          "price": 148105.72,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-24",
+          "price": 149646.9,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-25",
+          "price": 152393.0,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-26",
+          "price": 153808.16,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-27",
+          "price": 150383.88,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-28",
+          "price": 147912.61,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-29",
+          "price": 150472.9,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-30",
+          "price": 151887.98,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-31",
+          "price": 153050.47,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-01",
+          "price": 155477.11,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-02",
+          "price": 157461.52,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-03",
+          "price": 161164.53,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-04",
+          "price": 164256.73,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-05",
+          "price": 166343.68,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-06",
+          "price": 165810.11,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-07",
+          "price": 166942.4,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-08",
+          "price": 168421.49,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-09",
+          "price": 166193.41,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-10",
+          "price": 163908.28,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-11",
+          "price": 162529.37,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-12",
+          "price": 166347.38,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-13",
+          "price": 170062.83,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-14",
+          "price": 167356.41,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-15",
+          "price": 165394.67,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-16",
+          "price": 165173.9,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-17",
+          "price": 165389.09,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-18",
+          "price": 165121.31,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-19",
+          "price": 163073.44,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-20",
+          "price": 163996.95,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-21",
+          "price": 162296.29,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-22",
+          "price": 160070.41,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-23",
+          "price": 161817.67,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-24",
+          "price": 163223.04,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-25",
+          "price": 164661.34,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-26",
+          "price": 167166.93,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-27",
+          "price": 163656.53,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-28",
+          "price": 159779.03,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-01",
+          "price": 159195.99,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-02",
+          "price": 158401.28,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-03",
+          "price": 157281.99,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-04",
+          "price": 158187.97,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-05",
+          "price": 157516.76,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-06",
+          "price": 154615.51,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-07",
+          "price": 155778.52,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-08",
+          "price": 157610.32,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-09",
+          "price": 155113.73,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-10",
+          "price": 155631.7,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-11",
+          "price": 153050.99,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-12",
+          "price": 153000,
+          "is_real": true
+        }
+      ],
+      "daily_records": {
+        "2026-03-12": {
+          "price": 153000,
+          "change": 0,
+          "change_percent": 0,
+          "is_real": true
+        }
+      }
+    },
+    "copper": {
+      "name": "铜",
+      "unit": "元/吨",
+      "base_price": 72450,
+      "price_history": [
+        {
+          "date": "2026-01-12",
+          "price": 70974.81,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-13",
+          "price": 71569.63,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-14",
+          "price": 72547.08,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-15",
+          "price": 72748.05,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-16",
+          "price": 74497.94,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-17",
+          "price": 76016.87,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-18",
+          "price": 77832.42,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-19",
+          "price": 77110.71,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-20",
+          "price": 75825.57,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-21",
+          "price": 75542.88,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-22",
+          "price": 76067.94,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-23",
+          "price": 75428.73,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-24",
+          "price": 75679.52,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-25",
+          "price": 73864.72,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-26",
+          "price": 73268.94,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-27",
+          "price": 74149.21,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-28",
+          "price": 74100.34,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-29",
+          "price": 74741.47,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-30",
+          "price": 76290.49,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-31",
+          "price": 74841.92,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-01",
+          "price": 73904.74,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-02",
+          "price": 72884.76,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-03",
+          "price": 72584.69,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-04",
+          "price": 71887.83,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-05",
+          "price": 73610.43,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-06",
+          "price": 73016.81,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-07",
+          "price": 73297.25,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-08",
+          "price": 71836.7,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-09",
+          "price": 72350.6,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-10",
+          "price": 72674.5,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-11",
+          "price": 72088.86,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-12",
+          "price": 70542.3,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-13",
+          "price": 69394.67,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-14",
+          "price": 70128.6,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-15",
+          "price": 71301.58,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-16",
+          "price": 72273.38,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-17",
+          "price": 73190.71,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-18",
+          "price": 72514.66,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-19",
+          "price": 73120.51,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-20",
+          "price": 74654.73,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-21",
+          "price": 73641.4,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-22",
+          "price": 72149.36,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-23",
+          "price": 71334.51,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-24",
+          "price": 69920.57,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-25",
+          "price": 68917.41,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-26",
+          "price": 69048.56,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-27",
+          "price": 69247.56,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-28",
+          "price": 70916.86,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-01",
+          "price": 70928.57,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-02",
+          "price": 69302.11,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-03",
+          "price": 70093.25,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-04",
+          "price": 71379.06,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-05",
+          "price": 69978.49,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-06",
+          "price": 69182.45,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-07",
+          "price": 68771.19,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-08",
+          "price": 70357.06,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-09",
+          "price": 71581.6,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-10",
+          "price": 70348.04,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-11",
+          "price": 69508.59,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-12",
+          "price": 72450,
+          "is_real": true
+        }
+      ],
+      "daily_records": {
+        "2026-03-12": {
+          "price": 72450,
+          "change": 0,
+          "change_percent": 0,
+          "is_real": true
+        }
+      }
+    },
+    "aluminum": {
+      "name": "铝",
+      "unit": "元/吨",
+      "base_price": 18580,
+      "price_history": [
+        {
+          "date": "2026-01-12",
+          "price": 18522.36,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-13",
+          "price": 18871.37,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-14",
+          "price": 18688.39,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-15",
+          "price": 18895.57,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-16",
+          "price": 19350.62,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-17",
+          "price": 19097.83,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-18",
+          "price": 18990.21,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-19",
+          "price": 18953.86,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-20",
+          "price": 19106.39,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-21",
+          "price": 19262.16,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-22",
+          "price": 19707.17,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-23",
+          "price": 19344.13,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-24",
+          "price": 19143.26,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-25",
+          "price": 18777.17,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-26",
+          "price": 18648.06,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-27",
+          "price": 18275.24,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-28",
+          "price": 17910.71,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-29",
+          "price": 17691.73,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-30",
+          "price": 18019.51,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-31",
+          "price": 17997.09,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-01",
+          "price": 17570.17,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-02",
+          "price": 17736.99,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-03",
+          "price": 17504.11,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-04",
+          "price": 17482.71,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-05",
+          "price": 17338.92,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-06",
+          "price": 17296.44,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-07",
+          "price": 17313.24,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-08",
+          "price": 17335.79,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-09",
+          "price": 17063.47,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-10",
+          "price": 17425.28,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-11",
+          "price": 17632.28,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-12",
+          "price": 17483.61,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-13",
+          "price": 17127.25,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-14",
+          "price": 17007.53,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-15",
+          "price": 16614.86,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-16",
+          "price": 16346.06,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-17",
+          "price": 15950.54,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-18",
+          "price": 15610.12,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-19",
+          "price": 15891.84,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-20",
+          "price": 16194.05,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-21",
+          "price": 16376.23,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-22",
+          "price": 16621.96,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-23",
+          "price": 16506.5,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-24",
+          "price": 16664.98,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-25",
+          "price": 16263.81,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-26",
+          "price": 16584.85,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-27",
+          "price": 16620.45,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-28",
+          "price": 16783.27,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-01",
+          "price": 16718.88,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-02",
+          "price": 16626.19,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-03",
+          "price": 16939.64,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-04",
+          "price": 17089.08,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-05",
+          "price": 17063.01,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-06",
+          "price": 16777.19,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-07",
+          "price": 16381.95,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-08",
+          "price": 16284.0,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-09",
+          "price": 16292.04,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-10",
+          "price": 16693.51,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-11",
+          "price": 16722.24,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-12",
+          "price": 18580,
+          "is_real": true
+        }
+      ],
+      "daily_records": {
+        "2026-03-12": {
+          "price": 18580,
+          "change": 0,
+          "change_percent": 0,
+          "is_real": true
+        }
+      }
+    },
+    "tin": {
+      "name": "锡",
+      "unit": "元/吨",
+      "base_price": 246200,
+      "price_history": [
+        {
+          "date": "2026-01-12",
+          "price": 248297.15,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-13",
+          "price": 246415.8,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-14",
+          "price": 242275.31,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-15",
+          "price": 247735.95,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-16",
+          "price": 253367.93,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-17",
+          "price": 255313.7,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-18",
+          "price": 253124.45,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-19",
+          "price": 249803.31,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-20",
+          "price": 247705.41,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-21",
+          "price": 252345.16,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-22",
+          "price": 256352.11,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-23",
+          "price": 250296.1,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-24",
+          "price": 246484.53,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-25",
+          "price": 249588.12,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-26",
+          "price": 244361.29,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-27",
+          "price": 240086.84,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-28",
+          "price": 241222.37,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-29",
+          "price": 236830.05,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-30",
+          "price": 233204.27,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-31",
+          "price": 228262.21,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-01",
+          "price": 223805.82,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-02",
+          "price": 219667.23,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-03",
+          "price": 222548.56,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-04",
+          "price": 222989.46,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-05",
+          "price": 227626.49,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-06",
+          "price": 227745.95,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-07",
+          "price": 232950.36,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-08",
+          "price": 235868.71,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-09",
+          "price": 235308.77,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-10",
+          "price": 240947.05,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-11",
+          "price": 239370.49,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-12",
+          "price": 245178.9,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-13",
+          "price": 248447.96,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-14",
+          "price": 245724.59,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-15",
+          "price": 250010.93,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-16",
+          "price": 251128.14,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-17",
+          "price": 250272.65,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-18",
+          "price": 254831.71,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-19",
+          "price": 254133.56,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-20",
+          "price": 258217.98,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-21",
+          "price": 252535.02,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-22",
+          "price": 251469.27,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-23",
+          "price": 248155.39,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-24",
+          "price": 248876.78,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-25",
+          "price": 244159.88,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-26",
+          "price": 242776.94,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-27",
+          "price": 244654.21,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-28",
+          "price": 241035.77,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-01",
+          "price": 243381.24,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-02",
+          "price": 239220.19,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-03",
+          "price": 242747.85,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-04",
+          "price": 246771.45,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-05",
+          "price": 244554.74,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-06",
+          "price": 244710.91,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-07",
+          "price": 243575.11,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-08",
+          "price": 241538.73,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-09",
+          "price": 237980.29,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-10",
+          "price": 240988.87,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-11",
+          "price": 243894.25,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-12",
+          "price": 246200,
+          "is_real": true
+        }
+      ],
+      "daily_records": {
+        "2026-03-12": {
+          "price": 246200,
+          "change": 0,
+          "change_percent": 0,
+          "is_real": true
+        }
+      }
+    },
+    "nickel": {
+      "name": "镍",
+      "unit": "元/吨",
+      "base_price": 133500,
+      "price_history": [
+        {
+          "date": "2026-01-12",
+          "price": 133983.26,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-13",
+          "price": 135133.1,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-14",
+          "price": 135437.69,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-15",
+          "price": 138812.44,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-16",
+          "price": 140341.68,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-17",
+          "price": 138070.11,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-18",
+          "price": 140987.86,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-19",
+          "price": 144246.59,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-20",
+          "price": 145296.62,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-21",
+          "price": 141779.24,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-22",
+          "price": 138645.95,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-23",
+          "price": 139924.17,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-24",
+          "price": 137603.43,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-25",
+          "price": 140237.68,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-26",
+          "price": 142458.79,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-27",
+          "price": 144734.91,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-28",
+          "price": 142526.01,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-29",
+          "price": 139805.77,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-30",
+          "price": 137678.96,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-31",
+          "price": 139711.91,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-01",
+          "price": 142011.61,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-02",
+          "price": 139536.83,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-03",
+          "price": 137619.89,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-04",
+          "price": 137336.15,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-05",
+          "price": 137828.48,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-06",
+          "price": 138900.11,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-07",
+          "price": 136169.43,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-08",
+          "price": 137088.86,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-09",
+          "price": 134863.69,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-10",
+          "price": 138148.16,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-11",
+          "price": 137886.78,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-12",
+          "price": 139483.0,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-13",
+          "price": 141572.25,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-14",
+          "price": 144310.66,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-15",
+          "price": 145152.43,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-16",
+          "price": 146124.77,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-17",
+          "price": 148032.24,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-18",
+          "price": 144342.79,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-19",
+          "price": 146385.15,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-20",
+          "price": 150019.21,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-21",
+          "price": 151242.37,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-22",
+          "price": 149886.06,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-23",
+          "price": 153127.95,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-24",
+          "price": 150363.43,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-25",
+          "price": 153340.05,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-26",
+          "price": 156506.18,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-27",
+          "price": 154483.3,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-28",
+          "price": 155065.55,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-01",
+          "price": 151404.76,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-02",
+          "price": 150179.73,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-03",
+          "price": 149727.96,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-04",
+          "price": 148372.97,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-05",
+          "price": 149968.54,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-06",
+          "price": 146687.77,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-07",
+          "price": 147781.57,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-08",
+          "price": 144607.61,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-09",
+          "price": 146588.87,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-10",
+          "price": 144606.28,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-11",
+          "price": 145667.11,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-12",
+          "price": 133500,
+          "is_real": true
+        }
+      ],
+      "daily_records": {
+        "2026-03-12": {
+          "price": 133500,
+          "change": 0,
+          "change_percent": 0,
+          "is_real": true
+        }
+      }
+    },
+    "gold": {
+      "name": "黄金",
+      "unit": "元/克",
+      "base_price": 569.2,
+      "price_history": [
+        {
+          "date": "2026-01-12",
+          "price": 569.04,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-13",
+          "price": 574.21,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-14",
+          "price": 568.61,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-15",
+          "price": 569.75,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-16",
+          "price": 565.5,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-17",
+          "price": 561.07,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-18",
+          "price": 568.7,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-19",
+          "price": 556.33,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-20",
+          "price": 563.81,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-21",
+          "price": 553.63,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-22",
+          "price": 551.44,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-23",
+          "price": 546.33,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-24",
+          "price": 554.27,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-25",
+          "price": 563.49,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-26",
+          "price": 576.96,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-27",
+          "price": 586.33,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-28",
+          "price": 592.92,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-29",
+          "price": 593.0,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-30",
+          "price": 590.16,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-31",
+          "price": 594.46,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-01",
+          "price": 592.68,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-02",
+          "price": 602.51,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-03",
+          "price": 611.76,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-04",
+          "price": 599.21,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-05",
+          "price": 609.91,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-06",
+          "price": 604.32,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-07",
+          "price": 606.79,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-08",
+          "price": 594.99,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-09",
+          "price": 585.97,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-10",
+          "price": 586.43,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-11",
+          "price": 597.6,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-12",
+          "price": 609.08,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-13",
+          "price": 607.55,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-14",
+          "price": 605.48,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-15",
+          "price": 614.36,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-16",
+          "price": 618.84,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-17",
+          "price": 611.06,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-18",
+          "price": 618.22,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-19",
+          "price": 609.53,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-20",
+          "price": 607.79,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-21",
+          "price": 601.49,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-22",
+          "price": 596.11,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-23",
+          "price": 594.14,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-24",
+          "price": 582.81,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-25",
+          "price": 587.41,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-26",
+          "price": 573.15,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-27",
+          "price": 565.54,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-28",
+          "price": 557.69,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-01",
+          "price": 565.1,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-02",
+          "price": 563.08,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-03",
+          "price": 569.28,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-04",
+          "price": 557.33,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-05",
+          "price": 548.55,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-06",
+          "price": 551.86,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-07",
+          "price": 543.91,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-08",
+          "price": 550.15,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-09",
+          "price": 552.49,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-10",
+          "price": 539.79,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-11",
+          "price": 544.33,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-12",
+          "price": 569.2,
+          "is_real": true
+        }
+      ],
+      "daily_records": {
+        "2026-03-12": {
+          "price": 569.2,
+          "change": 0,
+          "change_percent": 0,
+          "is_real": true
+        }
+      }
+    },
+    "silver": {
+      "name": "白银",
+      "unit": "元/千克",
+      "base_price": 7875,
+      "price_history": [
+        {
+          "date": "2026-01-12",
+          "price": 8065.21,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-13",
+          "price": 7871.46,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-14",
+          "price": 7881.12,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-15",
+          "price": 8029.5,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-16",
+          "price": 8083.36,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-17",
+          "price": 8005.09,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-18",
+          "price": 8163.97,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-19",
+          "price": 8193.15,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-20",
+          "price": 8070.26,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-21",
+          "price": 8004.62,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-22",
+          "price": 7951.75,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-23",
+          "price": 7843.25,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-24",
+          "price": 7813.01,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-25",
+          "price": 7877.33,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-26",
+          "price": 8038.38,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-27",
+          "price": 8212.49,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-28",
+          "price": 8247.81,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-29",
+          "price": 8324.0,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-30",
+          "price": 8130.6,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-31",
+          "price": 8208.8,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-01",
+          "price": 8294.98,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-02",
+          "price": 8341.33,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-03",
+          "price": 8275.56,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-04",
+          "price": 8161.1,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-05",
+          "price": 8131.3,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-06",
+          "price": 8273.06,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-07",
+          "price": 8463.63,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-08",
+          "price": 8331.77,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-09",
+          "price": 8444.96,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-10",
+          "price": 8549.73,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-11",
+          "price": 8384.54,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-12",
+          "price": 8175.9,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-13",
+          "price": 8172.34,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-14",
+          "price": 8173.85,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-15",
+          "price": 8315.22,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-16",
+          "price": 8315.5,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-17",
+          "price": 8353.35,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-18",
+          "price": 8283.97,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-19",
+          "price": 8490.68,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-20",
+          "price": 8364.24,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-21",
+          "price": 8209.83,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-22",
+          "price": 8068.82,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-23",
+          "price": 7997.9,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-24",
+          "price": 8010.88,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-25",
+          "price": 7857.49,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-26",
+          "price": 7888.45,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-27",
+          "price": 8077.36,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-28",
+          "price": 7987.95,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-01",
+          "price": 7943.03,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-02",
+          "price": 8009.21,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-03",
+          "price": 8201.6,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-04",
+          "price": 8115.07,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-05",
+          "price": 8249.25,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-06",
+          "price": 8357.81,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-07",
+          "price": 8220.41,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-08",
+          "price": 8383.82,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-09",
+          "price": 8192.78,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-10",
+          "price": 8353.58,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-11",
+          "price": 8373.65,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-12",
+          "price": 7875,
+          "is_real": true
+        }
+      ],
+      "daily_records": {
+        "2026-03-12": {
+          "price": 7875,
+          "change": 0,
+          "change_percent": 0,
+          "is_real": true
+        }
+      }
+    },
+    "iron-ore": {
+      "name": "铁矿石",
+      "unit": "元/吨",
+      "base_price": 990,
+      "price_history": [
+        {
+          "date": "2026-01-12",
+          "price": 977.45,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-13",
+          "price": 967.89,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-14",
+          "price": 986.43,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-15",
+          "price": 973.99,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-16",
+          "price": 981.87,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-17",
+          "price": 979.39,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-18",
+          "price": 982.83,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-19",
+          "price": 987.54,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-20",
+          "price": 1005.37,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-21",
+          "price": 983.93,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-22",
+          "price": 981.7,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-23",
+          "price": 965.33,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-24",
+          "price": 971.85,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-25",
+          "price": 956.08,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-26",
+          "price": 960.03,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-27",
+          "price": 939.07,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-28",
+          "price": 939.52,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-29",
+          "price": 944.3,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-30",
+          "price": 921.53,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-31",
+          "price": 920.78,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-01",
+          "price": 905.26,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-02",
+          "price": 909.95,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-03",
+          "price": 894.46,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-04",
+          "price": 874.46,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-05",
+          "price": 868.63,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-06",
+          "price": 882.5,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-07",
+          "price": 869.86,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-08",
+          "price": 884.7,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-09",
+          "price": 897.84,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-10",
+          "price": 884.89,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-11",
+          "price": 901.7,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-12",
+          "price": 888.43,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-13",
+          "price": 882.99,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-14",
+          "price": 866.76,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-15",
+          "price": 847.56,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-16",
+          "price": 860.51,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-17",
+          "price": 851.3,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-18",
+          "price": 850.39,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-19",
+          "price": 865.18,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-20",
+          "price": 846.54,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-21",
+          "price": 829.45,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-22",
+          "price": 834.39,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-23",
+          "price": 828.13,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-24",
+          "price": 841.17,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-25",
+          "price": 821.0,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-26",
+          "price": 822.15,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-27",
+          "price": 814.73,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-28",
+          "price": 795.63,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-01",
+          "price": 802.68,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-02",
+          "price": 787.71,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-03",
+          "price": 802.55,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-04",
+          "price": 808.63,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-05",
+          "price": 790.47,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-06",
+          "price": 787.02,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-07",
+          "price": 783.83,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-08",
+          "price": 778.75,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-09",
+          "price": 790.7,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-10",
+          "price": 797.36,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-11",
+          "price": 808.97,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-12",
+          "price": 990,
+          "is_real": true
+        }
+      ],
+      "daily_records": {
+        "2026-03-12": {
+          "price": 990,
+          "change": 0,
+          "change_percent": 0,
+          "is_real": true
+        }
+      }
+    },
+    "abs": {
+      "name": "ABS塑料",
+      "unit": "元/吨",
+      "base_price": 12520,
+      "price_history": [
+        {
+          "date": "2026-01-12",
+          "price": 12265.31,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-13",
+          "price": 12437.67,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-14",
+          "price": 12366.45,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-15",
+          "price": 12346.03,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-16",
+          "price": 12509.41,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-17",
+          "price": 12529.31,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-18",
+          "price": 12803.0,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-19",
+          "price": 12833.16,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-20",
+          "price": 13119.13,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-21",
+          "price": 12867.53,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-22",
+          "price": 12865.74,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-23",
+          "price": 12655.34,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-24",
+          "price": 12438.92,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-25",
+          "price": 12475.2,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-26",
+          "price": 12454.53,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-27",
+          "price": 12446.6,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-28",
+          "price": 12143.22,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-29",
+          "price": 11912.49,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-30",
+          "price": 11714.13,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-31",
+          "price": 11470.85,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-01",
+          "price": 11208.31,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-02",
+          "price": 11151.31,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-03",
+          "price": 10933.62,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-04",
+          "price": 11149.93,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-05",
+          "price": 11029.02,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-06",
+          "price": 11250.73,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-07",
+          "price": 11048.14,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-08",
+          "price": 11022.2,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-09",
+          "price": 10748.93,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-10",
+          "price": 10768.6,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-11",
+          "price": 10860.5,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-12",
+          "price": 10782.58,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-13",
+          "price": 10812.97,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-14",
+          "price": 10667.69,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-15",
+          "price": 10585.85,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-16",
+          "price": 10829.52,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-17",
+          "price": 10993.58,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-18",
+          "price": 10951.36,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-19",
+          "price": 10732.06,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-20",
+          "price": 10759.53,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-21",
+          "price": 10528.68,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-22",
+          "price": 10529.12,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-23",
+          "price": 10416.45,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-24",
+          "price": 10305.46,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-25",
+          "price": 10161.34,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-26",
+          "price": 10252.68,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-27",
+          "price": 10253.17,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-28",
+          "price": 10099.38,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-01",
+          "price": 10118.91,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-02",
+          "price": 10337.45,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-03",
+          "price": 10307.43,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-04",
+          "price": 10293.01,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-05",
+          "price": 10525.59,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-06",
+          "price": 10644.76,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-07",
+          "price": 10413.06,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-08",
+          "price": 10573.28,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-09",
+          "price": 10544.71,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-10",
+          "price": 10771.09,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-11",
+          "price": 10846.43,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-12",
+          "price": 12520,
+          "is_real": true
+        }
+      ],
+      "daily_records": {
+        "2026-03-12": {
+          "price": 12520,
+          "change": 0,
+          "change_percent": 0,
+          "is_real": true
+        }
+      }
+    },
+    "corrugated-paper": {
+      "name": "瓦楞纸",
+      "unit": "元/吨",
+      "base_price": 3140,
+      "price_history": [
+        {
+          "date": "2026-01-12",
+          "price": 3138.19,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-13",
+          "price": 3128.45,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-14",
+          "price": 3110.2,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-15",
+          "price": 3113.1,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-16",
+          "price": 3167.05,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-17",
+          "price": 3121.78,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-18",
+          "price": 3078.59,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-19",
+          "price": 3043.68,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-20",
+          "price": 3080.85,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-21",
+          "price": 3057.48,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-22",
+          "price": 3032.15,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-23",
+          "price": 3071.07,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-24",
+          "price": 3023.21,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-25",
+          "price": 2961.51,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-26",
+          "price": 2967.73,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-27",
+          "price": 2954.95,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-28",
+          "price": 2922.21,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-29",
+          "price": 2869.94,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-30",
+          "price": 2798.3,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-31",
+          "price": 2790.49,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-01",
+          "price": 2853.0,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-02",
+          "price": 2826.33,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-03",
+          "price": 2894.54,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-04",
+          "price": 2878.93,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-05",
+          "price": 2889.96,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-06",
+          "price": 2862.71,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-07",
+          "price": 2916.97,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-08",
+          "price": 2860.64,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-09",
+          "price": 2874.38,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-10",
+          "price": 2842.61,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-11",
+          "price": 2803.39,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-12",
+          "price": 2871.09,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-13",
+          "price": 2855.57,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-14",
+          "price": 2829.81,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-15",
+          "price": 2866.5,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-16",
+          "price": 2930.07,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-17",
+          "price": 2939.6,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-18",
+          "price": 2884.02,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-19",
+          "price": 2911.79,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-20",
+          "price": 2970.72,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-21",
+          "price": 2912.33,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-22",
+          "price": 2842.42,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-23",
+          "price": 2881.7,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-24",
+          "price": 2917.03,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-25",
+          "price": 2923.19,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-26",
+          "price": 2860.98,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-27",
+          "price": 2889.62,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-28",
+          "price": 2881.59,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-01",
+          "price": 2948.44,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-02",
+          "price": 2984.82,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-03",
+          "price": 2920.39,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-04",
+          "price": 2985.04,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-05",
+          "price": 2962.58,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-06",
+          "price": 2915.9,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-07",
+          "price": 2890.41,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-08",
+          "price": 2822.73,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-09",
+          "price": 2835.36,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-10",
+          "price": 2879.04,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-11",
+          "price": 2816.19,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-12",
+          "price": 3140,
+          "is_real": true
+        }
+      ],
+      "daily_records": {
+        "2026-03-12": {
+          "price": 3140,
+          "change": 0,
+          "change_percent": 0,
+          "is_real": true
+        }
+      }
+    },
+    "crude-oil": {
+      "name": "原油",
+      "unit": "美元/桶",
+      "base_price": 82.8,
+      "price_history": [
+        {
+          "date": "2026-01-12",
+          "price": 80.98,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-13",
+          "price": 79.76,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-14",
+          "price": 80.66,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-15",
+          "price": 81.09,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-16",
+          "price": 79.97,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-17",
+          "price": 80.92,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-18",
+          "price": 79.13,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-19",
+          "price": 77.99,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-20",
+          "price": 77.1,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-21",
+          "price": 77.41,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-22",
+          "price": 78.13,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-23",
+          "price": 77.24,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-24",
+          "price": 75.52,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-25",
+          "price": 73.82,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-26",
+          "price": 74.9,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-27",
+          "price": 73.48,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-28",
+          "price": 73.95,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-29",
+          "price": 74.05,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-30",
+          "price": 72.43,
+          "is_real": false
+        },
+        {
+          "date": "2026-01-31",
+          "price": 72.8,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-01",
+          "price": 72.16,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-02",
+          "price": 73.17,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-03",
+          "price": 73.4,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-04",
+          "price": 73.38,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-05",
+          "price": 73.46,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-06",
+          "price": 74.3,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-07",
+          "price": 73.03,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-08",
+          "price": 72.13,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-09",
+          "price": 72.91,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-10",
+          "price": 72.01,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-11",
+          "price": 71.56,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-12",
+          "price": 72.15,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-13",
+          "price": 71.75,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-14",
+          "price": 72.82,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-15",
+          "price": 74.52,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-16",
+          "price": 73.34,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-17",
+          "price": 74.34,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-18",
+          "price": 72.94,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-19",
+          "price": 74.37,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-20",
+          "price": 73.4,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-21",
+          "price": 73.06,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-22",
+          "price": 72.74,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-23",
+          "price": 73.88,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-24",
+          "price": 72.55,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-25",
+          "price": 72.36,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-26",
+          "price": 73.3,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-27",
+          "price": 71.76,
+          "is_real": false
+        },
+        {
+          "date": "2026-02-28",
+          "price": 71.21,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-01",
+          "price": 71.13,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-02",
+          "price": 69.46,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-03",
+          "price": 67.97,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-04",
+          "price": 67.22,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-05",
+          "price": 66.51,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-06",
+          "price": 66.62,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-07",
+          "price": 67.37,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-08",
+          "price": 68.41,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-09",
+          "price": 69.35,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-10",
+          "price": 67.87,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-11",
+          "price": 69.35,
+          "is_real": false
+        },
+        {
+          "date": "2026-03-12",
+          "price": 82.8,
+          "is_real": true
+        }
+      ],
+      "daily_records": {
+        "2026-03-12": {
+          "price": 82.8,
+          "change": 0,
+          "change_percent": 0,
+          "is_real": true
+        }
+      }
+    }
+  }
+}

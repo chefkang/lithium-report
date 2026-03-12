@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大宗商品数据录入 - 生成监控系统</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; background: #f7fafc; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { color: #1a365d; margin-bottom: 10px; }
+        .subtitle { color: #718096; margin-bottom: 30px; }
+        .instructions { background: #ebf8ff; border-left: 4px solid #3182ce; padding: 15px; margin-bottom: 30px; border-radius: 4px; }
+        .instructions h3 { color: #1a365d; margin-bottom: 10px; }
+        .instructions ol { margin-left: 20px; color: #2d3748; }
+        .instructions li { margin-bottom: 5px; }
+        .commodity-form { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .form-header { display: flex; align-items: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #e2e8f0; }
+        .form-header h2 { color: #1a365d; font-size: 18px; }
+        .form-header .tag { background: #3182ce; color: white; padding: 2px 8px; border-radius: 4px; font-size: 12px; margin-left: 10px; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 15px; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group label { font-size: 13px; color: #4a5568; margin-bottom: 5px; font-weight: 600; }
+        .form-group input, .form-group textarea { padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 4px; font-size: 14px; }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: #3182ce; }
+        .price-trend-input { width: 100%; min-height: 120px; font-family: monospace; font-size: 12px; }
+        .btn-generate { background: #1a365d; color: white; padding: 12px 24px; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; margin-top: 30px; width: 100%; }
+        .btn-generate:hover { background: #2c5282; }
+        .output-section { margin-top: 30px; background: white; padding: 20px; border-radius: 8px; }
+        .output-section h3 { color: #1a365d; margin-bottom: 15px; }
+        textarea#output { width: 100%; min-height: 400px; font-family: monospace; font-size: 11px; padding: 10px; border: 1px solid #e2e8f0; border-radius: 4px; }
+        .copy-btn { background: #48bb78; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 大宗商品数据录入系统</h1>
+        <p class="subtitle">从SMM、生意社等网站复制真实数据，生成完整监控网页</p>
+        
+        <div class="instructions">
+            <h3>使用说明</h3>
+            <ol>
+                <li>打开 SMM上海有色网 (www.smm.cn) 或 生意社 (www.100ppi.com)</li>
+                <li>找到对应商品的今日价格、涨跌幅、近20天价格走势</li>
+                <li>复制数据到下方表单对应位置</li>
+                <li>点击"生成网页"按钮，自动生成完整HTML代码</li>
+                <li>复制生成的代码，替换GitHub仓库中的 index.html</li>
+            </ol>
+        </div>
+
+        <form id="dataForm">
+            <!-- 1. 碳酸锂 -->
+            <div class="commodity-form">
+                <div class="form-header">
+                    <h2>1. 碳酸锂</h2>
+                    <span class="tag">Li₂CO₃</span>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>今日价格 (元/吨)</label>
+                        <input type="number" id="li-c-price" placeholder="例如: 159500" required>
+                    </div>
+                    <div class="form-group">
+                        <label>涨跌额 (元)</label>
+                        <input type="number" id="li-c-change" placeholder="例如: 800" required>
+                    </div>
+                    <div class="form-group">
+                        <label>涨跌幅 (%)</label>
+                        <input type="number" step="0.01" id="li-c-change-pct" placeholder="例如: 0.50" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>近20天价格数据 (格式: 日期 价格，每行一条)</label>
+                    <textarea class="price-trend-input" id="li-c-trend" placeholder="03-12 159500
+03-11 158700
+03-10 158000
+..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>最新新闻 (3条，格式: 标题 | 来源)</label>
+                    <textarea id="li-c-news" placeholder="碳酸锂现货价格上涨800元/吨 | SMM上海有色网
+下游采购意愿增强，成交活跃 | 行业快讯
+供应端库存下降，支撑价格 | 期货日报" rows="3"></textarea>
+                </div>
+            </div>
+
+            <!-- 2. 氢氧化锂 -->
+            <div class="commodity-form">
+                <div class="form-header">
+                    <h2>2. 氢氧化锂</h2>
+                    <span class="tag">LiOH·H₂O</span>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>今日价格 (元/吨)</label>
+                        <input type="number" id="li-h-price" placeholder="例如: 153000" required>
+                    </div>
+                    <div class="form-group">
+                        <label>涨跌额 (元)</label>
+                        <input type="number" id="li-h-change" placeholder="例如: -700" required>
+                    </div>
+                    <div class="form-group">
+                        <label>涨跌幅 (%)</label>
+                        <input type="number" step="0.01" id="li-h-change-pct" placeholder="例如: -0.46" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>近20天价格数据</label>
+                    <textarea class="price-trend-input" id="li-h-trend" placeholder="03-12 153000
+03-11 153700
+..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>最新新闻 (3条)</label>
+                    <textarea id="li-h-news" rows="3"></textarea>
+                </div>
+            </div>
+
+            <!-- 3. 铜 -->
+            <div class="commodity-form">
+                <div class="form-header">
+                    <h2>3. 铜</h2>
+                    <span class="tag">Cu</span>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>今日价格 (元/吨)</label>
+                        <input type="number" id="cu-price" placeholder="例如: 72450" required>
+                    </div>
+                    <div class="form-group">
+                        <label>涨跌额 (元)</label>
+                        <input type="number" id="cu-change" placeholder="例如: 180" required>
+                    </div>
+                    <div class="form-group">
+                        <label>涨跌幅 (%)</label>
+                        <input type="number" step="0.01" id="cu-change-pct" placeholder="例如: 0.25" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>近20天价格数据</label>
+                    <textarea class="price-trend-input" id="cu-trend" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>最新新闻 (3条)</label>
+                    <textarea id="cu-news" rows="3"></textarea>
+                </div>
+            </div>
+
+            <!-- 更多商品表单... -->
+            
+            <button type="button" class="btn-generate" onclick="generateHTML()">🚀 生成完整网页</button>
+        </form>
+
+        <div class="output-section" id="outputSection" style="display:none;">
+            <h3>生成的HTML代码 (复制到 index.html)</h3>
+            <textarea id="output" readonly></textarea>
+            <button class="copy-btn" onclick="copyToClipboard()">📋 复制到剪贴板</button>
+        </div>
+    </div>
+
+    <script>
+        function generateHTML() {
+            // 获取所有表单数据
+            const commodities = [
+                { id: 'lithium-carbonate', name: '碳酸锂', symbol: 'Li₂CO₃', unit: '元/吨', 
+                  price: document.getElementById('li-c-price').value,
+                  change: document.getElementById('li-c-change').value,
+                  changePct: document.getElementById('li-c-change-pct').value,
+                  trend: document.getElementById('li-c-trend').value,
+                  news: document.getElementById('li-c-news').value },
+                { id: 'lithium-hydroxide', name: '氢氧化锂', symbol: 'LiOH·H₂O', unit: '元/吨',
+                  price: document.getElementById('li-h-price').value,
+                  change: document.getElementById('li-h-change').value,
+                  changePct: document.getElementById('li-h-change-pct').value,
+                  trend: document.getElementById('li-h-trend').value,
+                  news: document.getElementById('li-h-news').value },
+                { id: 'copper', name: '铜', symbol: 'Cu', unit: '元/吨',
+                  price: document.getElementById('cu-price').value,
+                  change: document.getElementById('cu-change').value,
+                  changePct: document.getElementById('cu-change-pct').value,
+                  trend: document.getElementById('cu-trend').value,
+                  news: document.getElementById('cu-news').value }
+            ];
+
+            // 生成完整HTML
+            let html = generateFullHTML(commodities);
+            
+            document.getElementById('output').value = html;
+            document.getElementById('outputSection').style.display = 'block';
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+
+        function generateFullHTML(commodities) {
+            const timestamp = new Date().toLocaleString('zh-CN');
+            
+            // 这里生成完整的HTML代码
+            // 简化版，实际需要生成完整的监控网页
+            let html = `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>大宗商品监控系统 - ${timestamp}</title>
+    <!-- 完整样式... -->
+</head>
+<body>
+    <!-- 使用真实数据生成的网页 -->
+    <!-- 数据更新时间: ${timestamp} -->
+    
+    ${commodities.map(c => generateCommoditySection(c)).join('\n')}
+    
+</body>
+</html>`;
+            
+            return html;
+        }
+
+        function generateCommoditySection(c) {
+            const isUp = parseFloat(c.change) >= 0;
+            const trendData = c.trend.split('\n').map(line => {
+                const [date, price] = line.trim().split(/\s+/);
+                return { date, price: parseFloat(price) };
+            }).filter(d => d.date && d.price);
+
+            return `
+<!-- ${c.name} -->
+<div id="${c.id}" class="page">
+    <div class="commodity-info">
+        <h2>${c.name} ${c.symbol}</h2>
+        <div class="price">¥${parseFloat(c.price).toLocaleString()}</div>
+        <div class="change ${isUp ? 'up' : 'down'}">
+            ${isUp ? '▲' : '▼'} ${Math.abs(parseFloat(c.change)).toFixed(0)} 
+            (${isUp ? '+' : ''}${c.changePct}%)
+        </div>
+    </div>
+    
+    <!-- 20天价格趋势图 -->
+    <div class="chart">
+        <!-- 使用真实数据: ${JSON.stringify(trendData)} -->
+    </div>
+    
+    <!-- 新闻 -->
+    <div class="news">
+        ${c.news.split('\n').map(n => `<p>${n}</p>`).join('')}
+    </div>
+</div>`;
+        }
+
+        function copyToClipboard() {
+            const output = document.getElementById('output');
+            output.select();
+            document.execCommand('copy');
+            alert('已复制到剪贴板！请粘贴到GitHub仓库的 index.html 文件中。');
+        }
+    </script>
+</body>
+</html>
