@@ -21,9 +21,9 @@
         },
         {
           "date": "2026-03-14",
-          "price": 157655.11,
-          "change": -344.89,
-          "change_percent": -0.22,
+          "price": 152800,
+          "change": -4855.11,
+          "change_percent": -3.08,
           "is_real": true
         }
       ],
@@ -55,9 +55,9 @@
         },
         {
           "date": "2026-03-14",
-          "price": 154076.17,
-          "change": 1076.17,
-          "change_percent": 0.7,
+          "price": 151500,
+          "change": -2576.17,
+          "change_percent": -1.67,
           "is_real": true
         }
       ],
@@ -225,9 +225,9 @@
         },
         {
           "date": "2026-03-14",
-          "price": 565.91,
-          "change": -3.29,
-          "change_percent": -0.58,
+          "price": 567.45,
+          "change": 1.54,
+          "change_percent": 0.27,
           "is_real": true
         }
       ],
@@ -259,9 +259,9 @@
         },
         {
           "date": "2026-03-14",
-          "price": 7797.68,
-          "change": -77.32,
-          "change_percent": -0.98,
+          "price": 7820.5,
+          "change": 22.82,
+          "change_percent": 0.29,
           "is_real": true
         }
       ],
@@ -293,9 +293,9 @@
         },
         {
           "date": "2026-03-14",
-          "price": 986.61,
-          "change": -3.39,
-          "change_percent": -0.34,
+          "price": 995.8,
+          "change": 9.19,
+          "change_percent": 0.93,
           "is_real": true
         }
       ],
@@ -327,9 +327,9 @@
         },
         {
           "date": "2026-03-14",
-          "price": 12612.58,
-          "change": 92.58,
-          "change_percent": 0.74,
+          "price": 12580.0,
+          "change": -32.58,
+          "change_percent": -0.26,
           "is_real": true
         }
       ],
@@ -361,9 +361,9 @@
         },
         {
           "date": "2026-03-14",
-          "price": 3163.36,
-          "change": 23.36,
-          "change_percent": 0.74,
+          "price": 3180.0,
+          "change": 16.64,
+          "change_percent": 0.53,
           "is_real": true
         }
       ],
@@ -395,9 +395,9 @@
         },
         {
           "date": "2026-03-14",
-          "price": 82.35,
-          "change": -0.45,
-          "change_percent": -0.54,
+          "price": 83.2,
+          "change": 0.85,
+          "change_percent": 1.03,
           "is_real": true
         }
       ],
