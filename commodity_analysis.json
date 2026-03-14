@@ -1,0 +1,208 @@
+{
+  "report_date": "2026-03-14",
+  "summary": {
+    "total_commodities": 12,
+    "market_sentiment": "中性",
+    "market_volatility": "低",
+    "up_count": 7,
+    "down_count": 5,
+    "stable_count": 0,
+    "real_data_ratio": 100.0
+  },
+  "top_performers": {
+    "gainers": [
+      {
+        "name": "锡",
+        "code": "tin",
+        "current_price": 372860,
+        "total_change": 126660,
+        "total_change_percent": 51.45,
+        "trend": "上涨",
+        "volatility": 1.82,
+        "is_real": true
+      },
+      {
+        "name": "铜",
+        "code": "copper",
+        "current_price": 99730,
+        "total_change": 27280,
+        "total_change_percent": 37.65,
+        "trend": "上涨",
+        "volatility": 0.76,
+        "is_real": true
+      },
+      {
+        "name": "铝",
+        "code": "aluminum",
+        "current_price": 24965,
+        "total_change": 6385,
+        "total_change_percent": 34.36,
+        "trend": "上涨",
+        "volatility": 1.09,
+        "is_real": true
+      }
+    ],
+    "losers": [
+      {
+        "name": "碳酸锂",
+        "code": "lithium-carbonate",
+        "current_price": 157655.11,
+        "total_change": -1844.890000000014,
+        "total_change_percent": -1.16,
+        "trend": "下跌",
+        "volatility": 0.42,
+        "is_real": true
+      },
+      {
+        "name": "白银",
+        "code": "silver",
+        "current_price": 7797.68,
+        "total_change": -77.31999999999971,
+        "total_change_percent": -0.98,
+        "trend": "下跌",
+        "volatility": 0.73,
+        "is_real": true
+      },
+      {
+        "name": "黄金",
+        "code": "gold",
+        "current_price": 565.91,
+        "total_change": -3.2900000000000773,
+        "total_change_percent": -0.58,
+        "trend": "下跌",
+        "volatility": 0.53,
+        "is_real": true
+      }
+    ]
+  },
+  "commodity_analysis": [
+    {
+      "name": "碳酸锂",
+      "code": "lithium-carbonate",
+      "current_price": 157655.11,
+      "total_change": -1844.890000000014,
+      "total_change_percent": -1.16,
+      "trend": "下跌",
+      "volatility": 0.42,
+      "is_real": true
+    },
+    {
+      "name": "氢氧化锂",
+      "code": "lithium-hydroxide",
+      "current_price": 154076.17,
+      "total_change": 1076.1700000000128,
+      "total_change_percent": 0.7,
+      "trend": "上涨",
+      "volatility": 0.58,
+      "is_real": true
+    },
+    {
+      "name": "铜",
+      "code": "copper",
+      "current_price": 99730,
+      "total_change": 27280,
+      "total_change_percent": 37.65,
+      "trend": "上涨",
+      "volatility": 0.76,
+      "is_real": true
+    },
+    {
+      "name": "铝",
+      "code": "aluminum",
+      "current_price": 24965,
+      "total_change": 6385,
+      "total_change_percent": 34.36,
+      "trend": "上涨",
+      "volatility": 1.09,
+      "is_real": true
+    },
+    {
+      "name": "锡",
+      "code": "tin",
+      "current_price": 372860,
+      "total_change": 126660,
+      "total_change_percent": 51.45,
+      "trend": "上涨",
+      "volatility": 1.82,
+      "is_real": true
+    },
+    {
+      "name": "镍",
+      "code": "nickel",
+      "current_price": 135900,
+      "total_change": 2400,
+      "total_change_percent": 1.8,
+      "trend": "上涨",
+      "volatility": 1.38,
+      "is_real": true
+    },
+    {
+      "name": "黄金",
+      "code": "gold",
+      "current_price": 565.91,
+      "total_change": -3.2900000000000773,
+      "total_change_percent": -0.58,
+      "trend": "下跌",
+      "volatility": 0.53,
+      "is_real": true
+    },
+    {
+      "name": "白银",
+      "code": "silver",
+      "current_price": 7797.68,
+      "total_change": -77.31999999999971,
+      "total_change_percent": -0.98,
+      "trend": "下跌",
+      "volatility": 0.73,
+      "is_real": true
+    },
+    {
+      "name": "铁矿石",
+      "code": "iron-ore",
+      "current_price": 986.61,
+      "total_change": -3.3899999999999864,
+      "total_change_percent": -0.34,
+      "trend": "下跌",
+      "volatility": 0.94,
+      "is_real": true
+    },
+    {
+      "name": "ABS塑料",
+      "code": "abs",
+      "current_price": 12612.58,
+      "total_change": 92.57999999999993,
+      "total_change_percent": 0.74,
+      "trend": "上涨",
+      "volatility": 0.75,
+      "is_real": true
+    },
+    {
+      "name": "瓦楞纸",
+      "code": "corrugated-paper",
+      "current_price": 3163.36,
+      "total_change": 23.360000000000127,
+      "total_change_percent": 0.74,
+      "trend": "上涨",
+      "volatility": 0.61,
+      "is_real": true
+    },
+    {
+      "name": "原油",
+      "code": "crude-oil",
+      "current_price": 82.35,
+      "total_change": -0.45000000000000284,
+      "total_change_percent": -0.54,
+      "trend": "下跌",
+      "volatility": 0.42,
+      "is_real": true
+    }
+  ],
+  "news_summary": {
+    "total_news": 3,
+    "by_category": {
+      "锂盐": 1,
+      "基本金属": 1,
+      "新能源": 1
+    }
+  }
+}
