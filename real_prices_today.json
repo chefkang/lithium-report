@@ -1,7 +1,7 @@
 {
   "start_date": "2026-03-12",
   "last_update": "2026-03-14",
-  "data_source": "SMM上海有色网期货数据 (2026-03-14)",
+  "data_source": "SMM上海有色网 + 多方数据源 (2026-03-14)",
   "commodities": {
     "lithium-carbonate": {
       "name": "碳酸锂",
