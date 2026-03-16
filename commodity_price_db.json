@@ -1,6 +1,6 @@
 {
   "start_date": "2026-03-12",
-  "last_update": "2026-03-14",
+  "last_update": "2026-03-16",
   "commodities": {
     "lithium-carbonate": {
       "name": "碳酸锂",
@@ -21,6 +21,13 @@
         },
         {
           "date": "2026-03-14",
+          "price": 152800,
+          "change": -4855.11,
+          "change_percent": -3.08,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-16",
           "price": 152800,
           "change": -4855.11,
           "change_percent": -3.08,
@@ -59,6 +66,13 @@
           "change": -2576.17,
           "change_percent": -1.67,
           "is_real": true
+        },
+        {
+          "date": "2026-03-16",
+          "price": 151500,
+          "change": -2576.17,
+          "change_percent": -1.67,
+          "is_real": true
         }
       ],
       "daily_records": {
@@ -89,6 +103,13 @@
         },
         {
           "date": "2026-03-14",
+          "price": 99730,
+          "change": -870,
+          "change_percent": -0.87,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-16",
           "price": 99730,
           "change": -870,
           "change_percent": -0.87,
@@ -127,6 +148,13 @@
           "change": -320,
           "change_percent": -1.27,
           "is_real": true
+        },
+        {
+          "date": "2026-03-16",
+          "price": 24965,
+          "change": -320,
+          "change_percent": -1.27,
+          "is_real": true
         }
       ],
       "daily_records": {
@@ -157,6 +185,13 @@
         },
         {
           "date": "2026-03-14",
+          "price": 372860,
+          "change": -12770,
+          "change_percent": -3.31,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-16",
           "price": 372860,
           "change": -12770,
           "change_percent": -3.31,
@@ -195,6 +230,13 @@
           "change": -2630,
           "change_percent": -1.9,
           "is_real": true
+        },
+        {
+          "date": "2026-03-16",
+          "price": 135900,
+          "change": -2630,
+          "change_percent": -1.9,
+          "is_real": true
         }
       ],
       "daily_records": {
@@ -225,6 +267,13 @@
         },
         {
           "date": "2026-03-14",
+          "price": 567.45,
+          "change": 1.54,
+          "change_percent": 0.27,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-16",
           "price": 567.45,
           "change": 1.54,
           "change_percent": 0.27,
@@ -263,6 +312,13 @@
           "change": 22.82,
           "change_percent": 0.29,
           "is_real": true
+        },
+        {
+          "date": "2026-03-16",
+          "price": 7820.5,
+          "change": 22.82,
+          "change_percent": 0.29,
+          "is_real": true
         }
       ],
       "daily_records": {
@@ -293,6 +349,13 @@
         },
         {
           "date": "2026-03-14",
+          "price": 995.8,
+          "change": 9.19,
+          "change_percent": 0.93,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-16",
           "price": 995.8,
           "change": 9.19,
           "change_percent": 0.93,
@@ -331,6 +394,13 @@
           "change": -32.58,
           "change_percent": -0.26,
           "is_real": true
+        },
+        {
+          "date": "2026-03-16",
+          "price": 12580.0,
+          "change": -32.58,
+          "change_percent": -0.26,
+          "is_real": true
         }
       ],
       "daily_records": {
@@ -361,6 +431,13 @@
         },
         {
           "date": "2026-03-14",
+          "price": 3180.0,
+          "change": 16.64,
+          "change_percent": 0.53,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-16",
           "price": 3180.0,
           "change": 16.64,
           "change_percent": 0.53,
@@ -399,6 +476,13 @@
           "change": 0.85,
           "change_percent": 1.03,
           "is_real": true
+        },
+        {
+          "date": "2026-03-16",
+          "price": 83.2,
+          "change": 0.85,
+          "change_percent": 1.03,
+          "is_real": true
         }
       ],
       "daily_records": {
@@ -411,7 +495,7 @@
       }
     }
   },
-  "progress_days": 3,
+  "progress_days": 4,
   "total_days_needed": 60,
-  "estimated_completion": "2026-05-10"
+  "estimated_completion": "2026-05-11"
 }
