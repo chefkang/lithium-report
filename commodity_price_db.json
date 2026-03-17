@@ -39,6 +39,13 @@
           "change": -4855.11,
           "change_percent": -3.08,
           "is_real": true
+        },
+        {
+          "date": "2026-03-17",
+          "price": 158140,
+          "change": 3420,
+          "change_percent": 2.21,
+          "is_real": true
         }
       ],
       "daily_records": {
@@ -87,6 +94,13 @@
           "change": -2576.17,
           "change_percent": -1.67,
           "is_real": true
+        },
+        {
+          "date": "2026-03-17",
+          "price": 151500,
+          "change": -2576.17,
+          "change_percent": -1.67,
+          "is_real": false
         }
       ],
       "daily_records": {
@@ -134,6 +148,13 @@
           "price": 99730,
           "change": -870,
           "change_percent": -0.87,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-17",
+          "price": 100300,
+          "change": 690,
+          "change_percent": 0.69,
           "is_real": true
         }
       ],
@@ -183,6 +204,13 @@
           "change": -320,
           "change_percent": -1.27,
           "is_real": true
+        },
+        {
+          "date": "2026-03-17",
+          "price": 25130,
+          "change": 40,
+          "change_percent": 0.16,
+          "is_real": true
         }
       ],
       "daily_records": {
@@ -230,6 +258,13 @@
           "price": 372860,
           "change": -12770,
           "change_percent": -3.31,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-17",
+          "price": 381200,
+          "change": 8430,
+          "change_percent": 2.26,
           "is_real": true
         }
       ],
@@ -279,6 +314,13 @@
           "change": -2630,
           "change_percent": -1.9,
           "is_real": true
+        },
+        {
+          "date": "2026-03-17",
+          "price": 137680,
+          "change": 1280,
+          "change_percent": 0.94,
+          "is_real": true
         }
       ],
       "daily_records": {
@@ -326,6 +368,13 @@
           "price": 567.45,
           "change": 1.54,
           "change_percent": 0.27,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-17",
+          "price": 1117.94,
+          "change": -7.18,
+          "change_percent": -0.64,
           "is_real": true
         }
       ],
@@ -375,6 +424,13 @@
           "change": 22.82,
           "change_percent": 0.29,
           "is_real": true
+        },
+        {
+          "date": "2026-03-17",
+          "price": 20614,
+          "change": 62,
+          "change_percent": 0.3,
+          "is_real": true
         }
       ],
       "daily_records": {
@@ -422,6 +478,13 @@
           "price": 995.8,
           "change": 9.19,
           "change_percent": 0.93,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-17",
+          "price": 813.5,
+          "change": 11.5,
+          "change_percent": 1.43,
           "is_real": true
         }
       ],
@@ -471,6 +534,13 @@
           "change": -32.58,
           "change_percent": -0.26,
           "is_real": true
+        },
+        {
+          "date": "2026-03-17",
+          "price": 12580.0,
+          "change": -32.58,
+          "change_percent": -0.26,
+          "is_real": false
         }
       ],
       "daily_records": {
@@ -519,6 +589,13 @@
           "change": 16.64,
           "change_percent": 0.53,
           "is_real": true
+        },
+        {
+          "date": "2026-03-17",
+          "price": 3180.0,
+          "change": 16.64,
+          "change_percent": 0.53,
+          "is_real": false
         }
       ],
       "daily_records": {
@@ -566,6 +643,13 @@
           "price": 83.2,
           "change": 0.85,
           "change_percent": 1.03,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-17",
+          "price": 745.9,
+          "change": -24.5,
+          "change_percent": -3.18,
           "is_real": true
         }
       ],

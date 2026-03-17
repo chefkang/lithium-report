@@ -1,10 +1,35 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>大宗商品专业监控系统 | 实时价格 & 市场分析</title>
-    <style>
+#!/usr/bin/env python3
+"""
+生成高标准大宗商品监控网站
+专业金融风格，响应式设计
+"""
+
+import json
+import os
+from datetime import datetime
+
+def load_data():
+    """加载所有数据"""
+    with open('real_prices_today.json', 'r', encoding='utf-8') as f:
+        prices = json.load(f)
+    
+    try:
+        with open('commodity_news.json', 'r', encoding='utf-8') as f:
+            news = json.load(f)
+    except FileNotFoundError:
+        news = {'news': [], 'last_update': '未更新', 'source': 'SMM'}
+    
+    try:
+        with open('commodity_analysis.json', 'r', encoding='utf-8') as f:
+            analysis = json.load(f)
+    except FileNotFoundError:
+        analysis = {'market_overview': '数据分析更新中...', 'top_gainers': [], 'top_losers': []}
+    
+    return prices, news, analysis
+
+def generate_css():
+    """生成专业CSS"""
+    return '''
     /* 高标准大宗商品监控系统 - 专业金融风格 */
     :root {
         /* 主色调 - 专业深蓝 */
@@ -436,7 +461,119 @@
             overflow-x: auto;
         }
     }
-    </style>
+    '''
+
+def generate_html(prices, news, analysis):
+    """生成HTML内容"""
+    today = datetime.now().strftime('%Y-%m-%d %H:%M')
+    
+    # 计算统计数据
+    total_commodities = len(prices['commodities'])
+    real_data_count = sum(1 for item in prices['commodities'].values() if item.get('is_real', False))
+    up_count = sum(1 for item in prices['commodities'].values() if item.get('change', 0) >= 0)
+    down_count = total_commodities - up_count
+    
+    # 生成商品行HTML
+    commodity_rows = []
+    for code, item in prices['commodities'].items():
+        is_up = item['change'] >= 0
+        is_real = item.get('is_real', False)
+        
+        # 数据真实性标记
+        if is_real:
+            data_badge = '<span class="badge-success card-badge">真实数据</span>'
+            data_status = '<span class="badge-success">✅ 真实</span>'
+        else:
+            data_badge = '<span class="badge-warning card-badge">模拟数据</span>'
+            data_status = '<span class="badge-warning">⚠️ 模拟</span>'
+        
+        # 涨跌标记
+        change_badge = f'''
+            <span class="price-change {'change-up' if is_up else 'change-down'}">
+                {'▲' if is_up else '▼'} {abs(item['change']):,} ({'+' if is_up else ''}{item['change_percent']:.2f}%)
+            </span>
+        '''
+        
+        # 价格显示
+        price_display = '¥' if '元' in item['unit'] else '$'
+        
+        row = f'''
+        <tr>
+            <td>
+                <div class="commodity-info">
+                    <div class="commodity-icon">{item['symbol'][0] if 'symbol' in item else item['name'][0]}</div>
+                    <div>
+                        <div class="commodity-name">{item['name']}</div>
+                        <div class="commodity-category">{item.get('category', '大宗商品')}</div>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="price-display">{price_display}{item['price']:,}</div>
+                {change_badge}
+            </td>
+            <td>{item['unit']}</td>
+            <td>{item.get('price_range', 'N/A')}</td>
+            <td>{data_status}</td>
+            <td>{item.get('desc', '')[:50]}...</td>
+        </tr>
+        '''
+        commodity_rows.append(row)
+    
+    # 生成新闻HTML
+    news_items = []
+    for i, news_item in enumerate(news.get('news', [])[:5]):
+        news_html = f'''
+        <div class="news-item">
+            <div class="news-title">{i+1}. {news_item.get('title', '新闻标题')}</div>
+            <div class="news-meta">
+                📅 {news_item.get('date', today)} | 📍 {news_item.get('category', '大宗商品')} | 🏷️ {news_item.get('source', 'SMM')}
+            </div>
+            <div class="news-summary">{news_item.get('summary', '新闻摘要...')}</div>
+        </div>
+        '''
+        news_items.append(news_html)
+    
+    if not news_items:
+        news_items = ['<div class="news-item"><div class="news-title">新闻数据更新中...</div></div>']
+    
+    # 生成分析HTML
+    analysis_html = f'''
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">📊 市场分析概览</div>
+            <span class="badge-success card-badge">实时分析</span>
+        </div>
+        <div style="margin-bottom: var(--spacing-md);">
+            <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6;">
+                {analysis.get('market_overview', '市场数据分析更新中...')}
+            </p>
+        </div>
+        <div style="display: flex; gap: var(--spacing-md); margin-top: var(--spacing-md);">
+            <div style="flex: 1;">
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: var(--spacing-xs);">上涨商品</div>
+                <div style="font-size: 1.25rem; font-weight: 700; color: var(--accent);">{up_count}</div>
+            </div>
+            <div style="flex: 1;">
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: var(--spacing-xs);">下跌商品</div>
+                <div style="font-size: 1.25rem; font-weight: 700; color: var(--accent-red);">{down_count}</div>
+            </div>
+            <div style="flex: 1;">
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: var(--spacing-xs);">真实数据</div>
+                <div style="font-size: 1.25rem; font-weight: 700; color: var(--accent);">{real_data_count}/{total_commodities}</div>
+            </div>
+        </div>
+    </div>
+    '''
+    
+    # 组装完整HTML
+    html = f'''<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大宗商品专业监控系统 | 实时价格 & 市场分析</title>
+    <style>{generate_css()}</style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -450,19 +587,19 @@
             
             <div class="header-stats">
                 <div class="stat-item">
-                    <div class="stat-value">12</div>
+                    <div class="stat-value">{total_commodities}</div>
                     <div class="stat-label">监控商品</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value" style="color: var(--accent);">8</div>
+                    <div class="stat-value" style="color: var(--accent);">{up_count}</div>
                     <div class="stat-label">上涨</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value" style="color: var(--accent-red);">4</div>
+                    <div class="stat-value" style="color: var(--accent-red);">{down_count}</div>
                     <div class="stat-label">下跌</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value" style="color: var(--accent);">9/12</div>
+                    <div class="stat-value" style="color: var(--accent);">{real_data_count}/{total_commodities}</div>
                     <div class="stat-label">真实数据</div>
                 </div>
             </div>
@@ -487,9 +624,9 @@
                     <div class="card-title">📅 数据更新时间</div>
                     <span class="badge-success card-badge">实时</span>
                 </div>
-                <div class="price-display">2026-03-17 10:44</div>
+                <div class="price-display">{today}</div>
                 <div class="price-details">
-                    数据源: SMM期货主力合约 (2026-03-17)<br>
+                    数据源: {prices.get('data_source', 'SMM上海有色网')}<br>
                     更新频率: 每日自动更新
                 </div>
             </div>
@@ -497,28 +634,28 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">📊 数据质量</div>
-                    <span class="badge-success card-badge">
-                        9/12 真实
+                    <span class="badge-{'success' if real_data_count/total_commodities >= 0.7 else 'warning'} card-badge">
+                        {real_data_count}/{total_commodities} 真实
                     </span>
                 </div>
-                <div class="price-display">75.0%</div>
+                <div class="price-display">{real_data_count/total_commodities*100:.1f}%</div>
                 <div class="price-details">
-                    真实数据: 9 种商品<br>
-                    模拟数据: 3 种商品
+                    真实数据: {real_data_count} 种商品<br>
+                    模拟数据: {total_commodities-real_data_count} 种商品
                 </div>
             </div>
             
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">📈 市场情绪</div>
-                    <span class="badge-success card-badge">
-                        看涨
+                    <span class="badge-{'success' if up_count >= down_count else 'danger'} card-badge">
+                        {'看涨' if up_count >= down_count else '看跌'}
                     </span>
                 </div>
-                <div class="price-display" style="color: var(--accent);">8</div>
+                <div class="price-display" style="color: var(--accent);">{up_count}</div>
                 <div class="price-details">
-                    上涨: 8 | 下跌: 4<br>
-                    涨跌比: 8:4
+                    上涨: {up_count} | 下跌: {down_count}<br>
+                    涨跌比: {up_count}:{down_count}
                 </div>
             </div>
         </div>
@@ -528,7 +665,7 @@
             <div class="table-header">
                 <div class="table-title">📋 大宗商品价格一览表</div>
                 <div class="table-subtitle">
-                    实时监控 12 种大宗商品价格，9 种为真实市场数据
+                    实时监控 {total_commodities} 种大宗商品价格，{real_data_count} 种为真实市场数据
                 </div>
             </div>
             <table>
@@ -543,295 +680,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
-        <tr>
-            <td>
-                <div class="commodity-info">
-                    <div class="commodity-icon">L</div>
-                    <div>
-                        <div class="commodity-name">碳酸锂</div>
-                        <div class="commodity-category">锂盐</div>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div class="price-display">¥158,140</div>
-                
-            <span class="price-change change-up">
-                ▲ 3,420 (+2.21%)
-            </span>
-        
-            </td>
-            <td>元/吨</td>
-            <td>157,349~158,931</td>
-            <td><span class="badge-success">✅ 真实</span></td>
-            <td>电池级碳酸锂（99.5%），主要用于磷酸铁锂电池 - 真实市场数据...</td>
-        </tr>
-        
-        <tr>
-            <td>
-                <div class="commodity-info">
-                    <div class="commodity-icon">L</div>
-                    <div>
-                        <div class="commodity-name">氢氧化锂</div>
-                        <div class="commodity-category">锂盐</div>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div class="price-display">¥151,500</div>
-                
-            <span class="price-change change-down">
-                ▼ 2,576.17 (-1.67%)
-            </span>
-        
-            </td>
-            <td>元/吨</td>
-            <td>149000~154000</td>
-            <td><span class="badge-warning">⚠️ 模拟</span></td>
-            <td>电池级氢氧化锂（56.5%），主要用于高镍三元电池 - 真实市场数据...</td>
-        </tr>
-        
-        <tr>
-            <td>
-                <div class="commodity-info">
-                    <div class="commodity-icon">C</div>
-                    <div>
-                        <div class="commodity-name">铜</div>
-                        <div class="commodity-category">基本金属</div>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div class="price-display">¥100,300</div>
-                
-            <span class="price-change change-up">
-                ▲ 690 (+0.69%)
-            </span>
-        
-            </td>
-            <td>元/吨</td>
-            <td>99,798~100,801</td>
-            <td><span class="badge-success">✅ 真实</span></td>
-            <td>电解铜（99.95%），电力、建筑、家电行业核心原材料...</td>
-        </tr>
-        
-        <tr>
-            <td>
-                <div class="commodity-info">
-                    <div class="commodity-icon">A</div>
-                    <div>
-                        <div class="commodity-name">铝</div>
-                        <div class="commodity-category">基本金属</div>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div class="price-display">¥25,130</div>
-                
-            <span class="price-change change-up">
-                ▲ 40 (+0.16%)
-            </span>
-        
-            </td>
-            <td>元/吨</td>
-            <td>25,004~25,256</td>
-            <td><span class="badge-success">✅ 真实</span></td>
-            <td>A00铝锭（99.7%），广泛应用于建筑、交通、包装行业...</td>
-        </tr>
-        
-        <tr>
-            <td>
-                <div class="commodity-info">
-                    <div class="commodity-icon">S</div>
-                    <div>
-                        <div class="commodity-name">锡</div>
-                        <div class="commodity-category">小金属</div>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div class="price-display">¥381,200</div>
-                
-            <span class="price-change change-up">
-                ▲ 8,430 (+2.26%)
-            </span>
-        
-            </td>
-            <td>元/吨</td>
-            <td>379,294~383,106</td>
-            <td><span class="badge-success">✅ 真实</span></td>
-            <td>锡锭（99.9%），电子焊料、镀锡钢板、合金添加剂...</td>
-        </tr>
-        
-        <tr>
-            <td>
-                <div class="commodity-info">
-                    <div class="commodity-icon">N</div>
-                    <div>
-                        <div class="commodity-name">镍</div>
-                        <div class="commodity-category">基本金属</div>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div class="price-display">¥137,680</div>
-                
-            <span class="price-change change-up">
-                ▲ 1,280 (+0.94%)
-            </span>
-        
-            </td>
-            <td>元/吨</td>
-            <td>136,992~138,368</td>
-            <td><span class="badge-success">✅ 真实</span></td>
-            <td>电解镍（99.9%），不锈钢主要原料，三元电池正极材料...</td>
-        </tr>
-        
-        <tr>
-            <td>
-                <div class="commodity-info">
-                    <div class="commodity-icon">A</div>
-                    <div>
-                        <div class="commodity-name">黄金</div>
-                        <div class="commodity-category">贵金属</div>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div class="price-display">¥1,117.94</div>
-                
-            <span class="price-change change-down">
-                ▼ 7.18 (-0.64%)
-            </span>
-        
-            </td>
-            <td>元/克</td>
-            <td>1,112~1,124</td>
-            <td><span class="badge-success">✅ 真实</span></td>
-            <td>Au99.99，避险资产，央行储备 - 上海黄金交易所数据...</td>
-        </tr>
-        
-        <tr>
-            <td>
-                <div class="commodity-info">
-                    <div class="commodity-icon">A</div>
-                    <div>
-                        <div class="commodity-name">白银</div>
-                        <div class="commodity-category">贵金属</div>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div class="price-display">¥20,614</div>
-                
-            <span class="price-change change-up">
-                ▲ 62 (+0.30%)
-            </span>
-        
-            </td>
-            <td>元/千克</td>
-            <td>20,511~20,717</td>
-            <td><span class="badge-success">✅ 真实</span></td>
-            <td>Ag99.99，工业用途广泛，光伏、电子、摄影 - 上海黄金交易所数据...</td>
-        </tr>
-        
-        <tr>
-            <td>
-                <div class="commodity-info">
-                    <div class="commodity-icon">F</div>
-                    <div>
-                        <div class="commodity-name">铁矿石</div>
-                        <div class="commodity-category">黑色金属</div>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div class="price-display">¥813.5</div>
-                
-            <span class="price-change change-up">
-                ▲ 11.5 (+1.43%)
-            </span>
-        
-            </td>
-            <td>元/吨</td>
-            <td>809~818</td>
-            <td><span class="badge-success">✅ 真实</span></td>
-            <td>PB粉（62%），钢铁生产主要原料 - 大连商品交易所数据...</td>
-        </tr>
-        
-        <tr>
-            <td>
-                <div class="commodity-info">
-                    <div class="commodity-icon">A</div>
-                    <div>
-                        <div class="commodity-name">ABS塑料</div>
-                        <div class="commodity-category">化工</div>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div class="price-display">¥12,580.0</div>
-                
-            <span class="price-change change-down">
-                ▼ 32.58 (-0.26%)
-            </span>
-        
-            </td>
-            <td>元/吨</td>
-            <td>12500~12650</td>
-            <td><span class="badge-warning">⚠️ 模拟</span></td>
-            <td>台湾奇美PA-757，家电、汽车、电子行业常用工程塑料 - 市场现货数据...</td>
-        </tr>
-        
-        <tr>
-            <td>
-                <div class="commodity-info">
-                    <div class="commodity-icon">瓦</div>
-                    <div>
-                        <div class="commodity-name">瓦楞纸</div>
-                        <div class="commodity-category">纸业</div>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div class="price-display">¥3,180.0</div>
-                
-            <span class="price-change change-up">
-                ▲ 16.64 (+0.53%)
-            </span>
-        
-            </td>
-            <td>元/吨</td>
-            <td>3150~3210</td>
-            <td><span class="badge-warning">⚠️ 模拟</span></td>
-            <td>AA级120g，包装行业基础材料 - 市场现货数据...</td>
-        </tr>
-        
-        <tr>
-            <td>
-                <div class="commodity-info">
-                    <div class="commodity-icon">W</div>
-                    <div>
-                        <div class="commodity-name">原油</div>
-                        <div class="commodity-category">能源</div>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div class="price-display">¥745.9</div>
-                
-            <span class="price-change change-down">
-                ▼ 24.5 (-3.18%)
-            </span>
-        
-            </td>
-            <td>美元/桶</td>
-            <td>742~750</td>
-            <td><span class="badge-success">✅ 真实</span></td>
-            <td>WTI原油，全球最重要能源和化工原料 - 纽约商品交易所数据...</td>
-        </tr>
-        
+                    {''.join(commodity_rows)}
                 </tbody>
             </table>
         </div>
@@ -845,62 +694,12 @@
                     <span class="badge-success card-badge">实时更新</span>
                 </div>
                 <div>
-                    
-        <div class="news-item">
-            <div class="news-title">1. 碳酸锂价格短期承压，下游需求观望情绪浓厚</div>
-            <div class="news-meta">
-                📅 2026-03-17 | 📍 锂盐 | 🏷️ SMM锂电资讯
-            </div>
-            <div class="news-summary">近期碳酸锂市场供应充足，下游电池厂采购谨慎，价格维持震荡走势。</div>
-        </div>
-        
-        <div class="news-item">
-            <div class="news-title">2. 铜价受宏观因素影响小幅下跌</div>
-            <div class="news-meta">
-                📅 2026-03-17 | 📍 基本金属 | 🏷️ SMM铜市分析
-            </div>
-            <div class="news-summary">美联储政策预期叠加库存上升，铜价短期承压。</div>
-        </div>
-        
-        <div class="news-item">
-            <div class="news-title">3. 新能源车销量持续增长，带动锂电材料需求</div>
-            <div class="news-meta">
-                📅 2026-03-17 | 📍 新能源 | 🏷️ SMM新能源汽车
-            </div>
-            <div class="news-summary">3月新能源车销量环比增长，对锂盐需求形成支撑。</div>
-        </div>
-        
+                    {''.join(news_items)}
                 </div>
             </div>
 
             <!-- 分析 -->
-            
-    <div class="card">
-        <div class="card-header">
-            <div class="card-title">📊 市场分析概览</div>
-            <span class="badge-success card-badge">实时分析</span>
-        </div>
-        <div style="margin-bottom: var(--spacing-md);">
-            <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6;">
-                市场数据分析更新中...
-            </p>
-        </div>
-        <div style="display: flex; gap: var(--spacing-md); margin-top: var(--spacing-md);">
-            <div style="flex: 1;">
-                <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: var(--spacing-xs);">上涨商品</div>
-                <div style="font-size: 1.25rem; font-weight: 700; color: var(--accent);">8</div>
-            </div>
-            <div style="flex: 1;">
-                <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: var(--spacing-xs);">下跌商品</div>
-                <div style="font-size: 1.25rem; font-weight: 700; color: var(--accent-red);">4</div>
-            </div>
-            <div style="flex: 1;">
-                <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: var(--spacing-xs);">真实数据</div>
-                <div style="font-size: 1.25rem; font-weight: 700; color: var(--accent);">9/12</div>
-            </div>
-        </div>
-    </div>
-    
+            {analysis_html}
         </div>
     </main>
 
@@ -908,51 +707,74 @@
     <footer class="footer">
         <p>© 2026 大宗商品专业监控系统 | 数据仅供参考，投资需谨慎</p>
         <p style="margin-top: var(--spacing-sm); font-size: 0.75rem; color: var(--text-muted);">
-            最后更新: 2026-03-17 10:44 | 数据源: SMM期货主力合约 (2026-03-17) | 系统状态: 运行正常
+            最后更新: {today} | 数据源: {prices.get('data_source', 'SMM + 市场数据')} | 系统状态: 运行正常
         </p>
     </footer>
 
     <script>
-        function refreshData() {
+        function refreshData() {{
             const btn = event.target.closest('button');
             const icon = btn.querySelector('i');
             btn.disabled = true;
             icon.className = 'fas fa-spinner fa-spin';
             
-            setTimeout(() => {
+            setTimeout(() => {{
                 btn.disabled = false;
                 icon.className = 'fas fa-sync-alt';
                 alert('数据刷新完成！页面已更新最新信息。');
                 location.reload();
-            }, 1500);
-        }
+            }}, 1500);
+        }}
         
         // 自动刷新时间显示
-        function updateTime() {
+        function updateTime() {{
             const now = new Date();
-            const timeStr = now.toLocaleString('zh-CN', {
+            const timeStr = now.toLocaleString('zh-CN', {{
                 year: 'numeric',
                 month: '2-digit',
                 day: '2-digit',
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit'
-            });
+            }});
             document.querySelector('.price-display').textContent = timeStr;
-        }
+        }}
         
         // 每30秒更新一次时间
         setInterval(updateTime, 30000);
         
         // 表格行点击效果
-        document.querySelectorAll('tbody tr').forEach(row => {
-            row.addEventListener('click', () => {
+        document.querySelectorAll('tbody tr').forEach(row => {{
+            row.addEventListener('click', () => {{
                 row.style.backgroundColor = 'var(--bg-hover)';
-                setTimeout(() => {
+                setTimeout(() => {{
                     row.style.backgroundColor = '';
-                }, 300);
-            });
-        });
+                }}, 300);
+            }});
+        }});
     </script>
 </body>
-</html>
+</html>'''
+    
+    return html
+
+def main():
+    print("生成高标准大宗商品监控网站...")
+    
+    # 加载数据
+    prices, news, analysis = load_data()
+    
+    # 生成HTML
+    html = generate_html(prices, news, analysis)
+    
+    # 保存文件
+    with open('index.html', 'w', encoding='utf-8') as f:
+        f.write(html)
+    
+    print("✅ 网站生成完成: index.html")
+    print(f"📊 数据统计: {len(prices['commodities'])} 种商品, {sum(1 for item in prices['commodities'].values() if item.get('is_real', False))} 种真实数据")
+    print(f"📰 新闻数量: {len(news.get('news', []))} 条")
+    print("🎨 设计风格: 专业金融风格，响应式布局")
+
+if __name__ == '__main__':
+    main()
