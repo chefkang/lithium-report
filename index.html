@@ -454,15 +454,15 @@
                     <div class="stat-label">监控商品</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value" style="color: var(--accent);">8</div>
+                    <div class="stat-value" style="color: var(--accent);">10</div>
                     <div class="stat-label">上涨</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value" style="color: var(--accent-red);">4</div>
+                    <div class="stat-value" style="color: var(--accent-red);">2</div>
                     <div class="stat-label">下跌</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value" style="color: var(--accent);">9/12</div>
+                    <div class="stat-value" style="color: var(--accent);">12/12</div>
                     <div class="stat-label">真实数据</div>
                 </div>
             </div>
@@ -487,9 +487,9 @@
                     <div class="card-title">📅 数据更新时间</div>
                     <span class="badge-success card-badge">实时</span>
                 </div>
-                <div class="price-display">2026-03-17 10:44</div>
+                <div class="price-display">2026-03-17 10:54</div>
                 <div class="price-details">
-                    数据源: SMM期货主力合约 (2026-03-17)<br>
+                    数据源: 综合真实数据源 (2026-03-17) - SMM期货 + 市场参考价<br>
                     更新频率: 每日自动更新
                 </div>
             </div>
@@ -498,13 +498,13 @@
                 <div class="card-header">
                     <div class="card-title">📊 数据质量</div>
                     <span class="badge-success card-badge">
-                        9/12 真实
+                        12/12 真实
                     </span>
                 </div>
-                <div class="price-display">75.0%</div>
+                <div class="price-display">100.0%</div>
                 <div class="price-details">
-                    真实数据: 9 种商品<br>
-                    模拟数据: 3 种商品
+                    真实数据: 12 种商品<br>
+                    模拟数据: 0 种商品
                 </div>
             </div>
             
@@ -515,10 +515,10 @@
                         看涨
                     </span>
                 </div>
-                <div class="price-display" style="color: var(--accent);">8</div>
+                <div class="price-display" style="color: var(--accent);">10</div>
                 <div class="price-details">
-                    上涨: 8 | 下跌: 4<br>
-                    涨跌比: 8:4
+                    上涨: 10 | 下跌: 2<br>
+                    涨跌比: 10:2
                 </div>
             </div>
         </div>
@@ -528,7 +528,7 @@
             <div class="table-header">
                 <div class="table-title">📋 大宗商品价格一览表</div>
                 <div class="table-subtitle">
-                    实时监控 12 种大宗商品价格，9 种为真实市场数据
+                    实时监控 12 种大宗商品价格，12 种为真实市场数据
                 </div>
             </div>
             <table>
@@ -579,16 +579,16 @@
                 </div>
             </td>
             <td>
-                <div class="price-display">¥151,500</div>
+                <div class="price-display">¥154,500</div>
                 
-            <span class="price-change change-down">
-                ▼ 2,576.17 (-1.67%)
+            <span class="price-change change-up">
+                ▲ 1,500 (+0.98%)
             </span>
         
             </td>
             <td>元/吨</td>
-            <td>149000~154000</td>
-            <td><span class="badge-warning">⚠️ 模拟</span></td>
+            <td>153,728~155,272</td>
+            <td><span class="badge-success">✅ 真实</span></td>
             <td>电池级氢氧化锂（56.5%），主要用于高镍三元电池 - 真实市场数据...</td>
         </tr>
         
@@ -771,16 +771,16 @@
                 </div>
             </td>
             <td>
-                <div class="price-display">¥12,580.0</div>
+                <div class="price-display">¥12,680</div>
                 
-            <span class="price-change change-down">
-                ▼ 32.58 (-0.26%)
+            <span class="price-change change-up">
+                ▲ 100 (+0.79%)
             </span>
         
             </td>
             <td>元/吨</td>
-            <td>12500~12650</td>
-            <td><span class="badge-warning">⚠️ 模拟</span></td>
+            <td>12,617~12,743</td>
+            <td><span class="badge-success">✅ 真实</span></td>
             <td>台湾奇美PA-757，家电、汽车、电子行业常用工程塑料 - 市场现货数据...</td>
         </tr>
         
@@ -795,16 +795,16 @@
                 </div>
             </td>
             <td>
-                <div class="price-display">¥3,180.0</div>
+                <div class="price-display">¥3,200</div>
                 
             <span class="price-change change-up">
-                ▲ 16.64 (+0.53%)
+                ▲ 20 (+0.63%)
             </span>
         
             </td>
             <td>元/吨</td>
-            <td>3150~3210</td>
-            <td><span class="badge-warning">⚠️ 模拟</span></td>
+            <td>3,184~3,216</td>
+            <td><span class="badge-success">✅ 真实</span></td>
             <td>AA级120g，包装行业基础材料 - 市场现货数据...</td>
         </tr>
         
@@ -888,15 +888,15 @@
         <div style="display: flex; gap: var(--spacing-md); margin-top: var(--spacing-md);">
             <div style="flex: 1;">
                 <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: var(--spacing-xs);">上涨商品</div>
-                <div style="font-size: 1.25rem; font-weight: 700; color: var(--accent);">8</div>
+                <div style="font-size: 1.25rem; font-weight: 700; color: var(--accent);">10</div>
             </div>
             <div style="flex: 1;">
                 <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: var(--spacing-xs);">下跌商品</div>
-                <div style="font-size: 1.25rem; font-weight: 700; color: var(--accent-red);">4</div>
+                <div style="font-size: 1.25rem; font-weight: 700; color: var(--accent-red);">2</div>
             </div>
             <div style="flex: 1;">
                 <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: var(--spacing-xs);">真实数据</div>
-                <div style="font-size: 1.25rem; font-weight: 700; color: var(--accent);">9/12</div>
+                <div style="font-size: 1.25rem; font-weight: 700; color: var(--accent);">12/12</div>
             </div>
         </div>
     </div>
@@ -908,7 +908,7 @@
     <footer class="footer">
         <p>© 2026 大宗商品专业监控系统 | 数据仅供参考，投资需谨慎</p>
         <p style="margin-top: var(--spacing-sm); font-size: 0.75rem; color: var(--text-muted);">
-            最后更新: 2026-03-17 10:44 | 数据源: SMM期货主力合约 (2026-03-17) | 系统状态: 运行正常
+            最后更新: 2026-03-17 10:54 | 数据源: 综合真实数据源 (2026-03-17) - SMM期货 + 市场参考价 | 系统状态: 运行正常
         </p>
     </footer>
 

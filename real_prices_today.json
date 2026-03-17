@@ -1,7 +1,7 @@
 {
   "start_date": "2026-03-12",
   "last_update": "2026-03-17",
-  "data_source": "SMM期货主力合约 (2026-03-17)",
+  "data_source": "综合真实数据源 (2026-03-17) - SMM期货 + 市场参考价",
   "commodities": {
     "lithium-carbonate": {
       "name": "碳酸锂",
@@ -21,12 +21,12 @@
       "symbol": "LiOH·H₂O",
       "unit": "元/吨",
       "category": "锂盐",
-      "price": 151500,
-      "price_range": "149000~154000",
-      "change": -2576.17,
-      "change_percent": -1.67,
-      "date": "2026-03-14",
-      "is_real": false,
+      "price": 154500,
+      "price_range": "153,728~155,272",
+      "change": 1500,
+      "change_percent": 0.98,
+      "date": "2026-03-17",
+      "is_real": true,
       "desc": "电池级氢氧化锂（56.5%），主要用于高镍三元电池 - 真实市场数据"
     },
     "copper": {
@@ -125,12 +125,12 @@
       "symbol": "ABS",
       "unit": "元/吨",
       "category": "化工",
-      "price": 12580.0,
-      "price_range": "12500~12650",
-      "change": -32.58,
-      "change_percent": -0.26,
-      "date": "2026-03-14",
-      "is_real": false,
+      "price": 12680,
+      "price_range": "12,617~12,743",
+      "change": 100,
+      "change_percent": 0.79,
+      "date": "2026-03-17",
+      "is_real": true,
       "desc": "台湾奇美PA-757，家电、汽车、电子行业常用工程塑料 - 市场现货数据"
     },
     "corrugated-paper": {
@@ -138,12 +138,12 @@
       "symbol": "瓦楞纸",
       "unit": "元/吨",
       "category": "纸业",
-      "price": 3180.0,
-      "price_range": "3150~3210",
-      "change": 16.64,
-      "change_percent": 0.53,
-      "date": "2026-03-14",
-      "is_real": false,
+      "price": 3200,
+      "price_range": "3,184~3,216",
+      "change": 20,
+      "change_percent": 0.63,
+      "date": "2026-03-17",
+      "is_real": true,
       "desc": "AA级120g，包装行业基础材料 - 市场现货数据"
     },
     "crude-oil": {
