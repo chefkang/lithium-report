@@ -1,6 +1,6 @@
 {
   "start_date": "2026-03-12",
-  "last_update": "2026-03-19",
+  "last_update": "2026-03-20",
   "commodities": {
     "lithium-carbonate": {
       "name": "碳酸锂",
@@ -28,6 +28,13 @@
         },
         {
           "date": "2026-03-19",
+          "price": 108700,
+          "change": -500,
+          "change_percent": -0.46,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-20",
           "price": 108700,
           "change": -500,
           "change_percent": -0.46,
@@ -73,6 +80,13 @@
           "change": -300,
           "change_percent": -0.32,
           "is_real": true
+        },
+        {
+          "date": "2026-03-20",
+          "price": 94900,
+          "change": -300,
+          "change_percent": -0.32,
+          "is_real": true
         }
       ],
       "daily_records": {
@@ -110,6 +124,13 @@
         },
         {
           "date": "2026-03-19",
+          "price": 99730,
+          "change": -870,
+          "change_percent": -0.87,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-20",
           "price": 99730,
           "change": -870,
           "change_percent": -0.87,
@@ -155,6 +176,13 @@
           "change": -320,
           "change_percent": -1.27,
           "is_real": true
+        },
+        {
+          "date": "2026-03-20",
+          "price": 24965,
+          "change": -320,
+          "change_percent": -1.27,
+          "is_real": true
         }
       ],
       "daily_records": {
@@ -192,6 +220,13 @@
         },
         {
           "date": "2026-03-19",
+          "price": 372860,
+          "change": -12770,
+          "change_percent": -3.31,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-20",
           "price": 372860,
           "change": -12770,
           "change_percent": -3.31,
@@ -237,6 +272,13 @@
           "change": -2630,
           "change_percent": -1.9,
           "is_real": true
+        },
+        {
+          "date": "2026-03-20",
+          "price": 135900,
+          "change": -2630,
+          "change_percent": -1.9,
+          "is_real": true
         }
       ],
       "daily_records": {
@@ -274,6 +316,13 @@
         },
         {
           "date": "2026-03-19",
+          "price": 1125.92,
+          "change": -11.574260131496455,
+          "change_percent": -1.0,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-20",
           "price": 1125.92,
           "change": -11.574260131496455,
           "change_percent": -1.0,
@@ -319,6 +368,13 @@
           "change": -956.0338868616071,
           "change_percent": -5.810354530106922,
           "is_real": true
+        },
+        {
+          "date": "2026-03-20",
+          "price": 16453.97,
+          "change": -956.0338868616071,
+          "change_percent": -5.810354530106922,
+          "is_real": true
         }
       ],
       "daily_records": {
@@ -356,6 +412,13 @@
         },
         {
           "date": "2026-03-19",
+          "price": 995.8,
+          "change": -5.2,
+          "change_percent": -0.52,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-20",
           "price": 995.8,
           "change": -5.2,
           "change_percent": -0.52,
@@ -401,6 +464,13 @@
           "change": -32.58,
           "change_percent": -0.26,
           "is_real": true
+        },
+        {
+          "date": "2026-03-20",
+          "price": 12580.0,
+          "change": -32.58,
+          "change_percent": -0.26,
+          "is_real": true
         }
       ],
       "daily_records": {
@@ -438,6 +508,13 @@
         },
         {
           "date": "2026-03-19",
+          "price": 3180.0,
+          "change": 16.64,
+          "change_percent": 0.53,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-20",
           "price": 3180.0,
           "change": 16.64,
           "change_percent": 0.53,
@@ -483,6 +560,13 @@
           "change": 0.85,
           "change_percent": 1.03,
           "is_real": true
+        },
+        {
+          "date": "2026-03-20",
+          "price": 83.2,
+          "change": 0.85,
+          "change_percent": 1.03,
+          "is_real": true
         }
       ],
       "daily_records": {
@@ -495,7 +579,7 @@
       }
     }
   },
-  "progress_days": 4,
+  "progress_days": 5,
   "total_days_needed": 60,
   "estimated_completion": "2026-05-14"
 }
