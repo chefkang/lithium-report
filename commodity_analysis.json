@@ -4,13 +4,33 @@
     "total_commodities": 12,
     "market_sentiment": "乐观",
     "market_volatility": "中",
-    "up_count": 8,
-    "down_count": 4,
+    "up_count": 10,
+    "down_count": 2,
     "stable_count": 0,
     "real_data_ratio": 100.0
   },
   "top_performers": {
     "gainers": [
+      {
+        "name": "白银",
+        "code": "silver",
+        "current_price": 16453.97,
+        "total_change": 8578.970000000001,
+        "total_change_percent": 108.94,
+        "trend": "上涨",
+        "volatility": 2.19,
+        "is_real": true
+      },
+      {
+        "name": "黄金",
+        "code": "gold",
+        "current_price": 1125.92,
+        "total_change": 556.72,
+        "total_change_percent": 97.81,
+        "trend": "上涨",
+        "volatility": 0.59,
+        "is_real": true
+      },
       {
         "name": "锡",
         "code": "tin",
@@ -20,57 +40,27 @@
         "trend": "上涨",
         "volatility": 2.32,
         "is_real": true
-      },
-      {
-        "name": "铜",
-        "code": "copper",
-        "current_price": 99730,
-        "total_change": 27280,
-        "total_change_percent": 37.65,
-        "trend": "上涨",
-        "volatility": 0.79,
-        "is_real": true
-      },
-      {
-        "name": "铝",
-        "code": "aluminum",
-        "current_price": 24965,
-        "total_change": 6385,
-        "total_change_percent": 34.36,
-        "trend": "上涨",
-        "volatility": 1.15,
-        "is_real": true
       }
     ],
     "losers": [
       {
-        "name": "碳酸锂",
-        "code": "lithium-carbonate",
-        "current_price": 152800,
-        "total_change": -6700,
-        "total_change_percent": -4.2,
-        "trend": "下跌",
-        "volatility": 2.26,
-        "is_real": true
-      },
-      {
         "name": "氢氧化锂",
         "code": "lithium-hydroxide",
-        "current_price": 151500,
-        "total_change": -1500,
-        "total_change_percent": -0.98,
+        "current_price": 94900,
+        "total_change": -58100,
+        "total_change_percent": -37.97,
         "trend": "下跌",
-        "volatility": 1.27,
+        "volatility": 0.82,
         "is_real": true
       },
       {
-        "name": "白银",
-        "code": "silver",
-        "current_price": 7820.5,
-        "total_change": -54.5,
-        "total_change_percent": -0.69,
+        "name": "碳酸锂",
+        "code": "lithium-carbonate",
+        "current_price": 108700,
+        "total_change": -50800,
+        "total_change_percent": -31.85,
         "trend": "下跌",
-        "volatility": 0.35,
+        "volatility": 1.39,
         "is_real": true
       }
     ]
@@ -79,21 +69,21 @@
     {
       "name": "碳酸锂",
       "code": "lithium-carbonate",
-      "current_price": 152800,
-      "total_change": -6700,
-      "total_change_percent": -4.2,
+      "current_price": 108700,
+      "total_change": -50800,
+      "total_change_percent": -31.85,
       "trend": "下跌",
-      "volatility": 2.26,
+      "volatility": 1.39,
       "is_real": true
     },
     {
       "name": "氢氧化锂",
       "code": "lithium-hydroxide",
-      "current_price": 151500,
-      "total_change": -1500,
-      "total_change_percent": -0.98,
+      "current_price": 94900,
+      "total_change": -58100,
+      "total_change_percent": -37.97,
       "trend": "下跌",
-      "volatility": 1.27,
+      "volatility": 0.82,
       "is_real": true
     },
     {
@@ -139,21 +129,21 @@
     {
       "name": "黄金",
       "code": "gold",
-      "current_price": 567.45,
-      "total_change": -1.75,
-      "total_change_percent": -0.31,
-      "trend": "下跌",
-      "volatility": 0.34,
+      "current_price": 1125.92,
+      "total_change": 556.72,
+      "total_change_percent": 97.81,
+      "trend": "上涨",
+      "volatility": 0.59,
       "is_real": true
     },
     {
       "name": "白银",
       "code": "silver",
-      "current_price": 7820.5,
-      "total_change": -54.5,
-      "total_change_percent": -0.69,
-      "trend": "下跌",
-      "volatility": 0.35,
+      "current_price": 16453.97,
+      "total_change": 8578.970000000001,
+      "total_change_percent": 108.94,
+      "trend": "上涨",
+      "volatility": 2.19,
       "is_real": true
     },
     {
@@ -163,7 +153,7 @@
       "total_change": 5.7999999999999545,
       "total_change_percent": 0.59,
       "trend": "上涨",
-      "volatility": 1.13,
+      "volatility": 1.0,
       "is_real": true
     },
     {
