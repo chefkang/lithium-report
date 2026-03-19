@@ -1,0 +1,70 @@
+; AutoCAD Script to convert DWG to PDF
+; Created by OpenClaw Assistant
+; File: 330f91c8-9488-474e-ab6f-a4f309eeabf2.dwg
+
+FILEDIA
+0
+; Open the DWG file
+OPEN
+"C:\\Users\\陈定平\\.openclaw\\media\\outbound\\330f91c8-9488-474e-ab6f-a4f309eeabf2.dwg"
+
+; Wait for file to load
+DELAY 2000
+
+; Start plot command
+-PLOT
+; Detailed plot configuration
+Yes
+; Model tab
+Model
+; Printer/plotter
+"DWG To PDF.pc3"
+; Paper size
+"ISO A4 (210.00 x 297.00 MM)"
+; Millimeters
+Millimeters
+; Landscape orientation
+Landscape
+; Plot upside down? No
+No
+; Plot area: Extents
+Extents
+; Scale to fit
+Fit
+; Center the plot
+Center
+; Plot with plot styles
+Yes
+; Scale 1:1
+1:1
+; Plot offset
+0.00,0.00
+; Plot with lineweights
+Yes
+; Plot with transparency? No
+No
+; Plot paper space last? No
+No
+; Hide paperspace objects? No
+No
+; Output file
+"C:\\Users\\陈定平\\.openclaw\\media\\outbound\\converted.pdf"
+; Save changes to layout? Yes
+Yes
+; Proceed with plot
+Yes
+
+; Wait for plot to complete
+DELAY 3000
+
+; Close the drawing without saving
+CLOSE
+No
+
+; Reset FILEDIA
+FILEDIA
+1
+
+; Quit AutoCAD (optional)
+; QUIT
+; Y

@@ -1,0 +1,19 @@
+{
+  "date": "2026-03-12",
+  "source": "SMM上海有色网首页",
+  "prices": {
+    "copper": {"name": "1#电解铜", "range": "100360~100980", "price": 100670, "change": -650, "unit": "元/吨"},
+    "aluminum": {"name": "A00铝", "range": "25240~25280", "price": 25260, "change": 230, "unit": "元/吨"},
+    "lead": {"name": "1#铅锭", "range": "16400~16550", "price": 16475, "change": 0, "unit": "元/吨"},
+    "zinc": {"name": "0#锌锭", "range": "24260~24360", "price": 24310, "change": 20, "unit": "元/吨"},
+    "nickel": {"name": "1#电解镍", "range": "137100~144800", "price": 140950, "change": 1200, "unit": "元/吨"},
+    "tin": {"name": "1#锡", "range": "390600~394700", "price": 392650, "change": -1350, "unit": "元/吨"},
+    "lithium-carbonate": {"name": "电池级碳酸锂", "range": "154000~162000", "price": 158000, "change": -1000, "unit": "元/吨"}
+  },
+  "news": [
+    {"title": "原油涨逾5% 金属多飘绿 伦铝、纽银涨超1%", "source": "SMM日评"},
+    {"title": "铝价偏强运行 铝企业股价逆势上扬", "source": "SMM快讯"},
+    {"title": "IEA宣布史上最大释储行动，为何油价不跌反涨？", "source": "SMM分析"},
+    {"title": "【3.12锂电快讯】2月汽车产销数据出炉", "source": "SMM快讯"}
+  ]
+}

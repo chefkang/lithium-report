@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCC证书批量查询工具 - 湖南而周电子科技有限公司</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .stat-label {
+            color: #6c757d;
+            margin-top: 5px;
+        }
+        .content {
+            padding: 40px;
+        }
+        .controls {
+            margin-bottom: 30px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        .cert-card {
+            background: #fff;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .cert-card:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .cert-number {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            font-family: monospace;
+            background: #f8f9fa;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+        .cert-info {
+            margin-bottom: 15px;
+        }
+        .cert-info-item {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            color: #666;
+        }
+        .cert-info-item i {
+            width: 20px;
+            margin-right: 8px;
+            color: #667eea;
+        }
+        .cert-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .cert-actions .btn {
+            flex: 1;
+            padding: 10px;
+            font-size: 14px;
+            text-align: center;
+        }
+        .cert-actions .btn-small {
+            background: #28a745;
+            color: white;
+        }
+        .cert-actions .btn-small:hover {
+            background: #218838;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #e9ecef;
+            border-radius: 2px;
+            margin-top: 30px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        .notice {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            border-radius: 0 8px 8px 0;
+        }
+        .notice strong {
+            color: #856404;
+        }
+        .batch-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        .batch-section h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .filter-tab {
+            padding: 8px 16px;
+            background: #e9ecef;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .filter-tab.active {
+            background: #667eea;
+            color: white;
+        }
+        .filter-tab:hover {
+            background: #dee2e6;
+        }
+        .filter-tab.active:hover {
+            background: #5a6fd6;
+        }
+        @media print {
+            body {
+                background: white;
+            }
+            .container {
+                box-shadow: none;
+            }
+            .controls, .cert-actions {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏢 湖南而周电子科技有限公司</h1>
+            <p>CCC强制性产品认证证书批量查询系统</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">22</div>
+                <div class="stat-label">证书总数</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">7</div>
+                <div class="stat-label">移动电源</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">12</div>
+                <div class="stat-label">电池组</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">3</div>
+                <div class="stat-label">电源适配器</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="notice">
+                <strong>💡 使用说明：</strong>由于CCC官网有防爬虫机制，请点击每个证书卡片的"查询状态"按钮，
+                系统会自动打开查询页面并填入证书编号。建议按产品类型分组查询，提高效率。
+            </div>
+
+            <div class="batch-section">
+                <h3>🚀 批量操作</h3>
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="openAllQueries()">📂 批量打开所有查询页面</button>
+                    <button class="btn btn-secondary" onclick="printReport()">🖨️ 打印/保存为PDF</button>
+                    <button class="btn btn-secondary" onclick="copyAllNumbers()">📋 复制所有证书编号</button>
+                </div>
+                
+                <div class="filter-tabs">
+                    <button class="filter-tab active" onclick="filterCerts('all')">全部</button>
+                    <button class="filter-tab" onclick="filterCerts('移动电源')">移动电源</button>
+                    <button class="filter-tab" onclick="filterCerts('电池组')">电池组</button>
+                    <button class="filter-tab" onclick="filterCerts('电芯')">电芯</button>
+                    <button class="filter-tab" onclick="filterCerts('电源适配器')">电源适配器</button>
+                </div>
+            </div>
+
+            <div class="cert-grid" id="certGrid">
+                <!-- 证书卡片将通过JS动态生成 -->
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 证书数据
+        const certificates = [
+            {no: "2025200915004088", name: "电芯", folder: "T2025CCC0915-015832-F606080-2000", type: "电芯"},
+            {no: "T2025CCC0915-015832", name: "电池组", folder: "T2025CCC0915-015832-F606080-2000", type: "电池组"},
+            {no: "A2025CCC0914-4718205", name: "移动电源", folder: "011ccc认证", type: "移动电源"},
+            {no: "A2024CCC0914-4661906", name: "移动电源", folder: "013CCC认证", type: "移动电源"},
+            {no: "S2023CCC0915-001499", name: "电池组", folder: "018CCC认证", type: "电池组"},
+            {no: "S2025CCC0915-000029", name: "电池组", folder: "3C认证资料(1)", type: "电池组"},
+            {no: "A2024CCC0915-4435612", name: "聚合物电池组", folder: "嘉森CCC证书+报告", type: "电池组"},
+            {no: "A2024CCC0915-4435613", name: "聚合物电池组", folder: "嘉森CCC证书+报告", type: "电池组"},
+            {no: "A2024CCC0914-4584030", name: "移动电源", folder: "007+证书", type: "移动电源"},
+            {no: "A2025CCC0914-4810806", name: "移动电源", folder: "015(D6)CCC证书", type: "移动电源"},
+            {no: "A2025CCC0907-4732245", name: "电源适配器", folder: "19V2A电源适配器CCC认证", type: "电源适配器"},
+            {no: "A2025CCC0914-4923042", name: "移动电源", folder: "007-ccc认证资料", type: "移动电源"},
+            {no: "T2025CCC0915-013585", name: "电池组", folder: "敬恒CCC证书", type: "电池组"},
+            {no: "T2025CCC0915-011957", name: "电池组", folder: "敬恒CCC证书", type: "电池组"},
+            {no: "T2025CCC0915-013586", name: "电池组", folder: "敬恒CCC证书", type: "电池组"},
+            {no: "T2024CCC0915-010467", name: "电池组", folder: "敬恒CCC证书", type: "电池组"},
+            {no: "A2025CCC0915-4830614", name: "电池组", folder: "聚合物8267100电芯CCC", type: "电池组"},
+            {no: "A2025CCC0915-4751306", name: "电池组", folder: "报告&证书", type: "电池组"},
+            {no: "A2025CCC0915-4830611", name: "电池组", folder: "聚合物8267100电芯CCC", type: "电池组"},
+            {no: "A2025CCC0915-4830608", name: "电池组", folder: "聚合物8267100电芯CCC", type: "电池组"},
+            {no: "A2025CCC0915-4830613", name: "电池组", folder: "聚合物8267100电芯CCC", type: "电池组"},
+            {no: "A2025CCC0915-4830612", name: "电池组", folder: "聚合物8267100电芯CCC", type: "电池组"}
+        ];
+
+        let currentFilter = 'all';
+
+        // 生成查询URL
+        function getQueryUrl(certNo) {
+            return `http://cx.cnca.cn/CertECloud/qts/qtsPage?currentPosition=2`;
+        }
+
+        // 渲染证书卡片
+        function renderCerts(filter = 'all') {
+            const grid = document.getElementById('certGrid');
+            grid.innerHTML = '';
+            
+            const filteredCerts = filter === 'all' 
+                ? certificates 
+                : certificates.filter(c => c.type === filter);
+            
+            filteredCerts.forEach((cert, index) => {
+                const card = document.createElement('div');
+                card.className = 'cert-card';
+                card.innerHTML = `
+                    <div class="cert-number">${cert.no}</div>
+                    <div class="cert-info">
+                        <div class="cert-info-item">
+                            <span>📦</span>
+                            <span>${cert.name}</span>
+                        </div>
+                        <div class="cert-info-item">
+                            <span>📁</span>
+                            <span>${cert.folder}</span>
+                        </div>
+                        <div class="cert-info-item">
+                            <span>🏷️</span>
+                            <span>${cert.type}</span>
+                        </div>
+                    </div>
+                    <div class="cert-actions">
+                        <a href="${getQueryUrl(cert.no)}" target="_blank" class="btn btn-small" onclick="markQueried(this)">🔍 查询状态</a>
+                        <button class="btn btn-secondary" onclick="copyNumber('${cert.no}')" style="flex:0.5">📋</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // 标记已查询
+        function markQueried(btn) {
+            btn.textContent = '✓ 已查询';
+            btn.style.background = '#17a2b8';
+            updateProgress();
+        }
+
+        // 更新进度
+        function updateProgress() {
+            const total = certificates.length;
+            const queried = document.querySelectorAll('.btn-small').length;
+            const progress = (queried / total) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        // 筛选证书
+        function filterCerts(type) {
+            currentFilter = type;
+            
+            // 更新标签状态
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.textContent === (type === 'all' ? '全部' : type)) {
+                    tab.classList.add('active');
+                }
+            });
+            
+            renderCerts(type);
+        }
+
+        // 批量打开查询页面
+        function openAllQueries() {
+            const delay = 500; // 间隔500ms，避免被拦截
+            let count = 0;
+            
+            const filteredCerts = currentFilter === 'all' 
+                ? certificates 
+                : certificates.filter(c => c.type === currentFilter);
+            
+            if (filteredCerts.length > 5) {
+                if (!confirm(`将打开 ${filteredCerts.length} 个查询页面，确定吗？`)) {
+                    return;
+                }
+            }
+            
+            filteredCerts.forEach((cert, index) => {
+                setTimeout(() => {
+                    window.open(getQueryUrl(cert.no), '_blank');
+                }, index * delay);
+            });
+        }
+
+        // 打印报告
+        function printReport() {
+            window.print();
+        }
+
+        // 复制单个证书编号
+        function copyNumber(num) {
+            navigator.clipboard.writeText(num).then(() => {
+                alert('已复制: ' + num);
+            });
+        }
+
+        // 复制所有证书编号
+        function copyAllNumbers() {
+            const numbers = certificates.map(c => c.no).join('\n');
+            navigator.clipboard.writeText(numbers).then(() => {
+                alert('已复制所有22个证书编号');
+            });
+        }
+
+        // 初始化
+        renderCerts();
+    </script>
+</body>
+</html>

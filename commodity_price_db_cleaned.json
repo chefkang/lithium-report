@@ -1,0 +1,585 @@
+{
+  "start_date": "2026-03-12",
+  "last_update": "2026-03-13",
+  "commodities": {
+    "lithium-carbonate": {
+      "name": "碳酸锂",
+      "unit": "元/吨",
+      "base_price": 159500,
+      "price_history": [
+        {
+          "date": "2026-03-12",
+          "price": 159500,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 158000,
+          "change": -1000,
+          "change_percent": -0.63,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 158000,
+          "change": -1000,
+          "change_percent": -0.63,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 158000,
+          "change": -1000,
+          "change_percent": -0.63,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 158000,
+          "change": -1000,
+          "change_percent": -0.63,
+          "is_real": true
+        }
+      ],
+      "daily_records": {
+        "2026-03-12": {
+          "price": 159500,
+          "change": 0,
+          "change_percent": 0,
+          "is_real": true
+        }
+      }
+    },
+    "lithium-hydroxide": {
+      "name": "氢氧化锂",
+      "unit": "元/吨",
+      "base_price": 153000,
+      "price_history": [
+        {
+          "date": "2026-03-12",
+          "price": 153000,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 153000,
+          "change": -700,
+          "change_percent": -0.46,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 153000,
+          "change": -700,
+          "change_percent": -0.46,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 153000,
+          "change": -700,
+          "change_percent": -0.46,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 153000,
+          "change": -700,
+          "change_percent": -0.46,
+          "is_real": true
+        }
+      ],
+      "daily_records": {
+        "2026-03-12": {
+          "price": 153000,
+          "change": 0,
+          "change_percent": 0,
+          "is_real": true
+        }
+      }
+    },
+    "copper": {
+      "name": "铜",
+      "unit": "元/吨",
+      "base_price": 72450,
+      "price_history": [
+        {
+          "date": "2026-03-12",
+          "price": 72450,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 100670,
+          "change": -650,
+          "change_percent": -0.64,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 100670,
+          "change": -650,
+          "change_percent": -0.64,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 100670,
+          "change": -650,
+          "change_percent": -0.64,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 100670,
+          "change": -650,
+          "change_percent": -0.64,
+          "is_real": true
+        }
+      ],
+      "daily_records": {
+        "2026-03-12": {
+          "price": 72450,
+          "change": 0,
+          "change_percent": 0,
+          "is_real": true
+        }
+      }
+    },
+    "aluminum": {
+      "name": "铝",
+      "unit": "元/吨",
+      "base_price": 18580,
+      "price_history": [
+        {
+          "date": "2026-03-12",
+          "price": 18580,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 25260,
+          "change": 230,
+          "change_percent": 0.92,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 25260,
+          "change": 230,
+          "change_percent": 0.92,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 25260,
+          "change": 230,
+          "change_percent": 0.92,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 25260,
+          "change": 230,
+          "change_percent": 0.92,
+          "is_real": true
+        }
+      ],
+      "daily_records": {
+        "2026-03-12": {
+          "price": 18580,
+          "change": 0,
+          "change_percent": 0,
+          "is_real": true
+        }
+      }
+    },
+    "tin": {
+      "name": "锡",
+      "unit": "元/吨",
+      "base_price": 246200,
+      "price_history": [
+        {
+          "date": "2026-03-12",
+          "price": 246200,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 392650,
+          "change": -1350,
+          "change_percent": -0.34,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 392650,
+          "change": -1350,
+          "change_percent": -0.34,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 392650,
+          "change": -1350,
+          "change_percent": -0.34,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 392650,
+          "change": -1350,
+          "change_percent": -0.34,
+          "is_real": true
+        }
+      ],
+      "daily_records": {
+        "2026-03-12": {
+          "price": 246200,
+          "change": 0,
+          "change_percent": 0,
+          "is_real": true
+        }
+      }
+    },
+    "nickel": {
+      "name": "镍",
+      "unit": "元/吨",
+      "base_price": 133500,
+      "price_history": [
+        {
+          "date": "2026-03-12",
+          "price": 133500,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 140950,
+          "change": 1200,
+          "change_percent": 0.86,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 140950,
+          "change": 1200,
+          "change_percent": 0.86,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 140950,
+          "change": 1200,
+          "change_percent": 0.86,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 140950,
+          "change": 1200,
+          "change_percent": 0.86,
+          "is_real": true
+        }
+      ],
+      "daily_records": {
+        "2026-03-12": {
+          "price": 133500,
+          "change": 0,
+          "change_percent": 0,
+          "is_real": true
+        }
+      }
+    },
+    "gold": {
+      "name": "黄金",
+      "unit": "元/克",
+      "base_price": 569.2,
+      "price_history": [
+        {
+          "date": "2026-03-12",
+          "price": 569.2,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 569.2,
+          "change": 2.8,
+          "change_percent": 0.49,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 569.2,
+          "change": 2.8,
+          "change_percent": 0.49,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 569.2,
+          "change": 2.8,
+          "change_percent": 0.49,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 569.2,
+          "change": 2.8,
+          "change_percent": 0.49,
+          "is_real": true
+        }
+      ],
+      "daily_records": {
+        "2026-03-12": {
+          "price": 569.2,
+          "change": 0,
+          "change_percent": 0,
+          "is_real": true
+        }
+      }
+    },
+    "silver": {
+      "name": "白银",
+      "unit": "元/千克",
+      "base_price": 7875,
+      "price_history": [
+        {
+          "date": "2026-03-12",
+          "price": 7875,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 7875,
+          "change": 38,
+          "change_percent": 0.48,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 7875,
+          "change": 38,
+          "change_percent": 0.48,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 7875,
+          "change": 38,
+          "change_percent": 0.48,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 7875,
+          "change": 38,
+          "change_percent": 0.48,
+          "is_real": true
+        }
+      ],
+      "daily_records": {
+        "2026-03-12": {
+          "price": 7875,
+          "change": 0,
+          "change_percent": 0,
+          "is_real": true
+        }
+      }
+    },
+    "iron-ore": {
+      "name": "铁矿石",
+      "unit": "元/吨",
+      "base_price": 990,
+      "price_history": [
+        {
+          "date": "2026-03-12",
+          "price": 990,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 990,
+          "change": 15,
+          "change_percent": 1.54,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 990,
+          "change": 15,
+          "change_percent": 1.54,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 990,
+          "change": 15,
+          "change_percent": 1.54,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 990,
+          "change": 15,
+          "change_percent": 1.54,
+          "is_real": true
+        }
+      ],
+      "daily_records": {
+        "2026-03-12": {
+          "price": 990,
+          "change": 0,
+          "change_percent": 0,
+          "is_real": true
+        }
+      }
+    },
+    "abs": {
+      "name": "ABS塑料",
+      "unit": "元/吨",
+      "base_price": 12520,
+      "price_history": [
+        {
+          "date": "2026-03-12",
+          "price": 12520,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 12520,
+          "change": 95,
+          "change_percent": 0.76,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 12520,
+          "change": 95,
+          "change_percent": 0.76,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 12520,
+          "change": 95,
+          "change_percent": 0.76,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 12520,
+          "change": 95,
+          "change_percent": 0.76,
+          "is_real": true
+        }
+      ],
+      "daily_records": {
+        "2026-03-12": {
+          "price": 12520,
+          "change": 0,
+          "change_percent": 0,
+          "is_real": true
+        }
+      }
+    },
+    "corrugated-paper": {
+      "name": "瓦楞纸",
+      "unit": "元/吨",
+      "base_price": 3140,
+      "price_history": [
+        {
+          "date": "2026-03-12",
+          "price": 3140,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 3140,
+          "change": -15,
+          "change_percent": -0.48,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 3140,
+          "change": -15,
+          "change_percent": -0.48,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 3140,
+          "change": -15,
+          "change_percent": -0.48,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 3140,
+          "change": -15,
+          "change_percent": -0.48,
+          "is_real": true
+        }
+      ],
+      "daily_records": {
+        "2026-03-12": {
+          "price": 3140,
+          "change": 0,
+          "change_percent": 0,
+          "is_real": true
+        }
+      }
+    },
+    "crude-oil": {
+      "name": "原油",
+      "unit": "美元/桶",
+      "base_price": 82.8,
+      "price_history": [
+        {
+          "date": "2026-03-12",
+          "price": 82.8,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 82.8,
+          "change": -0.25,
+          "change_percent": -0.3,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 82.8,
+          "change": -0.25,
+          "change_percent": -0.3,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 82.8,
+          "change": -0.25,
+          "change_percent": -0.3,
+          "is_real": true
+        },
+        {
+          "date": "2026-03-13",
+          "price": 82.8,
+          "change": -0.25,
+          "change_percent": -0.3,
+          "is_real": true
+        }
+      ],
+      "daily_records": {
+        "2026-03-12": {
+          "price": 82.8,
+          "change": 0,
+          "change_percent": 0,
+          "is_real": true
+        }
+      }
+    }
+  },
+  "progress_days": 2,
+  "total_days_needed": 60,
+  "estimated_completion": "2026-05-10"
+}

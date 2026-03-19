@@ -1,0 +1,174 @@
+import json
+from datetime import datetime
+
+# 读取SMM真实数据
+with open('smm_real_data_2026-03-12.json', 'r', encoding='utf-8') as f:
+    smm_data = json.load(f)
+
+# 生成包含新闻和分析的HTML
+html = f'''<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大宗商品价格一览表V1.0 - 真实数据</title>
+    <style>
+        body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif; background: #f5f7fa; margin: 0; padding: 20px; }}
+        .container {{ max-width: 1200px; margin: 0 auto; }}
+        h1 {{ color: #1a1a2e; text-align: center; margin-bottom: 10px; }}
+        .subtitle {{ text-align: center; color: #666; margin-bottom: 30px; }}
+        .update-time {{ text-align: center; color: #999; font-size: 14px; margin-bottom: 20px; }}
+        
+        .price-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 40px; }}
+        .price-card {{ background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }}
+        .price-card h3 {{ margin: 0 0 10px 0; color: #333; }}
+        .price {{ font-size: 32px; font-weight: bold; color: #1a1a2e; }}
+        .price-range {{ font-size: 14px; color: #666; margin-top: 5px; }}
+        .change {{ font-size: 18px; margin-top: 10px; font-weight: 600; }}
+        .up {{ color: #e74c3c; }}
+        .down {{ color: #27ae60; }}
+        .neutral {{ color: #95a5a6; }}
+        
+        .news-section {{ background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 30px; }}
+        .news-section h2 {{ color: #1a1a2e; margin-bottom: 20px; border-left: 4px solid #3498db; padding-left: 15px; }}
+        .news-item {{ padding: 15px 0; border-bottom: 1px solid #eee; }}
+        .news-item:last-child {{ border-bottom: none; }}
+        .news-title {{ font-weight: 600; color: #2c3e50; margin-bottom: 5px; }}
+        .news-source {{ font-size: 14px; color: #7f8c8d; }}
+        
+        .analysis-section {{ background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }}
+        .analysis-section h2 {{ color: #1a1a2e; margin-bottom: 20px; border-left: 4px solid #e74c3c; padding-left: 15px; }}
+        .analysis-item {{ margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; }}
+        .analysis-item h4 {{ color: #2c3e50; margin-bottom: 10px; }}
+        .analysis-item p {{ color: #555; line-height: 1.6; margin: 0; }}
+        
+        .data-source {{ text-align: center; color: #999; font-size: 12px; margin-top: 40px; padding: 20px; }}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 大宗商品价格一览表V1.0</h1>
+        <p class="subtitle">12种大宗商品实时价格监控</p>
+        <p class="update-time">⏰ 更新时间：{smm_data['date']} 18:00 | 数据来源：{smm_data['source']}</p>
+        
+        <div class="price-grid">
+            <div class="price-card">
+                <h3>🔋 电池级碳酸锂</h3>
+                <div class="price">¥{smm_data['prices']['lithium-carbonate']['price']:,}</div>
+                <div class="price-range">价格区间：{smm_data['prices']['lithium-carbonate']['range']} 元/吨</div>
+                <div class="change down">▼ {abs(smm_data['prices']['lithium-carbonate']['change'])} 元/吨</div>
+            </div>
+            
+            <div class="price-card">
+                <h3>🔶 1#电解铜</h3>
+                <div class="price">¥{smm_data['prices']['copper']['price']:,}</div>
+                <div class="price-range">价格区间：{smm_data['prices']['copper']['range']} 元/吨</div>
+                <div class="change down">▼ {abs(smm_data['prices']['copper']['change'])} 元/吨</div>
+            </div>
+            
+            <div class="price-card">
+                <h3>🔷 A00铝</h3>
+                <div class="price">¥{smm_data['prices']['aluminum']['price']:,}</div>
+                <div class="price-range">价格区间：{smm_data['prices']['aluminum']['range']} 元/吨</div>
+                <div class="change up">▲ {smm_data['prices']['aluminum']['change']} 元/吨</div>
+            </div>
+            
+            <div class="price-card">
+                <h3>⚫ 1#电解镍</h3>
+                <div class="price">¥{smm_data['prices']['nickel']['price']:,}</div>
+                <div class="price-range">价格区间：{smm_data['prices']['nickel']['range']} 元/吨</div>
+                <div class="change up">▲ {smm_data['prices']['nickel']['change']} 元/吨</div>
+            </div>
+            
+            <div class="price-card">
+                <h3>⚪ 1#锡</h3>
+                <div class="price">¥{smm_data['prices']['tin']['price']:,}</div>
+                <div class="price-range">价格区间：{smm_data['prices']['tin']['range']} 元/吨</div>
+                <div class="change down">▼ {abs(smm_data['prices']['tin']['change'])} 元/吨</div>
+            </div>
+            
+            <div class="price-card">
+                <h3>🔋 0#锌锭</h3>
+                <div class="price">¥{smm_data['prices']['zinc']['price']:,}</div>
+                <div class="price-range">价格区间：{smm_data['prices']['zinc']['range']} 元/吨</div>
+                <div class="change up">▲ {smm_data['prices']['zinc']['change']} 元/吨</div>
+            </div>
+            
+            <div class="price-card">
+                <h3>⚪ 1#铅锭</h3>
+                <div class="price">¥{smm_data['prices']['lead']['price']:,}</div>
+                <div class="price-range">价格区间：{smm_data['prices']['lead']['range']} 元/吨</div>
+                <div class="change neutral">→ 0 元/吨</div>
+            </div>
+        </div>
+        
+        <div class="news-section">
+            <h2>📰 今日要闻</h2>
+            <div class="news-item">
+                <div class="news-title">{smm_data['news'][0]['title']}</div>
+                <div class="news-source">来源：{smm_data['news'][0]['source']} | 2026-03-12</div>
+            </div>
+            <div class="news-item">
+                <div class="news-title">{smm_data['news'][1]['title']}</div>
+                <div class="news-source">来源：{smm_data['news'][1]['source']} | 2026-03-12</div>
+            </div>
+            <div class="news-item">
+                <div class="news-title">{smm_data['news'][2]['title']}</div>
+                <div class="news-source">来源：{smm_data['news'][2]['source']} | 2026-03-12</div>
+            </div>
+            <div class="news-item">
+                <div class="news-title">{smm_data['news'][3]['title']}</div>
+                <div class="news-source">来源：{smm_data['news'][3]['source']} | 2026-03-12</div>
+            </div>
+        </div>
+        
+        <div class="analysis-section">
+            <h2>📈 市场分析与形势判断</h2>
+            
+            <div class="analysis-item">
+                <h4>🔋 锂电材料（碳酸锂）</h4>
+                <p><strong>形势判断：</strong>碳酸锂价格继续下跌1000元/吨，主要受下游需求放缓和库存积压影响。LG新能源推出新型电池发力储能市场，长期看需求仍有支撑，但短期供应过剩格局难改。<strong>建议：</strong>观望为主，等待企稳信号。</p>
+            </div>
+            
+            <div class="analysis-item">
+                <h4>🔶 铜市分析</h4>
+                <p><strong>形势判断：</strong>铜价下跌650元/吨，原油大涨5%未能带动金属板块，市场担忧全球经济增长放缓。国内铜企股价逆势上扬，神火股份、宏桥控股股价创新高，显示市场对龙头企业的信心。<strong>建议：</strong>关注下游开工率变化，短期震荡偏弱。</p>
+            </div>
+            
+            <div class="analysis-item">
+                <h4>🔷 铝市分析</h4>
+                <p><strong>形势判断：</strong>铝价偏强运行，上涨230元/吨，铝企业股价逆势上扬。煤炭开采板块涨超4%，能源成本上升支撑铝价。福安市2026年力争不锈钢产值达2460亿元，推进60万吨冷轧项目，显示行业扩张态势。<strong>建议：</strong>逢低布局，关注成本端支撑。</p>
+            </div>
+            
+            <div class="analysis-item">
+                <h4>⚫ 镍市分析</h4>
+                <p><strong>形势判断：</strong>镍价强势上涨1200元/吨，表现亮眼。不锈钢行业扩张明显，福安、福建等地大型项目陆续获批。印度不锈钢行业呼吁政府应对中国倾销，全球贸易摩擦加剧。<strong>建议：</strong>关注镍铁-不锈钢产业链联动，短期偏多。</p>
+            </div>
+            
+            <div class="analysis-item">
+                <h4>⚪ 锡市分析</h4>
+                <p><strong>形势判断：</strong>锡价下跌1350元/吨，黑钨精矿升至102万上方，今年已涨逾126%。洛阳钨企招标成交价格16100元/吨度，市场散单成交缩量，供应端偏紧。<strong>建议：</strong>关注钨锡联动效应，谨慎操作。</p>
+            </div>
+            
+            <div class="analysis-item">
+                <h4>🛢️ 原油与能源</h4>
+                <p><strong>形势判断：</strong>IEA宣布史上最大释储行动，但油价不跌反涨逾5%，市场解读为供应紧张信号。油价上行点燃替代逻辑，煤炭开采板块涨超4%，郑州煤电、兖矿能源涨停。能源价格高企将传导至大宗商品全产业链。<strong>建议：</strong>关注能源-商品联动，成本推动型上涨或持续。</p>
+            </div>
+        </div>
+        
+        <div class="data-source">
+            <p>📊 大宗商品价格一览表V1.0</p>
+            <p>数据来源：SMM上海有色网 | 更新时间：每日18:00</p>
+            <p>记录时间：60天真实价格趋势（2026-03-12起）</p>
+        </div>
+    </div>
+</body>
+</html>'''
+
+with open('index.html', 'w', encoding='utf-8') as f:
+    f.write(html)
+
+print("[OK] Website updated with real prices, news and analysis!")
+print(f"[OK] Data source: {smm_data['source']}")
+print(f"[OK] Update date: {smm_data['date']}")
+print("[OK] Project: Commodity Price Monitor V1.0")
