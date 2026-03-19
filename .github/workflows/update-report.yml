@@ -23,8 +23,8 @@ jobs:
       with:
         python-version: '3.11'
         
-    - name: Update lithium report
-      run: python update_lithium_report.py
+    - name: Update commodity report
+      run: python daily_price_update.py
       
     - name: Check for changes
       id: check_changes
