@@ -120,10 +120,9 @@ if __name__ == '__main__':
     
     update_database()
     
-    # 询问是否更新网站
-    choice = input("\n是否生成网站并推送到GitHub? (y/n): ").strip().lower()
-    if choice == 'y':
-        update_website()
+    # 自动更新网站（非交互式模式）
+    print("\n自动生成网站并推送到GitHub...")
+    update_website()
     
     print("\n" + "=" * 60)
     print("[OK] 数据库更新流程完成!")

@@ -123,7 +123,7 @@ def fetch_commodity_news():
     
     print(f"[OK] 新闻数据已更新: {len(news_items)} 条")
     for news in news_items:
-        print(f"  • {news['title']} ({news['category']})")
+        print(f"  -  {news['title']} ({news['category']})")
     
     return news_data
 
