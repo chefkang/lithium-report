@@ -255,6 +255,30 @@ def generate_dashboard_html(progress_data, data_stats):
             border: 1px solid var(--border-color);
         }}
         
+        .refresh-button {{
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 6px 12px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.3s, transform 0.2s;
+        }}
+        
+        .refresh-button:hover {{
+            background: var(--accent-green);
+            transform: scale(1.05);
+        }}
+        
+        .refresh-button:active {{
+            transform: scale(0.95);
+        }}
+        
         .status-dot {{
             width: 12px;
             height: 12px;
@@ -532,6 +556,9 @@ def generate_dashboard_html(progress_data, data_stats):
                 <div class="status-dot"></div>
                 <span>系统运行中</span>
                 <span class="last-updated">最后更新: {progress_data['last_updated']}</span>
+                <button id="refreshButton" class="refresh-button">
+                    🔄 刷新数据
+                </button>
             </div>
         </div>
         
@@ -707,6 +734,38 @@ def generate_dashboard_html(progress_data, data_stats):
             </div>
         </div>
     </div>
+    
+    <script>
+        // 刷新按钮功能
+        document.getElementById('refreshButton').addEventListener('click', function() {
+            const button = this;
+            const originalText = button.innerHTML;
+            
+            // 显示加载状态
+            button.innerHTML = '⏳ 刷新中...';
+            button.disabled = true;
+            
+            // 添加加载动画
+            button.style.background = 'var(--accent-yellow)';
+            
+            // 模拟刷新过程（实际上需要后端API，这里先模拟）
+            setTimeout(function() {
+                // 刷新页面
+                location.reload(true);
+            }, 800);
+        });
+        
+        // 添加键盘快捷键：Ctrl+R 或 F5 刷新
+        document.addEventListener('keydown', function(event) {
+            if ((event.ctrlKey && event.key === 'r') || event.key === 'F5') {
+                event.preventDefault();
+                document.getElementById('refreshButton').click();
+            }
+        });
+        
+        // 自动刷新提示
+        console.log('工作进度监控面板已加载 - 点击"刷新数据"按钮或按Ctrl+R/F5刷新最新状态');
+    </script>
 </body>
 </html>
 '''

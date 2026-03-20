@@ -79,6 +79,30 @@
             border: 1px solid var(--border-color);
         }
         
+        .refresh-button {
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 6px 12px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.3s, transform 0.2s;
+        }
+        
+        .refresh-button:hover {
+            background: var(--accent-green);
+            transform: scale(1.05);
+        }
+        
+        .refresh-button:active {
+            transform: scale(0.95);
+        }
+        
         .status-dot {
             width: 12px;
             height: 12px;
@@ -355,7 +379,10 @@
             <div class="status-indicator">
                 <div class="status-dot"></div>
                 <span>系统运行中</span>
-                <span class="last-updated">最后更新: 2026-03-20 13:14:48</span>
+                <span class="last-updated">最后更新: 2026-03-20 14:19:34</span>
+                <button id="refreshButton" class="refresh-button">
+                    🔄 刷新数据
+                </button>
             </div>
         </div>
         
@@ -600,6 +627,11 @@
                 <div class="log-container">
     
                     <div class="log-item">
+                        <span class="log-time">[2026-03-20 14:13]</span>
+                        <span class="log-text">心跳检查：系统运行正常，进度监控面板添加实时刷新按钮功能</span>
+                    </div>
+        
+                    <div class="log-item">
                         <span class="log-time">[2026-03-20 13:07]</span>
                         <span class="log-text">心跳检查：系统运行正常，网络连接问题待重试</span>
                     </div>
@@ -619,11 +651,6 @@
                         <span class="log-text">日常自动更新执行：价格更新（4真实/8模拟）+ 新闻 + 数据库（第6天）+ 网站生成</span>
                     </div>
         
-                    <div class="log-item">
-                        <span class="log-time">[2026-03-20 09:37]</span>
-                        <span class="log-text">方案C阶段2开始：建立真实数据抓取原型，4种商品（锂盐×2、铜、黄金）原型数据已更新</span>
-                    </div>
-        
                 </div>
             </div>
         </div>
@@ -635,5 +662,37 @@
             </div>
         </div>
     </div>
+    
+    <script>
+        // 刷新按钮功能
+        document.getElementById('refreshButton').addEventListener('click', function() {
+            const button = this;
+            const originalText = button.innerHTML;
+            
+            // 显示加载状态
+            button.innerHTML = '⏳ 刷新中...';
+            button.disabled = true;
+            
+            // 添加加载动画
+            button.style.background = 'var(--accent-yellow)';
+            
+            // 模拟刷新过程（实际上需要后端API，这里先模拟）
+            setTimeout(function() {
+                // 刷新页面
+                location.reload(true);
+            }, 800);
+        });
+        
+        // 添加键盘快捷键：Ctrl+R 或 F5 刷新
+        document.addEventListener('keydown', function(event) {
+            if ((event.ctrlKey && event.key === 'r') || event.key === 'F5') {
+                event.preventDefault();
+                document.getElementById('refreshButton').click();
+            }
+        });
+        
+        // 自动刷新提示
+        console.log('工作进度监控面板已加载 - 点击"刷新数据"按钮或按Ctrl+R/F5刷新最新状态');
+    </script>
 </body>
 </html>
