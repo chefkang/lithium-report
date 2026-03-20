@@ -324,7 +324,7 @@
         {
           "date": "2026-03-20",
           "price": 1125.92,
-          "change": -11.574260131496455,
+          "change": -11.57,
           "change_percent": -1.0,
           "is_real": true
         }
@@ -372,8 +372,8 @@
         {
           "date": "2026-03-20",
           "price": 16453.97,
-          "change": -956.0338868616071,
-          "change_percent": -5.810354530106922,
+          "change": -956.03,
+          "change_percent": -5.8,
           "is_real": true
         }
       ],

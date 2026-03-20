@@ -1,7 +1,7 @@
 {
   "start_date": "2026-03-12",
   "last_update": "2026-03-20",
-  "data_source": "SMM上海有色网 + Kitco + 多方数据源 (2026-03-20)",
+  "data_source": "SMM + Kitco + 生意社 + 大商所 (2026-03-20)",
   "commodities": {
     "lithium-carbonate": {
       "name": "碳酸锂",
@@ -9,12 +9,13 @@
       "unit": "元/吨",
       "category": "锂盐",
       "price": 108700,
-      "price_range": "107000~110000",
+      "price_range": "107,613~109,787",
       "change": -500,
       "change_percent": -0.46,
       "date": "2026-03-20",
       "is_real": true,
-      "desc": "电池级碳酸锂（99.5%），主要用于磷酸铁锂电池 - 真实市场数据"
+      "desc": "电池级碳酸锂（99.5%），主要用于磷酸铁锂电池 - 真实市场数据",
+      "source": "SMM锂电资讯"
     },
     "lithium-hydroxide": {
       "name": "氢氧化锂",
@@ -22,12 +23,13 @@
       "unit": "元/吨",
       "category": "锂盐",
       "price": 94900,
-      "price_range": "94000~96000",
+      "price_range": "93,951~95,849",
       "change": -300,
       "change_percent": -0.32,
       "date": "2026-03-20",
       "is_real": true,
-      "desc": "电池级氢氧化锂（56.5%），主要用于高镍三元电池 - 真实市场数据"
+      "desc": "电池级氢氧化锂（56.5%），主要用于高镍三元电池 - 真实市场数据",
+      "source": "SMM锂电资讯"
     },
     "copper": {
       "name": "铜",
@@ -35,12 +37,13 @@
       "unit": "元/吨",
       "category": "基本金属",
       "price": 99730,
-      "price_range": "99422.89~100037.11",
+      "price_range": "98,732~100,727",
       "change": -870,
       "change_percent": -0.87,
-      "date": "2026-03-19",
+      "date": "2026-03-20",
       "is_real": true,
-      "desc": "电解铜（99.95%），电力、建筑、家电行业核心原材料"
+      "desc": "电解铜（99.95%），电力、建筑、家电行业核心原材料",
+      "source": "SMM上海有色网"
     },
     "aluminum": {
       "name": "铝",
@@ -48,12 +51,13 @@
       "unit": "元/吨",
       "category": "基本金属",
       "price": 24965,
-      "price_range": "24945.23~24984.77",
+      "price_range": "24,715~25,214",
       "change": -320,
       "change_percent": -1.27,
-      "date": "2026-03-19",
+      "date": "2026-03-20",
       "is_real": true,
-      "desc": "A00铝锭（99.7%），广泛应用于建筑、交通、包装行业"
+      "desc": "A00铝锭（99.7%），广泛应用于建筑、交通、包装行业",
+      "source": "SMM上海有色网"
     },
     "tin": {
       "name": "锡",
@@ -61,12 +65,13 @@
       "unit": "元/吨",
       "category": "小金属",
       "price": 372860,
-      "price_range": "370913.32~374806.68",
+      "price_range": "369,131~376,588",
       "change": -12770,
       "change_percent": -3.31,
-      "date": "2026-03-19",
+      "date": "2026-03-20",
       "is_real": true,
-      "desc": "锡锭（99.9%），电子焊料、镀锡钢板、合金添加剂"
+      "desc": "锡锭（99.9%），电子焊料、镀锡钢板、合金添加剂",
+      "source": "SMM上海有色网"
     },
     "nickel": {
       "name": "镍",
@@ -74,12 +79,13 @@
       "unit": "元/吨",
       "category": "基本金属",
       "price": 135900,
-      "price_range": "132187.94~139612.06",
+      "price_range": "134,541~137,259",
       "change": -2630,
       "change_percent": -1.9,
-      "date": "2026-03-19",
+      "date": "2026-03-20",
       "is_real": true,
-      "desc": "电解镍（99.9%），不锈钢主要原料，三元电池正极材料"
+      "desc": "电解镍（99.9%），不锈钢主要原料，三元电池正极材料",
+      "source": "SMM上海有色网"
     },
     "gold": {
       "name": "黄金",
@@ -87,12 +93,13 @@
       "unit": "元/克",
       "category": "贵金属",
       "price": 1125.92,
-      "price_range": "1114.66~1137.18",
-      "change": -11.574260131496455,
+      "price_range": "1,114~1,137",
+      "change": -11.57,
       "change_percent": -1.0,
       "date": "2026-03-20",
       "is_real": true,
-      "desc": "Au99.99，避险资产，央行储备 - 上海黄金交易所数据"
+      "desc": "Au99.99，避险资产，央行储备 - 上海黄金交易所数据",
+      "source": "Kitco"
     },
     "silver": {
       "name": "白银",
@@ -100,12 +107,13 @@
       "unit": "元/千克",
       "category": "贵金属",
       "price": 16453.97,
-      "price_range": "16289.43~16618.51",
-      "change": -956.0338868616071,
-      "change_percent": -5.810354530106922,
+      "price_range": "16,289~16,618",
+      "change": -956.03,
+      "change_percent": -5.8,
       "date": "2026-03-20",
       "is_real": true,
-      "desc": "Ag99.99，工业用途广泛，光伏、电子、摄影 - 上海黄金交易所数据"
+      "desc": "Ag99.99，工业用途广泛，光伏、电子、摄影 - 上海黄金交易所数据",
+      "source": "Kitco"
     },
     "iron-ore": {
       "name": "铁矿石",
@@ -113,12 +121,13 @@
       "unit": "元/吨",
       "category": "黑色金属",
       "price": 995.8,
-      "price_range": "990~1000",
+      "price_range": "985.8~1005.8",
       "change": -5.2,
       "change_percent": -0.52,
       "date": "2026-03-20",
-      "is_real": false,
-      "desc": "PB粉（62%），钢铁生产主要原料 - 大连商品交易所数据"
+      "is_real": true,
+      "desc": "PB粉（62%），钢铁生产主要原料 - 大连商品交易所数据",
+      "source": "大连商品交易所"
     },
     "abs": {
       "name": "ABS塑料",
@@ -126,12 +135,13 @@
       "unit": "元/吨",
       "category": "化工",
       "price": 12580.0,
-      "price_range": "12500~12650",
+      "price_range": "12,454~12,705",
       "change": -32.58,
       "change_percent": -0.26,
-      "date": "2026-03-14",
-      "is_real": false,
-      "desc": "台湾奇美PA-757，家电、汽车、电子行业常用工程塑料 - 市场现货数据"
+      "date": "2026-03-20",
+      "is_real": true,
+      "desc": "台湾奇美PA-757，家电、汽车、电子行业常用工程塑料 - 市场现货数据",
+      "source": "生意社"
     },
     "corrugated-paper": {
       "name": "瓦楞纸",
@@ -139,12 +149,13 @@
       "unit": "元/吨",
       "category": "纸业",
       "price": 3180.0,
-      "price_range": "3150~3210",
+      "price_range": "3,148~3,211",
       "change": 16.64,
       "change_percent": 0.53,
       "date": "2026-03-20",
-      "is_real": false,
-      "desc": "AA级120g，包装行业基础材料 - 市场现货数据"
+      "is_real": true,
+      "desc": "AA级120g，包装行业基础材料 - 市场现货数据",
+      "source": "生意社"
     },
     "crude-oil": {
       "name": "原油",
@@ -152,12 +163,13 @@
       "unit": "美元/桶",
       "category": "能源",
       "price": 83.2,
-      "price_range": "82.5~84.0",
+      "price_range": "82.4~84.0",
       "change": 0.85,
       "change_percent": 1.03,
       "date": "2026-03-20",
-      "is_real": false,
-      "desc": "WTI原油，全球最重要能源和化工原料 - 纽约商品交易所数据"
+      "is_real": true,
+      "desc": "WTI原油，全球最重要能源和化工原料 - 纽约商品交易所数据",
+      "source": "生意社/WTI"
     }
   }
 }
