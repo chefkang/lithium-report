@@ -1,5 +1,5 @@
 {
-  "report_date": "2026-03-19",
+  "report_date": "2026-03-20",
   "summary": {
     "total_commodities": 12,
     "market_sentiment": "乐观",
@@ -18,7 +18,7 @@
         "total_change": 8578.970000000001,
         "total_change_percent": 108.94,
         "trend": "上涨",
-        "volatility": 2.19,
+        "volatility": 3.97,
         "is_real": true
       },
       {
@@ -28,7 +28,7 @@
         "total_change": 556.72,
         "total_change_percent": 97.81,
         "trend": "上涨",
-        "volatility": 0.59,
+        "volatility": 0.76,
         "is_real": true
       },
       {
@@ -38,7 +38,7 @@
         "total_change": 126660,
         "total_change_percent": 51.45,
         "trend": "上涨",
-        "volatility": 2.32,
+        "volatility": 3.31,
         "is_real": true
       }
     ],
@@ -50,7 +50,7 @@
         "total_change": -58100,
         "total_change_percent": -37.97,
         "trend": "下跌",
-        "volatility": 0.82,
+        "volatility": 0.77,
         "is_real": true
       },
       {
@@ -60,7 +60,7 @@
         "total_change": -50800,
         "total_change_percent": -31.85,
         "trend": "下跌",
-        "volatility": 1.39,
+        "volatility": 1.33,
         "is_real": true
       }
     ]
@@ -73,7 +73,7 @@
       "total_change": -50800,
       "total_change_percent": -31.85,
       "trend": "下跌",
-      "volatility": 1.39,
+      "volatility": 1.33,
       "is_real": true
     },
     {
@@ -83,7 +83,7 @@
       "total_change": -58100,
       "total_change_percent": -37.97,
       "trend": "下跌",
-      "volatility": 0.82,
+      "volatility": 0.77,
       "is_real": true
     },
     {
@@ -93,7 +93,7 @@
       "total_change": 27280,
       "total_change_percent": 37.65,
       "trend": "上涨",
-      "volatility": 0.79,
+      "volatility": 0.87,
       "is_real": true
     },
     {
@@ -103,7 +103,7 @@
       "total_change": 6385,
       "total_change_percent": 34.36,
       "trend": "上涨",
-      "volatility": 1.15,
+      "volatility": 1.27,
       "is_real": true
     },
     {
@@ -113,7 +113,7 @@
       "total_change": 126660,
       "total_change_percent": 51.45,
       "trend": "上涨",
-      "volatility": 2.32,
+      "volatility": 3.31,
       "is_real": true
     },
     {
@@ -123,7 +123,7 @@
       "total_change": 2400,
       "total_change_percent": 1.8,
       "trend": "上涨",
-      "volatility": 1.55,
+      "volatility": 1.9,
       "is_real": true
     },
     {
@@ -133,7 +133,7 @@
       "total_change": 556.72,
       "total_change_percent": 97.81,
       "trend": "上涨",
-      "volatility": 0.59,
+      "volatility": 0.76,
       "is_real": true
     },
     {
@@ -143,7 +143,7 @@
       "total_change": 8578.970000000001,
       "total_change_percent": 108.94,
       "trend": "上涨",
-      "volatility": 2.19,
+      "volatility": 3.97,
       "is_real": true
     },
     {
@@ -153,7 +153,7 @@
       "total_change": 5.7999999999999545,
       "total_change_percent": 0.59,
       "trend": "上涨",
-      "volatility": 1.0,
+      "volatility": 0.66,
       "is_real": true
     },
     {
@@ -163,7 +163,7 @@
       "total_change": 60.0,
       "total_change_percent": 0.48,
       "trend": "上涨",
-      "volatility": 0.43,
+      "volatility": 0.26,
       "is_real": true
     },
     {
@@ -173,7 +173,7 @@
       "total_change": 40.0,
       "total_change_percent": 1.27,
       "trend": "上涨",
-      "volatility": 0.51,
+      "volatility": 0.53,
       "is_real": true
     },
     {
@@ -183,7 +183,7 @@
       "total_change": 0.4000000000000057,
       "total_change_percent": 0.48,
       "trend": "上涨",
-      "volatility": 0.79,
+      "volatility": 1.03,
       "is_real": true
     }
   ],
