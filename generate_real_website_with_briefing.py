@@ -12,6 +12,9 @@ def generate_briefing_page(db):
     
     # 计算统计信息
     real_count = sum(1 for item in db['commodities'].values() if item.get('is_real', False))
+    prototype_count = sum(1 for item in db['commodities'].values() if item.get('status') == 'prototype')
+    simulated_count = sum(1 for item in db['commodities'].values() if not item.get('is_real', False) and item.get('status') != 'prototype')
+    
     total_count = len(db['commodities'])
     up_count = sum(1 for item in db['commodities'].values() if item['change'] >= 0)
     down_count = total_count - up_count
@@ -23,6 +26,17 @@ def generate_briefing_page(db):
         change_percent = item['change_percent']
         is_up = change >= 0
         is_real = item.get('is_real', False)
+        status = item.get('status', 'unknown')
+        
+        # 根据状态显示不同的标记
+        if status == 'prototype':
+            status_badge = '🔬 原型'
+        elif status == 'prototype_error':
+            status_badge = '⚠️ 原型错误'
+        elif is_real:
+            status_badge = '✅ 真实'
+        else:
+            status_badge = '❌ 模拟'
         
         price_rows.append(f'''
                 <tr>
@@ -31,7 +45,7 @@ def generate_briefing_page(db):
                     <td><span class="badge {'badge-up' if is_up else 'badge-down'}">{'+' if is_up else ''}{change:,}</span></td>
                     <td>{'+' if is_up else ''}{change_percent:.2f}%</td>
                     <td>{item['unit']}</td>
-                    <td>{"✅ 真实" if is_real else "❌ 模拟"}</td>
+                    <td>{status_badge}</td>
                 </tr>''')
     
     # 简报页面HTML
@@ -56,7 +70,7 @@ def generate_briefing_page(db):
             <div class="section-title">📋 执行摘要</div>
             <p><strong>市场情绪：</strong>整体偏弱，{total_count}种商品中{down_count}种下跌，{up_count}种上涨。</p>
             <p><strong>关键动向：</strong>白银(-5.8%)和锡(-3.3%)跌幅最大；原油(+1.0%)和瓦楞纸(+0.5%)小幅上涨。</p>
-            <p><strong>数据质量：</strong>{total_count}种商品中{real_count}种为真实市场数据，真实数据占比{real_count/total_count*100:.0f}%。</p>
+            <p><strong>数据质量：</strong>{total_count}种商品中 {real_count}种真实，{prototype_count}种原型测试，{simulated_count}种模拟。方案C阶段2执行中。</p>
             <p><strong>风险提示：</strong>美联储政策预期压制金属价格，新能源需求支撑锂盐底部。</p>
             <p><strong>方案C状态：</strong>混合方案执行中（模拟数据+真实抓取管道建设）</p>
         </div>

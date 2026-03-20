@@ -1,0 +1,40 @@
+{
+  "report_date": "2026-03-20",
+  "phase": "stage2_prototype",
+  "status": "in_progress",
+  "target_completion": "2026-03-23",
+  "prototypes": [
+    {
+      "commodity": "lithium-carbonate",
+      "price": 108700,
+      "source": "SMM锂电资讯（原型）",
+      "status": "prototype",
+      "method": "simulated",
+      "timestamp": "2026-03-20 09:37"
+    },
+    {
+      "commodity": "lithium-hydroxide",
+      "price": 94900,
+      "source": "SMM锂电资讯（原型）",
+      "status": "prototype",
+      "method": "simulated",
+      "timestamp": "2026-03-20 09:37"
+    },
+    {
+      "commodity": "copper",
+      "price": 99730,
+      "source": "SMM上海有色网（原型）",
+      "status": "prototype",
+      "method": "simulated",
+      "timestamp": "2026-03-20 09:37"
+    },
+    {
+      "commodity": "gold",
+      "price": 1125.92,
+      "source": "Kitco（原型）",
+      "status": "prototype",
+      "method": "simulated",
+      "timestamp": "2026-03-20 09:37"
+    }
+  ]
+}

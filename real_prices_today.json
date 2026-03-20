@@ -1,7 +1,7 @@
 {
   "start_date": "2026-03-12",
   "last_update": "2026-03-20",
-  "data_source": "SMM + Kitco + 生意社 + 大商所 (2026-03-20)",
+  "data_source": "SMM上海有色网 + 多方数据源 (2026-03-20)",
   "commodities": {
     "lithium-carbonate": {
       "name": "碳酸锂",
@@ -13,9 +13,10 @@
       "change": -500,
       "change_percent": -0.46,
       "date": "2026-03-20",
-      "is_real": true,
+      "is_real": false,
       "desc": "电池级碳酸锂（99.5%），主要用于磷酸铁锂电池 - 真实市场数据",
-      "source": "SMM锂电资讯"
+      "source": "SMM锂电资讯（原型）",
+      "status": "prototype"
     },
     "lithium-hydroxide": {
       "name": "氢氧化锂",
@@ -27,9 +28,10 @@
       "change": -300,
       "change_percent": -0.32,
       "date": "2026-03-20",
-      "is_real": true,
+      "is_real": false,
       "desc": "电池级氢氧化锂（56.5%），主要用于高镍三元电池 - 真实市场数据",
-      "source": "SMM锂电资讯"
+      "source": "SMM锂电资讯（原型）",
+      "status": "prototype"
     },
     "copper": {
       "name": "铜",
@@ -43,7 +45,8 @@
       "date": "2026-03-20",
       "is_real": true,
       "desc": "电解铜（99.95%），电力、建筑、家电行业核心原材料",
-      "source": "SMM上海有色网"
+      "source": "SMM上海有色网（原型）",
+      "status": "prototype"
     },
     "aluminum": {
       "name": "铝",
@@ -97,9 +100,10 @@
       "change": -11.57,
       "change_percent": -1.0,
       "date": "2026-03-20",
-      "is_real": true,
+      "is_real": false,
       "desc": "Au99.99，避险资产，央行储备 - 上海黄金交易所数据",
-      "source": "Kitco"
+      "source": "Kitco（原型）",
+      "status": "prototype"
     },
     "silver": {
       "name": "白银",
@@ -111,7 +115,7 @@
       "change": -956.03,
       "change_percent": -5.8,
       "date": "2026-03-20",
-      "is_real": true,
+      "is_real": false,
       "desc": "Ag99.99，工业用途广泛，光伏、电子、摄影 - 上海黄金交易所数据",
       "source": "Kitco"
     },
@@ -125,7 +129,7 @@
       "change": -5.2,
       "change_percent": -0.52,
       "date": "2026-03-20",
-      "is_real": true,
+      "is_real": false,
       "desc": "PB粉（62%），钢铁生产主要原料 - 大连商品交易所数据",
       "source": "大连商品交易所"
     },
@@ -139,7 +143,7 @@
       "change": -32.58,
       "change_percent": -0.26,
       "date": "2026-03-20",
-      "is_real": true,
+      "is_real": false,
       "desc": "台湾奇美PA-757，家电、汽车、电子行业常用工程塑料 - 市场现货数据",
       "source": "生意社"
     },
@@ -153,7 +157,7 @@
       "change": 16.64,
       "change_percent": 0.53,
       "date": "2026-03-20",
-      "is_real": true,
+      "is_real": false,
       "desc": "AA级120g，包装行业基础材料 - 市场现货数据",
       "source": "生意社"
     },
@@ -167,7 +171,7 @@
       "change": 0.85,
       "change_percent": 1.03,
       "date": "2026-03-20",
-      "is_real": true,
+      "is_real": false,
       "desc": "WTI原油，全球最重要能源和化工原料 - 纽约商品交易所数据",
       "source": "生意社/WTI"
     }
