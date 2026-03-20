@@ -176,8 +176,8 @@ def generate_website():
         else:
             print(f"[WARNING] 数据分析生成失败: {analysis_result.stderr[:200]}")
         
-        # 生成完整网站
-        result = subprocess.run(['uv', 'run', 'python', 'generate_full_website.py'], 
+        # 生成完整网站（使用上市公司风格简报）
+        result = subprocess.run(['uv', 'run', 'python', 'generate_real_website_with_briefing.py'], 
                               cwd='.', capture_output=True, text=True, timeout=120)
         
         if result.returncode == 0:

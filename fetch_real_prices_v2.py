@@ -343,7 +343,7 @@ def generate_website_with_real_data():
     log_message("生成网站...")
     
     try:
-        result = subprocess.run(['uv', 'run', 'python', 'generate_real_website.py'], 
+        result = subprocess.run(['uv', 'run', 'python', 'generate_real_website_with_briefing.py'], 
                               cwd='.', capture_output=True, text=True, encoding='utf-8')
         
         if result.returncode == 0:
