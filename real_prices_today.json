@@ -1,7 +1,7 @@
 {
   "start_date": "2026-03-12",
-  "last_update": "2026-04-16",
-  "data_source": "SMM上海有色网 + 多方数据源 (2026-04-16)",
+  "last_update": "2026-04-17",
+  "data_source": "SMM上海有色网 + 多方数据源 (2026-04-17)",
   "commodities": {
     "lithium-carbonate": {
       "name": "碳酸锂",
@@ -42,7 +42,7 @@
       "price_range": "98,732~100,727",
       "change": -870,
       "change_percent": -0.87,
-      "date": "2026-04-16",
+      "date": "2026-04-17",
       "is_real": true,
       "desc": "电解铜（99.95%），电力、建筑、家电行业核心原材料",
       "source": "SMM上海有色网（原型）",
@@ -57,7 +57,7 @@
       "price_range": "24,715~25,214",
       "change": -320,
       "change_percent": -1.27,
-      "date": "2026-04-16",
+      "date": "2026-04-17",
       "is_real": true,
       "desc": "A00铝锭（99.7%），广泛应用于建筑、交通、包装行业",
       "source": "SMM上海有色网"
@@ -71,7 +71,7 @@
       "price_range": "369,131~376,588",
       "change": -12770,
       "change_percent": -3.31,
-      "date": "2026-04-16",
+      "date": "2026-04-17",
       "is_real": true,
       "desc": "锡锭（99.9%），电子焊料、镀锡钢板、合金添加剂",
       "source": "SMM上海有色网"
@@ -85,7 +85,7 @@
       "price_range": "134,541~137,259",
       "change": -2630,
       "change_percent": -1.9,
-      "date": "2026-04-16",
+      "date": "2026-04-17",
       "is_real": true,
       "desc": "电解镍（99.9%），不锈钢主要原料，三元电池正极材料",
       "source": "SMM上海有色网"
